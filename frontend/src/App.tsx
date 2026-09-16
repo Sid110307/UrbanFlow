@@ -4,6 +4,7 @@ import { ControlPanel } from "./components/ControlPanel";
 import { DrainModal } from "./components/DrainModal";
 import { IncidentFeed } from "./components/IncidentFeed";
 import { MapView } from "./components/MapView";
+import { NewWindowPortal } from "./components/NewWindowPortal";
 import type { Drain, Incident, LiveEvent } from "./types";
 
 function countByStatus(drains: Drain[]) {
@@ -21,6 +22,16 @@ export default function App() {
   const [incidents, setIncidents] = useState<Incident[]>([]);
   const [selectedDrainId, setSelectedDrainId] = useState<string | null>(null);
   const [refreshSignals, setRefreshSignals] = useState<Record<string, number>>({});
+  const [controlWindow, setControlWindow] = useState<Window | null>(null);
+
+  function openControls() {
+    const win = window.open(
+      "",
+      "",
+      `width=380,height=640,left=${window.screenX + 80},top=${window.screenY + 80}`
+    );
+    if (win) setControlWindow(win);
+  }
 
   useEffect(() => {
     api.listDrains().then(setDrains);
@@ -59,6 +70,9 @@ export default function App() {
         <div className="app-header-top">
           <h1>DrainGuard</h1>
           <span className="subtitle">Causal drain-network monitoring &mdash; Gemini reasoning core</span>
+          <button className="open-controls-btn" onClick={openControls} disabled={!!controlWindow}>
+            Open controls
+          </button>
         </div>
         <div className="status-strip">
           <span className="status-strip-item">
@@ -84,10 +98,19 @@ export default function App() {
           <MapView drains={drains} onSelect={setSelectedDrainId} />
         </div>
         <aside className="side-pane">
-          <ControlPanel drains={drains} />
           <IncidentFeed incidents={incidents} onSelect={setSelectedDrainId} />
         </aside>
       </div>
+
+      {controlWindow && (
+        <NewWindowPortal
+          targetWindow={controlWindow}
+          title="DrainGuard controls"
+          onClose={() => setControlWindow(null)}
+        >
+          <ControlPanel drains={drains} />
+        </NewWindowPortal>
+      )}
 
       {selectedDrainId && (
         <DrainModal
