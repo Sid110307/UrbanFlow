@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from datetime import datetime, timezone
 
 from sqlalchemy import select
@@ -161,6 +162,10 @@ async def on_tick(session_factory, drain_id, reading):
     session = session_factory()
     try:
         event = await evaluate_drain(session, drain_id, reading)
+    except Exception:
+        logging.exception("evaluate_drain failed for %s; skipping this tick", drain_id)
+        session.rollback()
+        return
     finally:
         session.close()
     await manager.broadcast(event)
