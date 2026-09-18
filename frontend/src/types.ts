@@ -1,60 +1,137 @@
-export type RiskLevel = "green" | "yellow" | "red";
+export const DRAIN_TYPES = ["Primary", "Secondary", "Tertiary"] as const;
 
-export interface Telemetry {
-  timestamp: string;
-  water_level_cm: number;
-  flow_velocity_mps: number;
-  turbidity_ntu: number;
-  precip_rate_mm_hr: number;
-  upstream_precip_mm_hr: number;
+export type DrainType = (typeof DRAIN_TYPES)[number];
+export type Coordinate = [number, number];
+export type Bounds = [number, number, number, number];
+
+export interface DrainProperties {
+  id: string;
+  label: string;
+  type: DrainType;
+  lengthMeters: number;
+  sourceId: string;
+  refName?: string;
+  entity?: string;
+  originalVertices: number;
+  displayVertices: number;
+  bounds: Bounds;
+  center: Coordinate;
 }
 
-export interface Drain {
-  drain_id: string;
-  name: string;
-  lat: number;
-  lon: number;
-  status: RiskLevel;
-  updated_at: string;
+export interface DrainFeature {
+  type: "Feature";
+  geometry:
+    | { type: "LineString"; coordinates: Coordinate[] }
+    | { type: "MultiLineString"; coordinates: Coordinate[][] };
+  properties: DrainProperties;
 }
 
-export interface DrainDetail extends Drain {
-  latest_reading: Telemetry | null;
-  history: Telemetry[];
-  neighbors: string[];
+export interface DrainCategorySummary {
+  count: number;
+  lengthMeters: number;
+  originalVertices: number;
+  displayVertices: number;
 }
 
-export interface Incident {
-  id: number;
-  drain_id: string;
-  timestamp: string;
-  classification: string;
-  blockage_probability: number;
-  reasoning: string;
-  trigger_visual_triage: boolean;
-  debris_class: string | null;
-  debris_confidence: number | null;
-  debris_rationale: string | null;
-  camera_image_path: string | null;
-  graph_narrative: string | null;
-  risk_level: RiskLevel;
-  dispatch_text: string | null;
-  alert_text: string | null;
+export interface DrainDataset {
+  type: "FeatureCollection";
+  metadata: {
+    title: string;
+    sourceName: string;
+    sourceUrl: string;
+    downloadUrl: string;
+    dataUpdated: string;
+    totalFeatures: number;
+    totalLengthMeters: number;
+    originalVertices: number;
+    displayVertices: number;
+    bounds: Bounds;
+    categories: Record<DrainType, DrainCategorySummary>;
+  };
+  features: DrainFeature[];
 }
 
-export interface TelemetryEvent {
-  type: "telemetry";
-  drain_id: string;
-  reading: Telemetry;
-  status: RiskLevel;
+export type DrainTypeVisibility = Record<DrainType, boolean>;
+
+export type ScenarioKind = "normal" | "cloudburst" | "blockage";
+export type RiskStatus = "normal" | "watch" | "critical" | "blocked";
+export type FlowTrend = "falling" | "steady" | "rising";
+
+export interface SimulationConfig {
+  scenario: ScenarioKind;
+  rainfallMmHr: number;
+  running: boolean;
+  speed: 1 | 2 | 4;
+  blockedId: string | null;
+  elapsedMinutes: number;
 }
 
-export interface IncidentEvent {
-  type: "incident";
-  drain_id: string;
-  reading: Telemetry;
-  status: RiskLevel;
-  incident: Omit<Incident, "id" | "drain_id"> & { timestamp: string };
+export interface SegmentTelemetry {
+  id: string;
+  status: RiskStatus;
+  utilization: number;
+  waterLevelCm: number;
+  flowMps: number;
+  localRainfallMmHr: number;
+  trend: FlowTrend;
 }
 
-export type LiveEvent = TelemetryEvent | IncidentEvent;
+export interface TelemetryPoint extends SegmentTelemetry {
+  elapsedMinutes: number;
+}
+
+export interface NetworkMetrics {
+  watchCount: number;
+  criticalCount: number;
+  blockedCount: number;
+  overflowCount: number;
+  averageUtilization: number;
+  impactedLengthMeters: number;
+  connectedSegments: number;
+}
+
+export interface SimulationEvent {
+  id: string;
+  elapsedMinutes: number;
+  severity: "info" | "watch" | "critical";
+  title: string;
+  description: string;
+  segmentId?: string;
+}
+
+export interface SimulationSnapshot {
+  tick: number;
+  elapsedMinutes: number;
+  rainfallMmHr: number;
+  scenario: ScenarioKind;
+  affected: SegmentTelemetry[];
+  topRisks: SegmentTelemetry[];
+  selectedTelemetry: SegmentTelemetry | null;
+  upstreamIds: string[];
+  downstreamIds: string[];
+  metrics: NetworkMetrics;
+  events: SimulationEvent[];
+}
+
+export interface WorkerSegment {
+  id: string;
+  type: DrainType;
+  lengthMeters: number;
+  center: Coordinate;
+  endpoints: [Coordinate, Coordinate];
+}
+
+export type SimulationWorkerMessage =
+  | {
+      type: "INIT";
+      segments: WorkerSegment[];
+      config: SimulationConfig;
+      selectedId: string | null;
+    }
+  | { type: "CONTROL"; config: Partial<SimulationConfig> }
+  | { type: "SELECT"; selectedId: string | null }
+  | { type: "SNAPSHOT" };
+
+export type SimulationWorkerResponse =
+  | { type: "READY"; connectedSegments: number }
+  | { type: "UPDATE"; snapshot: SimulationSnapshot };
