@@ -1,83 +1,98 @@
-# DrainGuard — as-built architecture (software-only demo)
+# UrbanFlow: architecture
 
-Trimmed from the original full-deployment blueprint down to what actually runs
-for the hackathon: two local processes, SQLite, real Gemini calls, zero
-hardware, zero external delivery integrations.
+A frontend-only atlas of Bengaluru's mapped stormwater drain network, with a
+browser-side scenario engine layered on top. There is no server, database, or
+API key involved anywhere in the running app.
 
 ## System diagram
 
 ```mermaid
 flowchart TB
-    subgraph SIM["Simulator (in-process, backend/app/simulator.py)"]
-        TICK["asyncio loop, ~6s tick\n10 drains, manual rain/blockage injection"]
+    subgraph DATA["Static dataset"]
+        JSON["public/data/drains.json\nGIS network, pre-built from the OpenCity KML"]
     end
 
-    subgraph API["FastAPI backend (single process)"]
-        AGENT["agent.py\nlocal threshold pre-filter"]
-        GEMINI["gemini_client.py\nreal Gemini API calls"]
-        GRAPH["graph.py — networkx\n10-node drain network"]
-        DB[("SQLite\ndrainguard.db")]
-        WS["WebSocket broadcast"]
+    subgraph WORKER["Web Worker (simulation.worker.ts)"]
+        GRAPH["Endpoint-snapping graph build\n(adjacency from shared coordinates)"]
+        TICK["Tick loop, ~0.9s\nrainfall, blockage propagation, utilization model"]
     end
 
-    subgraph FE["React + Vite dashboard"]
-        MAP["Leaflet map — live pins"]
-        MODAL["Drain modal — chart + reasoning trace"]
-        CTRL["Popup controls window"]
-        FEED["Reasoning log"]
+    subgraph APP["React app (Vite)"]
+        HOOK["useDrainSimulation\nposts control messages, receives snapshots"]
+        MAP["MapView (Leaflet)\nbase network + live risk overlay"]
+        EXPLORER["DrainExplorer\nsearch and type filters"]
+        DETAILS["DrainDetails\nper-segment telemetry and capacity trend"]
+        PANEL["SimulationPanel\nscenario controls, rainfall, KPIs"]
+        TIMELINE["IncidentTimeline\npropagation log"]
+        ASSIST["FlowAssistant\nkeyword-matched operations chat"]
     end
 
-    TICK -->|reading| AGENT
-    AGENT -->|water_level/flow/turbidity delta over threshold| GEMINI
-    AGENT --> GRAPH
-    AGENT --> DB
-    GEMINI -->|causal disambiguation JSON| AGENT
-    GEMINI -->|debris vision classification| AGENT
-    GEMINI -->|dispatch + citizen alert text| AGENT
-    AGENT --> WS
-    WS --> MAP
-    WS --> FEED
-    CTRL -->|inject rain/blockage| TICK
-    MAP --> MODAL
+    JSON -->|fetched on load| APP
+    APP -->|segments + config| HOOK
+    HOOK -->|INIT / CONTROL / SELECT| WORKER
+    WORKER -->|UPDATE snapshot| HOOK
+    HOOK --> MAP
+    HOOK --> DETAILS
+    HOOK --> PANEL
+    HOOK --> TIMELINE
+    HOOK --> ASSIST
+    EXPLORER --> MAP
 ```
 
-## The judgment step
+## What is real and what is simulated
 
-Unchanged in spirit from the original doc: Gemini receives current telemetry,
-a rolling baseline, and a text summary of upstream/downstream neighbor
-readings (from the networkx graph), and returns a structured
-`{classification, blockage_probability, reasoning, trigger_visual_triage}`
-object via the `google-genai` SDK's `response_schema` (Pydantic model) —
-guaranteed-shape JSON, no free-text parsing. `blockage_probability >= 70`
-(configurable) triggers debris vision classification against a staged camera
-frame, also via a schema-constrained Gemini call.
+The mapped geometry, drain hierarchy (primary/secondary/tertiary), recorded
+lengths, and source identifiers come directly from OpenCity's public BBMP
+stormwater drain dataset. `frontend/scripts/build-drain-data.mjs` converts the
+source KML into the static `frontend/public/data/drains.json` the app fetches
+at load time.
 
-## AI tool assignment (as built)
+Everything downstream of that fetch (rainfall, capacity, water level, flow,
+topology direction, and incidents) is a deterministic demo model computed in
+`frontend/src/workers/simulation.worker.ts`. It is clearly labeled as
+simulated in the UI wherever it appears. There is no live weather feed, no
+hydraulic sensor input, and no telemetry hardware.
 
-| Task | Tool |
-|---|---|
-| Causal disambiguation (rain vs. blockage) | Gemini Flash, `response_schema`-constrained JSON |
-| Debris vision classification | Gemini Pro (multimodal), `response_schema`-constrained JSON |
-| Graph-context narrative | networkx (deterministic traversal) + Gemini Flash for the plain-language explanation |
-| Dispatch / citizen alert copy | Gemini Flash, free-text |
-| Everything else (backend/frontend code) | written directly, no product dependency on any specific coding tool |
+## The simulation worker
 
-## What was cut, and why
+On `INIT`, the worker snaps segment endpoints into a coordinate-bucketed
+adjacency graph (`SNAP_TOLERANCE`), which stands in for real drain topology.
+Every tick it recomputes, per segment: a rainfall load (uniform under the
+baseline scenario, a distance-weighted storm cell under cloudburst), a
+blockage pressure that decays with graph distance from an injected
+obstruction, and a small deterministic oscillation seeded from the segment
+id. Utilization crossing 68% or 90% moves a segment into `watch` or
+`critical`; an active blockage forces `blocked` regardless of utilization.
+Status transitions emit entries into the propagation log.
 
-| Original doc | Cut to | Why |
-|---|---|---|
-| Mosquitto MQTT + ESP32 hardware rig | Simulator runs in-process, calls the agent pipeline directly | No hardware for a software demo; MQTT adds a moving part with zero payoff at this scale |
-| TimescaleDB + PostGIS + S3/GCS | SQLite file, static in-repo demo images | 10 drains, a few thousand rows — SQLite is instant to set up and plenty fast |
-| Docker Compose stack | Two local dev processes (`uvicorn`, `vite`) | Faster to start, easier to debug, nothing to containerize at this scale |
-| Google ADK orchestrator | Direct `google-genai` SDK calls from `agent.py` | ADK's primitives (sequential/parallel sub-agents) aren't needed for a 4-step pipeline; keeps the dependency surface small for demo reliability |
-| Three.js digital twin | Cut entirely | Pure polish, zero functional dependency, cut for time per project decision |
-| WhatsApp Business Cloud API + Twilio/MSG91 SMS | Dispatch/alert text generated by Gemini and shown in the UI, not sent anywhere | Real delivery needs Meta template approval / TRAI DLT registration with real lead time; per project decision, skipped rather than mocked as a fake chat feed |
-| Flood Hub / KSNDMC upstream context | Not integrated | No public real-time key on hackathon timelines (per original doc's own caveat); network-graph neighbor context substitutes for the "is this isolated to one node" signal |
+Running the model in a Web Worker keeps the tick loop (recomputing telemetry
+for all ~6,800 segments several times a second) off the main thread, so the
+map and UI stay responsive during a cloudburst scenario.
+
+## The on-device assistant
+
+`FlowAssistant` is a keyword-intent matcher, not a model call. It pattern-matches
+the operator's message against regexes for scenario control ("start a
+cloudburst", "block this drain"), rainfall and speed changes, filters, and
+status questions, then reads the answer straight from the current simulation
+snapshot and dataset metadata. It runs entirely in the browser with no network
+request and no external AI dependency.
+
+## Why frontend-only
+
+An earlier version of this project ran a FastAPI backend with a real Gemini
+API integration for causal disambiguation and debris classification. For a
+software demo with no field hardware and no live sensor feed, that backend
+added a process to run, a key to manage, and a network dependency for a
+judgment step that a deterministic model can approximate well enough for
+demo purposes. The current version trades that real inference step for a
+build that runs from a single static bundle, works offline once loaded, and
+has nothing that can fail during a live demo besides the browser tab.
 
 ## Pitch framing that still holds
 
-DrainGuard is the causal, per-drain layer that neither city-scale rainfall
-forecasting (Flood Hub, KSNDMC's Urban Flood Model) nor generic threshold
-alerting can provide: it looks at flow velocity, turbidity, and graph
-context together to tell a control-room operator *why* a drain is behaving
-abnormally, not just *that* it is.
+UrbanFlow is a per-drain operational view that neither city-scale rainfall
+forecasting nor a flat threshold alert can provide: it shows how utilization,
+water level, and flow at one segment relate to the segments upstream and
+downstream of it, and how a single obstruction propagates pressure across the
+graph as rainfall continues.
