@@ -1,10 +1,4 @@
-backend/venv/
-backend/.env
-backend/urbanflow.db
-**/__pycache__/
 frontend/node_modules/
 frontend/dist/
 frontend/tsconfig.tsbuildinfo
-
-# Local Netlify folder
 .netlify

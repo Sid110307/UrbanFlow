@@ -40,6 +40,7 @@ function squaredDistance(a, b) {
   return dx * dx + dy * dy;
 }
 
+// https://stackoverflow.com/questions/849211
 function squaredSegmentDistance(point, start, end) {
   let x = start[0];
   let y = start[1];
@@ -171,6 +172,7 @@ const categories = {
 const bounds = [Infinity, Infinity, -Infinity, -Infinity];
 const placemarkPattern = /<Placemark\b[^>]*>([\s\S]*?)<\/Placemark>/gi;
 
+// dont fucking touch this
 for (const placemarkMatch of xml.matchAll(placemarkPattern)) {
   const placemark = placemarkMatch[1];
   const source = extractProperties(placemark);
@@ -211,19 +213,19 @@ for (const placemarkMatch of xml.matchAll(placemarkPattern)) {
     }
   }
   for (const line of displayLines) displayVertices += line.length;
-
+  
   const index = counters[type];
   const id = `${config.prefix}-${String(index).padStart(4, "0")}`;
   const lengthMeters = measuredLength(source);
   const sourceId = source.OBJECTID_1 || source.OBJECTID || source.FID_ || String(index);
   const refName = decodeXml(source.RefName);
   const entity = decodeXml(source.Bengaluru_GIS_DBO_SWD_Tertiary_Entity);
-
+  
   categories[type].count += 1;
   categories[type].lengthMeters += lengthMeters;
   categories[type].originalVertices += originalVertices;
   categories[type].displayVertices += displayVertices;
-
+  
   features.push({
     type: "Feature",
     geometry:
