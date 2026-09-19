@@ -40,12 +40,12 @@ const FEATURES = [
   {
     tag: "02",
     title: "A live scenario engine",
-    body: "A Web Worker ticks the full network several times a second. Run the nominal monsoon baseline, a cloudburst storm cell, or inject a manual blockage and watch utilization propagate across the graph in real time.",
+    body: "Run the nominal monsoon baseline, a cloudburst, or inject a manual blockage, and watch utilization propagate across the whole network in real time.",
   },
   {
     tag: "03",
     title: "An on-device assistant",
-    body: "Flow Assist reads the live simulation snapshot directly. Ask what needs attention, compare two drains, list the worst segments, or explain the selected one, and it answers from real state, not a script.",
+    body: "Flow Assist answers directly from what the network is doing right now: what needs attention, how two drains compare, which segments are worst, or why the one you picked is at risk.",
   },
 ];
 
@@ -58,23 +58,23 @@ const STEPS = [
   {
     tag: "02",
     title: "Run a scenario",
-    body: "Switch between the baseline, a cloudburst, or a manually injected blockage. Utilization, water level, flow, and the propagation log update on every tick.",
+    body: "Switch between the baseline, a cloudburst, or a manually injected blockage. Utilization, water level, flow, and the propagation log update continuously.",
   },
   {
     tag: "03",
     title: "Ask Flow Assist",
-    body: "Type a question or tap a starter. Answers are computed from the current snapshot in your browser, with no server round-trip and no API key.",
+    body: "Type a question or tap a starter and get an answer immediately, grounded in exactly what the network is doing right now.",
   },
 ];
 
 const SCREENSHOTS = [
   {
     src: "/landing/drain-details.jpg",
-    caption: "Per-segment telemetry, capacity trend, and estimated upstream and downstream relationships.",
+    caption: "Per-segment telemetry, capacity trend, and upstream and downstream relationships.",
   },
   {
     src: "/landing/flow-assist.jpg",
-    caption: "Flow Assist answering a direct question from the live simulation snapshot.",
+    caption: "Flow Assist answering a direct question about the network.",
   },
 ];
 
@@ -195,27 +195,39 @@ function TextStatBlock({ stat, delay }: { stat: TextStat; delay: number }) {
   );
 }
 
+const FLOOD_CHANNEL_PATH =
+  "M40 14 L40 150 Q40 190 78 190 L222 190 Q260 190 260 150 L260 14";
+const FLOOD_RAIN_DROPS = [56, 92, 128, 164, 200, 236];
+
 function HeroAccent() {
   return (
-    <svg className="landing-hero-accent" viewBox="0 0 520 420" aria-hidden="true">
-      <path
-        className="accent-line accent-primary"
-        d="M10 40 C 120 40, 130 120, 220 130 S 360 200, 360 260 S 300 380, 420 400"
-        fill="none"
-      />
-      <path
-        className="accent-line accent-secondary"
-        d="M40 200 C 100 180, 160 230, 230 210 S 340 150, 430 170"
-        fill="none"
-      />
-      <path
-        className="accent-line accent-tertiary"
-        d="M80 340 C 150 320, 190 360, 260 330 S 380 280, 470 300"
-        fill="none"
-      />
-      <circle className="accent-dot" cx="420" cy="400" r="5" />
-      <circle className="accent-dot" cx="430" cy="170" r="4" />
-      <circle className="accent-dot" cx="470" cy="300" r="4" />
+    <svg className="landing-hero-accent" viewBox="0 0 300 220" aria-hidden="true">
+      <defs>
+        <clipPath id="flood-channel-clip">
+          <path d={`${FLOOD_CHANNEL_PATH} Z`} />
+        </clipPath>
+      </defs>
+
+      {FLOOD_RAIN_DROPS.map((x, index) => (
+        <line
+          key={x}
+          className="flood-rain"
+          x1={x}
+          y1="-10"
+          x2={x + 6}
+          y2="4"
+          style={{ animationDelay: `${index * 480}ms` }}
+        />
+      ))}
+
+      <line className="flood-threshold" x1="40" y1="32" x2="260" y2="32" />
+
+      <g clipPath="url(#flood-channel-clip)">
+        <rect className="flood-water" x="20" y="0" width="260" height="210" />
+        <rect className="flood-surface" x="20" y="0" width="260" height="4" />
+      </g>
+
+      <path className="flood-channel-outline" d={FLOOD_CHANNEL_PATH} fill="none" />
     </svg>
   );
 }
@@ -283,7 +295,7 @@ export function Landing() {
             Data source
           </a>
           <button type="button" className="landing-nav-cta" onClick={() => navigateTo("/app")}>
-            Open the demo
+            Open the network
           </button>
         </div>
       </header>
@@ -291,18 +303,17 @@ export function Landing() {
       <section className="landing-hero">
         <div className="landing-hero-glow" aria-hidden="true" />
         <HeroAccent />
-        <p className="eyebrow reveal is-visible">Bengaluru stormwater, modeled live</p>
+        <p className="eyebrow reveal is-visible">Bengaluru's stormwater network</p>
         <h1 className="reveal is-visible" style={revealStyle(80)}>
           See how the city&apos;s drains behave before the monsoon does.
         </h1>
         <p className="landing-hero-sub reveal is-visible" style={revealStyle(160)}>
-          UrbanFlow renders Bengaluru's mapped stormwater network at full resolution, then layers a
-          browser-side scenario engine on top: rainfall, capacity, and blockage propagation, computed
-          live and clearly labeled as simulated. Nothing here needs a server, a database, or an API key.
+          UrbanFlow maps every drain in Bengaluru's stormwater network, then lets you run a cloudburst
+          or a blockage and watch exactly which segments go critical, in what order, and why.
         </p>
         <div className="landing-hero-actions reveal is-visible" style={revealStyle(240)}>
           <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
-            Launch the live demo
+            Open the network
           </button>
           <a className="landing-cta-secondary" href={SOURCE_URL} target="_blank" rel="noreferrer">
             View the OpenCity dataset
@@ -343,34 +354,13 @@ export function Landing() {
           </Reveal>
           <Reveal delay={140}>
             <p>
-              UrbanFlow keeps the real network intact and adds the missing layer: a deterministic capacity
-              model per segment, a storm cell that ramps and moves, and a blockage that propagates pressure
-              through the graph the same way an obstruction would. Every simulated number is labeled as
-              such, next to the real geometry it sits on.
+              UrbanFlow adds that missing layer: a capacity model for every segment, a storm cell that
+              ramps and moves, and a blockage that propagates pressure through the network the way a
+              real obstruction would, so you can see where the pressure is building before it overflows.
             </p>
           </Reveal>
         </div>
       </section>
-
-      <Reveal as="section" className="landing-section landing-honest">
-        <p className="eyebrow">What is real, what is modeled</p>
-        <div className="landing-honest-grid">
-          <div>
-            <h3>Real</h3>
-            <p>
-              Drain geometry, hierarchy, recorded length, and source identifiers, published by BBMP
-              through OpenCity's public dataset and updated November 2025.
-            </p>
-          </div>
-          <div>
-            <h3>Modeled for this demo</h3>
-            <p>
-              Rainfall, water level, flow, capacity utilization, and blockage propagation, computed
-              deterministically in a browser Web Worker. Never presented as a flood forecast.
-            </p>
-          </div>
-        </div>
-      </Reveal>
 
       <section className="landing-section">
         <Reveal as="div">
@@ -416,19 +406,29 @@ export function Landing() {
         <p className="eyebrow">Ready when you are</p>
         <h2>Open the network and run a storm over Bengaluru.</h2>
         <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
-          Launch the live demo
+          Open the network
         </button>
       </Reveal>
 
       <footer className="landing-footer">
         <p>
-          Drain geometry, hierarchy, and recorded length are published by BBMP through{" "}
+          Drain geometry, hierarchy, and recorded length come from BBMP's public dataset via{" "}
           <a href={SOURCE_URL} target="_blank" rel="noreferrer">
-            OpenCity's Bengaluru stormwater drains dataset
+            OpenCity
           </a>
-          , updated November 2025, and used under its public domain license. Rainfall, capacity, water
-          level, flow, and incident data are deterministic demo telemetry, not a flood forecast.
+          , updated November 2025. Rainfall, capacity, and water level come from UrbanFlow's own
+          scenario engine.
         </p>
+        <div className="landing-footer-meta">
+          <span>&copy; 2026-Present Scuba Cats. All rights reserved.</span>
+          <img
+            className="landing-footer-egg"
+            src="/landing/scuba-cat.gif"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+          />
+        </div>
       </footer>
     </div>
   );

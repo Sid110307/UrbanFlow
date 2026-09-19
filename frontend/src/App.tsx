@@ -190,9 +190,8 @@ export default function App() {
           </div>
         </div>
         <div className="topbar-context">
-          <span className="live-pill">
-            <i />
-            {simulation.ready ? "Simulation online" : "Building network graph"}
+          <span className={`live-status${simulation.ready ? "" : " is-connecting"}`}>
+            {simulation.ready ? "Live" : "Connecting"}
           </span>
           <span className="updated">Source updated Nov 2025</span>
           <a href={metadata.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
