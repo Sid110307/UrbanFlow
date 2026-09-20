@@ -7,6 +7,7 @@ import {
   type UIEvent,
 } from "react";
 import { navigateTo } from "../Root";
+import { CityPolygonScene } from "../components/CityPolygonScene";
 
 const SOURCE_URL = "https://data.opencity.in/dataset/bengaluru-stormwater-drains-maps";
 
@@ -195,42 +196,7 @@ function TextStatBlock({ stat, delay }: { stat: TextStat; delay: number }) {
   );
 }
 
-const FLOOD_CHANNEL_PATH =
-  "M40 14 L40 150 Q40 190 78 190 L222 190 Q260 190 260 150 L260 14";
-const FLOOD_RAIN_DROPS = [56, 92, 128, 164, 200, 236];
 
-function HeroAccent() {
-  return (
-    <svg className="landing-hero-accent" viewBox="0 0 300 220" aria-hidden="true">
-      <defs>
-        <clipPath id="flood-channel-clip">
-          <path d={`${FLOOD_CHANNEL_PATH} Z`} />
-        </clipPath>
-      </defs>
-
-      {FLOOD_RAIN_DROPS.map((x, index) => (
-        <line
-          key={x}
-          className="flood-rain"
-          x1={x}
-          y1="-10"
-          x2={x + 6}
-          y2="4"
-          style={{ animationDelay: `${index * 480}ms` }}
-        />
-      ))}
-
-      <line className="flood-threshold" x1="40" y1="32" x2="260" y2="32" />
-
-      <g clipPath="url(#flood-channel-clip)">
-        <rect className="flood-water" x="20" y="0" width="260" height="210" />
-        <rect className="flood-surface" x="20" y="0" width="260" height="4" />
-      </g>
-
-      <path className="flood-channel-outline" d={FLOOD_CHANNEL_PATH} fill="none" />
-    </svg>
-  );
-}
 
 function FeatureCard({ feature, delay }: { feature: (typeof FEATURES)[number]; delay: number }) {
   return (
@@ -302,22 +268,29 @@ export function Landing() {
 
       <section className="landing-hero">
         <div className="landing-hero-glow" aria-hidden="true" />
-        <HeroAccent />
-        <p className="eyebrow reveal is-visible">Bengaluru's stormwater network</p>
-        <h1 className="reveal is-visible" style={revealStyle(80)}>
-          See how the city&apos;s drains behave before the monsoon does.
-        </h1>
-        <p className="landing-hero-sub reveal is-visible" style={revealStyle(160)}>
-          UrbanFlow maps every drain in Bengaluru's stormwater network, then lets you run a cloudburst
-          or a blockage and watch exactly which segments go critical, in what order, and why.
-        </p>
-        <div className="landing-hero-actions reveal is-visible" style={revealStyle(240)}>
-          <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
-            Open the network
-          </button>
-          <a className="landing-cta-secondary" href={SOURCE_URL} target="_blank" rel="noreferrer">
-            View the OpenCity dataset
-          </a>
+        <div className="landing-hero-split">
+          <div className="landing-hero-copy">
+            <p className="eyebrow reveal is-visible">Bengaluru's stormwater network</p>
+            <h1 className="reveal is-visible" style={revealStyle(80)}>
+              See how the city&apos;s drains behave before the monsoon does.
+            </h1>
+            <p className="landing-hero-sub reveal is-visible" style={revealStyle(160)}>
+              UrbanFlow maps every drain in Bengaluru's stormwater network, then lets you run a cloudburst
+              or a blockage and watch exactly which segments go critical, in what order, and why.
+            </p>
+            <div className="landing-hero-actions reveal is-visible" style={revealStyle(240)}>
+              <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
+                Open the network
+              </button>
+              <a className="landing-cta-secondary" href={SOURCE_URL} target="_blank" rel="noreferrer">
+                View the OpenCity dataset
+              </a>
+            </div>
+          </div>
+
+          <div className="landing-hero-visual reveal is-visible" style={revealStyle(120)}>
+            <CityPolygonScene />
+          </div>
         </div>
 
         <div className="landing-stats">
