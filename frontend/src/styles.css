@@ -6043,3 +6043,310 @@ input:focus-visible {
   gap: 12px;
   flex-wrap: wrap;
 }
+
+/* ── Enhanced CCTV Feed & Multi-Angle Optical Styles ───────────────────────── */
+
+.camera-rain-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+.camera-offline-slate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #1b2638 0%, #0a0f18 100%);
+  color: #94a3b8;
+  text-align: center;
+  padding: 16px;
+  z-index: 2;
+}
+
+.camera-offline-slate .offline-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  opacity: 0.6;
+}
+
+.camera-offline-slate h4 {
+  margin: 0 0 4px;
+  font: 700 0.78rem/1.2 "DM Mono", monospace;
+  color: #ef4444;
+  letter-spacing: 0.05em;
+}
+
+.camera-offline-slate p {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  color: #64748b;
+}
+
+.camera-offline-slate .offline-sub {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.camera-fps-tag,
+.camera-bitrate-tag {
+  font: 600 0.5rem/1 "DM Mono", monospace;
+  color: rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.45);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.camera-hud-specs {
+  display: flex;
+  justify-content: space-between;
+  font: 500 0.52rem/1 "DM Mono", monospace;
+  color: rgba(56, 189, 248, 0.85);
+  background: rgba(12, 20, 32, 0.6);
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin: 4px 0;
+  border-left: 2px solid #38bdf8;
+}
+
+.detection-label-group {
+  position: absolute;
+  top: -24px;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.detection-sublabel {
+  font-size: 0.48rem;
+  font-weight: 500;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 1px 4px;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+
+.box-secondary {
+  border: 1px dashed #38bdf8 !important;
+  animation: none !important;
+}
+
+.box-secondary .detection-label {
+  color: #38bdf8 !important;
+  border-color: #38bdf8 !important;
+}
+
+.box-corner {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-color: currentColor;
+}
+
+.box-corner.tl { top: -2px; left: -2px; border-top: 2px solid; border-left: 2px solid; }
+.box-corner.tr { top: -2px; right: -2px; border-top: 2px solid; border-right: 2px solid; }
+.box-corner.bl { bottom: -2px; left: -2px; border-bottom: 2px solid; border-left: 2px solid; }
+.box-corner.br { bottom: -2px; right: -2px; border-bottom: 2px solid; border-right: 2px solid; }
+
+/* ── Camera Switcher Bar (Modal) ───────────────────────────────────────────── */
+
+.camera-switcher-bar {
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #09101d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.camera-switch-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: #94a3b8;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.camera-switch-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f1f5f9;
+}
+
+.camera-switch-btn.is-active {
+  background: rgba(14, 165, 233, 0.15);
+  border-color: #0ea5e9;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.camera-switch-btn.is-alert {
+  border-color: rgba(239, 68, 68, 0.5);
+}
+
+.switch-cam-id {
+  font: 700 0.72rem/1 "DM Mono", monospace;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.switch-alert-dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.6);
+  animation: pulse 1s infinite;
+}
+
+/* ── Hardware Spec Card ────────────────────────────────────────────────────── */
+
+.camera-hardware-card {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+}
+
+.hw-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.hw-label {
+  font: 600 0.58rem/1 "DM Mono", monospace;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hw-meta-item strong {
+  font-size: 0.68rem;
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+/* ── Optical Analytics Card ───────────────────────────────────────────────── */
+
+.optical-analytics-card {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+}
+
+.optical-metrics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.optical-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.optical-metric.full-width {
+  width: 100%;
+}
+
+.opt-label {
+  font: 600 0.62rem/1 "DM Mono", monospace;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.opt-val {
+  font-size: 0.8rem;
+  color: #f1f5f9;
+}
+
+.opt-val.is-choke {
+  color: #f87171;
+  font-weight: 600;
+}
+
+.material-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.mat-bar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 35px;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  color: #cbd5e1;
+}
+
+.bar-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #ef4444);
+  border-radius: 3px;
+}
+
+.btn-snapshot-action {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-snapshot-action:hover {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: #38bdf8;
+}
+
+.camera-clear-note {
+  padding: 8px;
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 6px;
+  color: #4ade80;
+  font-size: 0.72rem;
+}
+

@@ -17,9 +17,11 @@ export function DispatchModal({
     detection.classification === "probable_blockage";
 
   const imageSrc =
-    detection.visual_result?.camera_id === "CAM-03" || isBlockage
-      ? "/cctv/cam_debris.jpg"
-      : "/cctv/cam_waterlogged.jpg";
+    detection.visual_result?.camera_id === "CAM-01"
+      ? "/cctv/cam01_alert.jpg"
+      : detection.visual_result?.camera_id === "CAM-02"
+      ? "/cctv/cam02_alert.jpg"
+      : "/cctv/cam03_alert.jpg";
 
   const crewType =
     detection.dispatch_action ||
