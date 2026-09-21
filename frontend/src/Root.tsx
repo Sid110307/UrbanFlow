@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react";
 import App from "./App";
 import { Landing } from "./pages/Landing";
+import { SilkboardView } from "./pages/SilkboardView";
 
 function isAppPath(pathname: string) {
   return pathname === "/app" || pathname.startsWith("/app/");
+}
+
+function isSilkboardPath(pathname: string) {
+  return pathname === "/app/silkboard" || pathname.startsWith("/app/silkboard/");
 }
 
 export function navigateTo(path: string) {
@@ -21,5 +26,7 @@ export default function Root() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  return isAppPath(pathname) ? <App /> : <Landing />;
+  if (isSilkboardPath(pathname)) return <SilkboardView />;
+  if (isAppPath(pathname)) return <App />;
+  return <Landing />;
 }

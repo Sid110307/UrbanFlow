@@ -282,6 +282,9 @@ export function Landing() {
               <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
                 Open the network
               </button>
+              <button type="button" className="landing-cta-silkboard" onClick={() => navigateTo("/app/silkboard")}>
+                🛰 Silk Board deep-dive
+              </button>
               <a className="landing-cta-secondary" href={SOURCE_URL} target="_blank" rel="noreferrer">
                 View the OpenCity dataset
               </a>
