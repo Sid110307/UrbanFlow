@@ -17,6 +17,8 @@ import type {
   SilkboardSnapshot,
   SilkboardRiskLevel,
   AgentDetection,
+  FailureType,
+  ExecutionTrace,
 } from "../types";
 
 // ─── Defaults ───────────────────────────────────────────────────────────────
@@ -52,6 +54,7 @@ function lerp(a: number, b: number, t: number): number {
 function generateDrainTelemetry(
   tick: number,
   config: SilkboardSimConfig,
+  activeFailures?: Set<FailureType>,
 ): SilkboardDrainTelemetry[] {
   return DRAIN_NODES.map((node, i) => {
     const baseRain = config.rainfall_mm_hr;
@@ -96,6 +99,13 @@ function generateDrainTelemetry(
         flowVelocity = 0.1 + noise2 * 0.05;
         turbidity = 700 + noise * 100;
       }
+    }
+
+    // Injected Fault: Corrupt sensor flatlines to 0
+    if (activeFailures?.has("sensor_corrupt") && node.drain_id === "BLR-SKB-103") {
+      waterLevel = 0;
+      flowVelocity = 0;
+      turbidity = 0;
     }
 
     waterLevel = clamp(waterLevel, 0, 150);
@@ -237,8 +247,20 @@ function generateCameraStates(
   config: SilkboardSimConfig,
   drainTelemetry: SilkboardDrainTelemetry[],
   roadSensors: SilkboardRoadSensorReading[],
+  activeFailures?: Set<FailureType>,
 ): SilkboardCameraState[] {
   return CAMERAS.map((camera) => {
+    // Injected Fault: Kill Camera CAM-02
+    if (activeFailures?.has("camera_offline") && camera.id === "CAM-02") {
+      return {
+        camera_id: camera.id,
+        status: "offline" as const,
+        last_detection: null,
+        detection_active: false,
+        waterlogging_confidence: 0,
+      };
+    }
+
     // Check if any sensors in camera's coverage area are alerting
     const nearbySensors = ROAD_SENSORS.filter((s) => {
       const dist = Math.sqrt(
@@ -272,6 +294,7 @@ function computeMetrics(
   drains: SilkboardDrainTelemetry[],
   roadSensors: SilkboardRoadSensorReading[],
   cameras: SilkboardCameraState[],
+  traces: ExecutionTrace[] = [],
 ): SilkboardMetrics {
   const alerts = drains.filter((d) => d.status !== "green").length +
     roadSensors.filter((s) => s.status === "flooding" || s.status === "pooling").length;
@@ -282,12 +305,13 @@ function computeMetrics(
     return s + (d.telemetry.water_level_cm / (node?.capacity_liters_per_sec ?? 400 * 0.3));
   }, 0) / drains.length;
 
-  const worstDrain = drains.reduce((worst, d) =>
-    d.telemetry.water_level_cm > worst.telemetry.water_level_cm ? d : worst, drains[0]);
-
   let risk: SilkboardRiskLevel = "green";
   if (drains.some((d) => d.status === "red") || alerts > 5) risk = "red";
   else if (drains.some((d) => d.status === "yellow") || alerts > 2) risk = "yellow";
+
+  const totalSelfHeals = traces.reduce((acc, t) => acc + (t.self_healing_count || 0), 0);
+  const latestTrace = traces[0];
+  const gatesPassed = latestTrace ? latestTrace.gates.filter((g) => g.status === "pass").length : 5;
 
   return {
     active_sensors: ROAD_SENSORS.length + DRAIN_NODES.length + DRAIN_INLETS.length,
@@ -296,6 +320,8 @@ function computeMetrics(
     avg_drain_utilization: Math.round(avgUtil * 100) / 100,
     cameras_online: cameras.filter((c) => c.status !== "offline").length,
     risk_level: risk,
+    self_heals: totalSelfHeals,
+    gates_passed: gatesPassed,
   };
 }
 
@@ -318,6 +344,17 @@ export function useSilkboardSimulation() {
   const tickRef = useRef(0);
   const detectionsRef = useRef<AgentDetection[]>([]);
 
+  // A1: Active failure injection and trace buffers
+  const [activeFailures, setActiveFailures] = useState<Set<FailureType>>(new Set());
+  const activeFailuresRef = useRef<Set<FailureType>>(activeFailures);
+  activeFailuresRef.current = activeFailures;
+
+  const [traces, setTraces] = useState<ExecutionTrace[]>([]);
+  const tracesRef = useRef<ExecutionTrace[]>(traces);
+  tracesRef.current = traces;
+
+  const [activeTraceId, setActiveTraceId] = useState<string | null>(null);
+
   // Tick-based simulation loop
   useEffect(() => {
     if (!config.running) return;
@@ -328,11 +365,11 @@ export function useSilkboardSimulation() {
       const elapsed = tick * (TICK_INTERVAL_MS / 1000) * config.speed;
 
       const currentConfig = { ...config, elapsed_seconds: elapsed };
-      const drains = generateDrainTelemetry(tick, currentConfig);
+      const drains = generateDrainTelemetry(tick, currentConfig, activeFailuresRef.current);
       const roadSensors = generateRoadSensorReadings(tick, currentConfig, drains);
       const inlets = generateInletReadings(tick, currentConfig, drains);
-      const cameras = generateCameraStates(tick, currentConfig, drains, roadSensors);
-      const metrics = computeMetrics(drains, roadSensors, cameras);
+      const cameras = generateCameraStates(tick, currentConfig, drains, roadSensors, activeFailuresRef.current);
+      const metrics = computeMetrics(drains, roadSensors, cameras, tracesRef.current);
 
       // Update history ring buffers
       setDrainHistory((prev) => {
@@ -356,6 +393,8 @@ export function useSilkboardSimulation() {
         inlets,
         cameras,
         detections: detectionsRef.current,
+        traces: tracesRef.current,
+        activeFailures: Array.from(activeFailuresRef.current),
         metrics,
         config: currentConfig,
       });
@@ -369,6 +408,7 @@ export function useSilkboardSimulation() {
   const startScenario = useCallback((scenario: SilkboardScenarioKind, blockedId?: string | null) => {
     tickRef.current = 0;
     detectionsRef.current = [];
+    setActiveFailures(new Set());
     const rainfallMap: Record<SilkboardScenarioKind, number> = {
       normal: 8,
       heavy_rain: 65,
@@ -403,6 +443,41 @@ export function useSilkboardSimulation() {
     setSnapshot((prev) => prev ? { ...prev, detections: detectionsRef.current } : prev);
   }, []);
 
+  const addTrace = useCallback((trace: ExecutionTrace) => {
+    setTraces((prev) => {
+      const next = [trace, ...prev.filter((t) => t.trace_id !== trace.trace_id)].slice(0, 10);
+      tracesRef.current = next;
+      return next;
+    });
+    setActiveTraceId(trace.trace_id);
+    setSnapshot((prev) => prev ? { ...prev, traces: tracesRef.current } : prev);
+  }, []);
+
+  const injectFailure = useCallback((failure: FailureType) => {
+    setActiveFailures((prev) => new Set([...prev, failure]));
+  }, []);
+
+  const clearFailure = useCallback((failure: FailureType) => {
+    setActiveFailures((prev) => {
+      const next = new Set(prev);
+      next.delete(failure);
+      return next;
+    });
+  }, []);
+
+  const toggleFailure = useCallback((failure: FailureType) => {
+    setActiveFailures((prev) => {
+      const next = new Set(prev);
+      if (next.has(failure)) next.delete(failure);
+      else next.add(failure);
+      return next;
+    });
+  }, []);
+
+  const clearAllFailures = useCallback(() => {
+    setActiveFailures(new Set());
+  }, []);
+
   return {
     config,
     snapshot,
@@ -412,5 +487,14 @@ export function useSilkboardSimulation() {
     setRunning,
     setSpeed,
     addDetection,
+    activeFailures,
+    injectFailure,
+    clearFailure,
+    toggleFailure,
+    clearAllFailures,
+    traces,
+    activeTraceId,
+    setActiveTraceId,
+    addTrace,
   };
 }

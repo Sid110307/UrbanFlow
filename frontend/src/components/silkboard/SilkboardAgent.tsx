@@ -1,8 +1,10 @@
 import { useMemo, useRef, useEffect, useState } from "react";
 import { DRAIN_NODES, SCENARIO_REFERENCES } from "../../data/silkboard";
 import { DispatchModal } from "./DispatchModal";
+import { ExecutionTracePanel } from "./ExecutionTrace";
 import type {
   AgentDetection,
+  ExecutionTrace,
   SilkboardDrainTelemetry,
   SilkboardSnapshot,
 } from "../../types";
@@ -249,17 +251,32 @@ export function SilkboardAgentPanel({
   selectedDrainId,
   onSelectDrain,
   onTriggerScenario,
+  traces,
+  activeTraceId,
+  onSelectTrace,
 }: {
   snapshot: SilkboardSnapshot | null;
   drainHistory: Record<string, { water_levels: number[]; flow_velocities: number[]; turbidities: number[] }>;
   selectedDrainId: string | null;
   onSelectDrain: (id: string) => void;
   onTriggerScenario?: (scenario: "normal" | "heavy_rain" | "blockage" | "inlet_backflow") => void;
+  traces?: ExecutionTrace[];
+  activeTraceId?: string | null;
+  onSelectTrace?: (id: string) => void;
 }) {
   const feedRef = useRef<HTMLDivElement>(null);
   const [dispatchDetection, setDispatchDetection] = useState<AgentDetection | null>(null);
+  const [activeTab, setActiveTab] = useState<"trace" | "detections">("trace");
 
+  const effectiveTraces = traces ?? snapshot?.traces ?? [];
   const detections = snapshot?.detections ?? [];
+
+  // When a self-healing event occurs or traces update, keep attention on A1 Gate Trace
+  useEffect(() => {
+    if (effectiveTraces.length > 0 && effectiveTraces.some((t) => t.self_healing_count > 0)) {
+      setActiveTab("trace");
+    }
+  }, [effectiveTraces, effectiveTraces.length]);
 
   // Auto-scroll the detection feed
   useEffect(() => {
@@ -315,73 +332,124 @@ export function SilkboardAgentPanel({
           </div>
         </section>
 
-        {/* Agent reasoning feed */}
+        {/* Agent reasoning feed & A1 Execution Trace */}
         <section className="agent-section reasoning-feed">
           <header className="agent-section-header">
-            <div>
-              <p className="eyebrow">Agentic Reasoning</p>
-              <h3>Detection Feed</h3>
+            <div className="agent-tab-switch">
+              <button
+                type="button"
+                className={`agent-tab-btn ${activeTab === "trace" ? "is-active" : ""}`}
+                onClick={() => setActiveTab("trace")}
+                title="A1 Evidence-Gated 5-Gate Execution Trace"
+              >
+                <span className="tab-icon">⚡</span>
+                <span>A1 Gate Trace</span>
+                {effectiveTraces.length > 0 && (
+                  <span className="tab-badge">{effectiveTraces.length}</span>
+                )}
+                {effectiveTraces.some((t) => t.self_healing_count > 0) && (
+                  <span className="tab-heal-dot" title="Self-healing recovery detected" />
+                )}
+              </button>
+
+              <button
+                type="button"
+                className={`agent-tab-btn ${activeTab === "detections" ? "is-active" : ""}`}
+                onClick={() => setActiveTab("detections")}
+                title="Municipal Incident Detections"
+              >
+                <span className="tab-icon">🚨</span>
+                <span>Detections</span>
+                {detections.length > 0 && (
+                  <span className="tab-badge">{detections.length}</span>
+                )}
+              </button>
             </div>
+
             <div className="detection-stats">
-              {activeAlerts.length > 0 && (
-                <span className="stat-alert">{activeAlerts.length} active</span>
-              )}
-              {novelCount > 0 && (
-                <span className="stat-novel">✨ {novelCount} novel</span>
+              <div className="agent-cadence-badge" title="Strict 15-second pipeline cadence — Quota protected against rapid API calls">
+                <span className="cadence-pulse" />
+                <span>15s Cycle</span>
+                <span className="cadence-divider">·</span>
+                <span className="cadence-status">Quota Guarded</span>
+              </div>
+              {activeTab === "trace" ? (
+                effectiveTraces.length > 0 && (
+                  <span className="stat-novel">
+                    {effectiveTraces[0]?.self_healing_count > 0 ? "🛡️ Self-Healed" : "✓ Nominal Trace"}
+                  </span>
+                )
+              ) : (
+                <>
+                  {activeAlerts.length > 0 && (
+                    <span className="stat-alert">{activeAlerts.length} active</span>
+                  )}
+                  {novelCount > 0 && (
+                    <span className="stat-novel">✨ {novelCount} novel</span>
+                  )}
+                </>
               )}
             </div>
           </header>
 
-          <div className="detection-feed" ref={feedRef}>
-            {detections.length === 0 ? (
-              <div className="detection-empty">
-                <div className="detection-empty-badge">
-                  <span className="nominal-dot" />
-                  <span>All 10 Drain Nodes Nominal</span>
-                </div>
-                <p>Agent actively monitoring all telemetry channels...</p>
-                <small>
-                  The causal disambiguation engine continuously evaluates the 4-signal
-                  vector (velocity drop vs level spike vs rainfall vs neighbor graph).
-                  To test live reasoning, trigger an incident scenario:
-                </small>
-                {onTriggerScenario && (
-                  <div className="detection-empty-actions">
-                    <button
-                      type="button"
-                      className="btn-trigger-scenario blockage"
-                      onClick={() => onTriggerScenario("blockage")}
-                    >
-                      🚫 Trigger Debris Blockage
-                    </button>
-                    <button
-                      type="button"
-                      className="btn-trigger-scenario rain"
-                      onClick={() => onTriggerScenario("heavy_rain")}
-                    >
-                      🌧️ Trigger Heavy Rain
-                    </button>
-                    <button
-                      type="button"
-                      className="btn-trigger-scenario backflow"
-                      onClick={() => onTriggerScenario("inlet_backflow")}
-                    >
-                      ↩️ Trigger Inlet Surcharge
-                    </button>
+          {activeTab === "trace" ? (
+            <ExecutionTracePanel
+              traces={effectiveTraces}
+              activeTraceId={activeTraceId ?? null}
+              onSelectTrace={onSelectTrace ?? (() => {})}
+            />
+          ) : (
+            <div className="detection-feed" ref={feedRef}>
+              {detections.length === 0 ? (
+                <div className="detection-empty">
+                  <div className="detection-empty-badge">
+                    <span className="nominal-dot" />
+                    <span>All 10 Drain Nodes Nominal</span>
                   </div>
-                )}
-              </div>
-            ) : (
-              detections.map((detection) => (
-                <DetectionCard
-                  key={detection.id}
-                  detection={detection}
-                  onFocus={() => onSelectDrain(detection.drain_id)}
-                  onOpenDispatch={(d) => setDispatchDetection(d)}
-                />
-              ))
-            )}
-          </div>
+                  <p>Agent actively monitoring all telemetry channels...</p>
+                  <small>
+                    The causal disambiguation engine continuously evaluates the 4-signal
+                    vector (velocity drop vs level spike vs rainfall vs neighbor graph).
+                    To test live reasoning, trigger an incident scenario:
+                  </small>
+                  {onTriggerScenario && (
+                    <div className="detection-empty-actions">
+                      <button
+                        type="button"
+                        className="btn-trigger-scenario blockage"
+                        onClick={() => onTriggerScenario("blockage")}
+                      >
+                        🚫 Trigger Debris Blockage
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-trigger-scenario rain"
+                        onClick={() => onTriggerScenario("heavy_rain")}
+                      >
+                        🌧️ Trigger Heavy Rain
+                      </button>
+                      <button
+                        type="button"
+                        className="btn-trigger-scenario backflow"
+                        onClick={() => onTriggerScenario("inlet_backflow")}
+                      >
+                        ↩️ Trigger Inlet Surcharge
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                detections.map((detection) => (
+                  <DetectionCard
+                    key={detection.id}
+                    detection={detection}
+                    onFocus={() => onSelectDrain(detection.drain_id)}
+                    onOpenDispatch={(d) => setDispatchDetection(d)}
+                  />
+                ))
+              )}
+            </div>
+          )}
         </section>
 
         {/* Scenario reference */}

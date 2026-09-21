@@ -4996,3 +4996,1050 @@ input:focus-visible {
   overflow-y: auto;
 }
 
+/* ─── A1 Agent Tab Switcher ──────────────────────────────────────────────── */
+.agent-tab-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: var(--panel-soft);
+  padding: 3px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.agent-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  position: relative;
+}
+
+.agent-tab-btn:hover {
+  color: var(--ink);
+  background: rgba(23, 48, 44, 0.04);
+}
+
+.agent-tab-btn.is-active {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: 0 1px 3px rgba(23, 48, 44, 0.08);
+  font-weight: 700;
+}
+
+.agent-tab-btn .tab-icon {
+  font-size: 0.82rem;
+}
+
+.agent-tab-btn .tab-badge {
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+
+.agent-tab-btn .tab-heal-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 6px rgba(8, 127, 117, 0.6);
+  animation: pulse-nominal 1.5s infinite;
+}
+
+/* ─── Execution Trace Panel ──────────────────────────────────────────────── */
+.exec-trace-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 16px;
+  max-height: 580px;
+  overflow-y: auto;
+}
+
+.exec-trace-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 36px 20px;
+  background: var(--panel-soft);
+  border-radius: 10px;
+  border: 1px dashed var(--line-strong);
+}
+
+.exec-trace-empty-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.exec-trace-empty h4 {
+  margin: 0 0 6px 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.exec-trace-empty p {
+  margin: 0 0 14px 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  max-width: 320px;
+}
+
+.exec-trace-gate-preview {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 6px 12px;
+  border-radius: 20px;
+  margin-bottom: 12px;
+  font-family: "DM Mono", monospace;
+}
+
+.exec-trace-empty small {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* ── Trace Selector Tabs ── */
+.exec-trace-selector {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.exec-trace-tab {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 7px 11px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: inherit;
+  min-width: 110px;
+}
+
+.exec-trace-tab:hover {
+  border-color: var(--primary);
+  background: var(--paper);
+}
+
+.exec-trace-tab.is-active {
+  border-color: var(--primary);
+  background: var(--paper);
+  box-shadow: 0 0 0 1px var(--primary), 0 2px 8px rgba(8, 127, 117, 0.08);
+}
+
+.exec-trace-tab.is-healed {
+  border-left: 3px solid var(--secondary);
+}
+
+.exec-trace-tab-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.exec-trace-tab-id {
+  font-family: "DM Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.exec-trace-badge {
+  font-family: "DM Mono", monospace;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.status-completed, .status-pass {
+  background: rgba(8, 127, 117, 0.08);
+  color: var(--primary);
+  border: 1px solid rgba(8, 127, 117, 0.25);
+}
+
+.status-recovered {
+  background: rgba(224, 151, 60, 0.1);
+  color: #92400e;
+  border: 1px solid rgba(224, 151, 60, 0.35);
+}
+
+.status-fail {
+  background: rgba(239, 68, 68, 0.08);
+  color: #b91c1c;
+  border: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.status-partial {
+  background: rgba(245, 158, 11, 0.08);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.status-in_progress, .status-running {
+  background: rgba(8, 127, 117, 0.05);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+
+.status-pending {
+  background: var(--panel-soft);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
+
+.exec-trace-tab-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.exec-trace-healed-pill {
+  font-size: 0.62rem;
+  color: #92400e;
+  font-weight: 700;
+}
+
+/* ── Trace Body ── */
+.exec-trace-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exec-trace-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+  gap: 8px;
+}
+
+.exec-trace-timestamp {
+  font: 500 10px/1.2 "DM Mono", monospace;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.exec-trace-trigger {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin: 3px 0 0;
+  letter-spacing: -0.02em;
+}
+
+.exec-trace-header-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.exec-trace-header-stat .stat-label {
+  font: 500 9px/1.2 "DM Mono", monospace;
+  text-transform: uppercase;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+.exec-trace-header-stat .stat-value {
+  font-family: "DM Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-top: 2px;
+}
+
+/* ── Re-Plan Diff Alert ── */
+.exec-trace-replan-alert {
+  background: rgba(224, 151, 60, 0.06);
+  border: 1px solid rgba(224, 151, 60, 0.3);
+  border-left: 3px solid var(--secondary);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.replan-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 10px/1 "DM Mono", monospace;
+  color: #92400e;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.replan-diff {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.replan-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+}
+
+.replan-tag {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--muted);
+  min-width: 60px;
+}
+
+.replan-row.original code {
+  text-decoration: line-through;
+  color: var(--muted);
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "DM Mono", monospace;
+}
+
+.replan-row.actual code {
+  color: var(--primary);
+  font-weight: 700;
+  background: rgba(8, 127, 117, 0.08);
+  border: 1px solid rgba(8, 127, 117, 0.25);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: "DM Mono", monospace;
+}
+
+/* ── Stepper ── */
+.exec-trace-stepper-wrap {
+  padding: 14px 10px 10px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.exec-trace-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.exec-trace-step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  flex: 1;
+}
+
+.exec-trace-connector {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  z-index: 1;
+}
+
+.exec-trace-connector.connector-pass {
+  background: var(--primary);
+}
+
+.exec-trace-connector.connector-fail {
+  background: #dc2626;
+}
+
+.exec-trace-gate-node {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 2px solid var(--line-strong);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 1px 3px rgba(23, 48, 44, 0.06);
+  font-family: inherit;
+}
+
+.exec-trace-gate-node:hover {
+  transform: scale(1.08);
+  border-color: var(--primary);
+}
+
+.exec-trace-gate-node.is-selected {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(8, 127, 117, 0.2), 0 2px 8px rgba(8, 127, 117, 0.15);
+}
+
+.exec-trace-gate-node.status-pass {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.exec-trace-gate-node.status-fail {
+  border-color: #dc2626;
+  color: #dc2626;
+}
+
+.exec-trace-gate-node.is-healed {
+  border-color: var(--secondary);
+}
+
+.gate-node-icon {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+.gate-node-id {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--ink-soft);
+  margin-top: 1px;
+}
+
+.gate-node-heal-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--secondary);
+  box-shadow: 0 0 6px var(--secondary);
+}
+
+.gate-node-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 5px;
+}
+
+.gate-node-conf {
+  font: 500 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+  margin-top: 1px;
+}
+
+/* ── Inspector ── */
+.exec-trace-inspector {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(23, 48, 44, 0.04);
+}
+
+.inspector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+
+.inspector-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inspector-icon {
+  font-size: 1.15rem;
+}
+
+.inspector-title h5 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.inspector-duration {
+  font: 500 10px/1.2 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+.inspector-badge {
+  font: 700 10px/1 "DM Mono", monospace;
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+/* ── 15s Continuous Temporal Chunk Card ── */
+.exec-trace-chunk-card {
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.chunk-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(219, 225, 220, 0.7);
+  padding-bottom: 6px;
+}
+
+.chunk-card-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chunk-card-title strong {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.chunk-badge {
+  font: 800 9px/1 "DM Mono", monospace;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--primary);
+  color: #fff;
+  letter-spacing: 0.04em;
+}
+
+.chunk-samples-tag {
+  font: 600 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+.chunk-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.chunk-metric {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chunk-label {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.chunk-val {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.chunk-sub {
+  font: 500 9px/1 "DM Mono", monospace;
+  color: var(--primary);
+}
+
+.chunk-sub.is-warn {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.chunk-progression-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.progression-tag {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.progression-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 28px;
+  flex: 1;
+}
+
+.progression-bar-col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+}
+
+.progression-bar-fill {
+  width: 100%;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.3s ease;
+  min-height: 4px;
+}
+
+.progression-bar-label {
+  font: 600 8px/1 "DM Mono", monospace;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* ── Cadence Badge ── */
+.agent-cadence-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font: 600 10px/1.2 "DM Mono", monospace;
+  color: var(--ink-soft);
+}
+
+.cadence-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 0 2px rgba(8, 127, 117, 0.2);
+  animation: cadence-pulse-anim 2s infinite;
+}
+
+@keyframes cadence-pulse-anim {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.cadence-divider {
+  color: var(--line);
+}
+
+.cadence-status {
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.exec-trace-recovery-card {
+  background: rgba(224, 151, 60, 0.06);
+  border: 1px solid rgba(224, 151, 60, 0.25);
+  border-left: 3px solid var(--secondary);
+  padding: 10px 12px;
+  border-radius: 0 8px 8px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.recovery-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font: 700 10px/1 "DM Mono", monospace;
+  color: #92400e;
+}
+
+.recovery-pill {
+  font: 800 9px/1 "DM Mono", monospace;
+  padding: 2px 5px;
+  border-radius: 3px;
+  background: var(--secondary);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.recovery-desc {
+  margin: 0;
+  font-size: 0.74rem;
+  color: var(--ink);
+  line-height: 1.45;
+}
+
+.recovery-outcome {
+  display: flex;
+  gap: 6px;
+  font-size: 0.72rem;
+  color: var(--primary);
+  background: rgba(8, 127, 117, 0.06);
+  border: 1px solid rgba(8, 127, 117, 0.2);
+  padding: 5px 8px;
+  border-radius: 6px;
+}
+
+.outcome-label {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--primary);
+  text-transform: uppercase;
+}
+
+.evidence-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+
+.evidence-count {
+  font: 500 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+.evidence-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  margin-bottom: 6px;
+  transition: border-color 0.15s ease;
+}
+
+.evidence-row.is-fail {
+  border-color: rgba(239, 68, 68, 0.25);
+  border-left: 3px solid #dc2626;
+  background: rgba(239, 68, 68, 0.03);
+}
+
+.evidence-status-icon {
+  font-size: 0.85rem;
+  margin-top: 2px;
+}
+
+.evidence-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.evidence-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.evidence-source {
+  font: 600 10px/1 "DM Mono", monospace;
+  color: var(--primary);
+  background: rgba(8, 127, 117, 0.08);
+  border: 1px solid rgba(8, 127, 117, 0.2);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.evidence-claim {
+  font-size: 0.76rem;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.evidence-assertion, .evidence-actual {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+}
+
+.assertion-label, .actual-label {
+  font: 700 9px/1 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+.evidence-assertion code {
+  font: 500 10px/1.3 "DM Mono", monospace;
+  color: var(--ink-soft);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.actual-val {
+  font: 600 10px/1.3 "DM Mono", monospace;
+  color: var(--ink);
+}
+
+.evidence-conf {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  min-width: 45px;
+}
+
+.conf-bar-wrap {
+  width: 40px;
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.conf-bar {
+  height: 100%;
+}
+
+.conf-num {
+  font: 500 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+/* ── Bottom Summary Bar ── */
+.exec-trace-summary-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 0.72rem;
+}
+
+.summary-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.summary-chip.is-healed {
+  color: #92400e;
+  font-weight: 700;
+}
+
+.summary-chip.is-nominal {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.summary-duration {
+  font: 500 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+}
+
+/* ─── Fault Injection Panel (A1 Demo Controls) ───────────────────────────── */
+.fault-inject-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 7px 12px;
+  background: var(--panel-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.fault-inject-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.fault-inject-title {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fault-inject-warn-icon {
+  font-size: 0.82rem;
+}
+
+.fault-inject-label {
+  font: 600 10px/1 "DM Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.fault-inject-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fault-inject-active-count {
+  font: 700 10px/1 "DM Mono", monospace;
+  color: #b91c1c;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.fault-inject-reset-btn {
+  font: 600 10px/1 "DM Mono", monospace;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.fault-inject-reset-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+.fault-inject-grid {
+  display: flex;
+  gap: 6px;
+}
+
+.fault-inject-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 11px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-width: 95px;
+  text-align: left;
+  font-family: inherit;
+}
+
+.fault-inject-btn:hover {
+  border-color: var(--primary);
+  box-shadow: 0 2px 6px rgba(23, 48, 44, 0.06);
+}
+
+.fault-inject-btn.is-active {
+  background: rgba(220, 38, 38, 0.04);
+  border-color: #b91c1c;
+  box-shadow: 0 0 0 1px #b91c1c;
+}
+
+.fault-inject-btn-top {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.fault-inject-icon {
+  font-size: 0.9rem;
+}
+
+.fault-inject-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.fault-inject-btn.is-active .fault-inject-name {
+  color: #b91c1c;
+}
+
+.fault-inject-live-dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #b91c1c;
+  box-shadow: 0 0 6px rgba(185, 28, 28, 0.5);
+  animation: pulse 1s infinite;
+}
+
+.fault-inject-target {
+  font: 500 10px/1 "DM Mono", monospace;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.fault-inject-outcome {
+  font-size: 0.62rem;
+  color: var(--primary);
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 115px;
+  font-weight: 500;
+}
+
+.fault-inject-btn.is-active .fault-inject-outcome {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.outcome-arrow {
+  color: var(--muted);
+}
+
+.silkboard-scenarios-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}

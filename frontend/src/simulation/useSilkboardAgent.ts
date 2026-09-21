@@ -16,13 +16,17 @@ import type {
   AnomalyClassification,
   CausalJudgment,
   DebrisClass,
+  ExecutionTrace,
+  FailureType,
   SilkboardDrainTelemetry,
   SilkboardInletReading,
   SilkboardRiskLevel,
   SilkboardRoadSensorReading,
   SilkboardSnapshot,
+  TemporalChunkRecording,
   VisualTriageResult,
 } from "../types";
+import { executeEvidenceGatedPipeline } from "./evidenceGates";
 
 // ─── Configurable thresholds ────────────────────────────────────────────────
 
@@ -31,7 +35,106 @@ const BLOCKAGE_FLOW_VELOCITY_THRESHOLD = 0.3;
 const BACKFLOW_TRIGGER_LEVEL = 95;
 const MULTI_SENSOR_CORRELATION_COUNT = 3;
 const VISUAL_TRIAGE_PROBABILITY_THRESHOLD = 70;
-const AGENT_COOLDOWN_TICKS = 8; // Don't re-evaluate same drain within 8 ticks
+const AGENT_CYCLE_INTERVAL_MS = 15000; // Strict 15-second agent pipeline execution cycle
+
+/**
+ * Builds a rich 15-second continuous temporal recording chunk from the simulation history.
+ * Computes exact physical derivatives (rate of rise dh/dt, flow deceleration dv/dt) and
+ * correlates surface street inlets, road ponding depth, and hydraulic head gradients across the 15s window.
+ */
+function buildTemporalChunk(
+  history: { water_levels: number[]; flow_velocities: number[]; turbidities: number[] } | undefined,
+  currentDrain: SilkboardDrainTelemetry,
+  neighbors: SilkboardDrainTelemetry[],
+  snapshot: SilkboardSnapshot,
+): TemporalChunkRecording {
+  const durationSeconds = 15;
+  const levels = history?.water_levels && history.water_levels.length > 0
+    ? [...history.water_levels.slice(-8), currentDrain.telemetry.water_level_cm]
+    : [currentDrain.telemetry.water_level_cm];
+  const flows = history?.flow_velocities && history.flow_velocities.length > 0
+    ? [...history.flow_velocities.slice(-8), currentDrain.telemetry.flow_velocity_mps]
+    : [currentDrain.telemetry.flow_velocity_mps];
+  const turbidities = history?.turbidities && history.turbidities.length > 0
+    ? [...history.turbidities.slice(-8), currentDrain.telemetry.turbidity_ntu]
+    : [currentDrain.telemetry.turbidity_ntu];
+
+  const startLevel = levels[0] ?? currentDrain.telemetry.water_level_cm;
+  const endLevel = levels[levels.length - 1] ?? currentDrain.telemetry.water_level_cm;
+  const startVelocity = flows[0] ?? currentDrain.telemetry.flow_velocity_mps;
+  const endVelocity = flows[flows.length - 1] ?? currentDrain.telemetry.flow_velocity_mps;
+
+  const rateOfRise = (endLevel - startLevel) / durationSeconds;
+  const flowDecel = (startVelocity - endVelocity) / durationSeconds;
+  const startTurbidity = turbidities[0] ?? currentDrain.telemetry.turbidity_ntu;
+  const endTurbidity = turbidities[turbidities.length - 1] ?? currentDrain.telemetry.turbidity_ntu;
+  const turbRate = (endTurbidity - startTurbidity) / durationSeconds;
+
+  const rainfallMmHr = currentDrain.weather.precip_rate_mm_hr;
+  // Theoretical max rise from pure rain runoff (1mm/hr ~= 0.025 cm/s theoretical limit for catchment)
+  const expectedRainRiseRate = Math.max(0.02, (rainfallMmHr * 1.5) / 60);
+  const hydraulicAnomalyRatio = rateOfRise > 0
+    ? Math.max(1, Math.round((rateOfRise / expectedRainRiseRate) * 10) / 10)
+    : 1;
+
+  // Upstream / downstream head loss: BLR-SKB-103 to 104
+  let upstreamDownstreamGradientCm: number | undefined;
+  const downstream = neighbors.find((n) => n.drain_id === "BLR-SKB-104");
+  if (currentDrain.drain_id === "BLR-SKB-103" && downstream) {
+    upstreamDownstreamGradientCm = Math.max(0, currentDrain.telemetry.water_level_cm - downstream.telemetry.water_level_cm);
+  }
+
+  // Correlate nearby surface inlets in this 15s instance
+  const nearbyInlets = snapshot.inlets.filter((i) => {
+    const inletNode = DRAIN_INLETS.find((di) => di.id === i.inlet_id);
+    const drainNode = DRAIN_NODES.find((n) => n.drain_id === currentDrain.drain_id);
+    if (!inletNode || !drainNode) return false;
+    const dist = Math.sqrt(
+      (inletNode.position[0] - drainNode.position[0]) ** 2 +
+      (inletNode.position[1] - drainNode.position[1]) ** 2,
+    );
+    return dist < 0.003;
+  });
+  const backflowInlet = nearbyInlets.find((i) => i.flow_direction === "backflow");
+  const inletBackflowActive = Boolean(backflowInlet);
+  const inletBackflowRateLps = backflowInlet?.flow_rate_lps ?? 0;
+
+  // Correlate nearby road ponding sensors in this 15s instance
+  const nearbyRoadSensors = snapshot.road_sensors.filter((r) => {
+    const s = ROAD_SENSORS.find((rs) => rs.id === r.sensor_id);
+    return s?.drain_node_id === currentDrain.drain_id;
+  });
+  const pondingSensors = nearbyRoadSensors.filter((s) => s.status === "pooling" || s.status === "flooding");
+  const maxSurfaceDepthCm = nearbyRoadSensors.length > 0
+    ? Math.max(0, ...nearbyRoadSensors.map((r) => r.water_depth_cm))
+    : 0;
+
+  const hydraulicChokeSignature = rateOfRise > 0.15 && flowDecel >= -0.005;
+
+  return {
+    durationSeconds,
+    sampleCount: levels.length,
+    waterLevels: levels.map((v) => Math.round(v * 10) / 10),
+    flowVelocities: flows.map((v) => Math.round(v * 100) / 100),
+    turbidities: turbidities.map((v) => Math.round(v)),
+    rateOfRiseCmPerSec: Math.round(rateOfRise * 100) / 100,
+    flowDecelerationRate: Math.round(flowDecel * 1000) / 1000,
+    turbidityRateOfChange: Math.round(turbRate * 10) / 10,
+    startLevel,
+    endLevel,
+    startVelocity,
+    endVelocity,
+    rainfallMmHr,
+    expectedRainRiseRate: Math.round(expectedRainRiseRate * 100) / 100,
+    hydraulicAnomalyRatio,
+    upstreamDownstreamGradientCm: upstreamDownstreamGradientCm !== undefined ? Math.round(upstreamDownstreamGradientCm * 10) / 10 : undefined,
+    inletBackflowActive,
+    inletBackflowRateLps: Math.round(inletBackflowRateLps * 10) / 10,
+    nearbyPondingSensorsCount: pondingSensors.length,
+    maxSurfaceDepthCm: Math.round(maxSurfaceDepthCm * 10) / 10,
+    hydraulicChokeSignature,
+  };
+}
 
 // ─── Deterministic causal disambiguation (heuristic fallback) ─────────────
 // This implements the 4-signal weighted read from the architecture doc §2.
@@ -189,10 +292,10 @@ function matchScenario(
 // ─── Dispatch action generator ─────────────────────────────────────────────
 
 function generateDispatchAction(
-  judgment: CausalJudgment,
+  classification: AnomalyClassification,
   visual: VisualTriageResult | null,
 ): string | null {
-  if (judgment.classification === "normal_runoff") return null;
+  if (classification === "normal_runoff") return null;
 
   if (visual) {
     const crewType: Record<DebrisClass, string> = {
@@ -203,7 +306,7 @@ function generateDispatchAction(
     return crewType[visual.debris_class];
   }
 
-  if (judgment.classification === "confirmed_blockage") {
+  if (classification === "confirmed_blockage") {
     return "Emergency inspection crew — confirmed obstruction, camera verification pending";
   }
 
@@ -275,38 +378,30 @@ export function useSilkboardAgent(
   snapshot: SilkboardSnapshot | null,
   drainHistory: Record<string, { water_levels: number[]; flow_velocities: number[]; turbidities: number[] }>,
   addDetection: (detection: AgentDetection) => void,
+  addTrace?: (trace: ExecutionTrace) => void,
+  activeFailures?: Set<FailureType>,
 ) {
-  const cooldowns = useRef<Record<string, number>>({});
+  const lastCycleTimeRef = useRef<number>(0);
+  const isEvaluatingRef = useRef<boolean>(false);
+  const prevScenarioRef = useRef<string | null>(null);
+  const prevFailuresSizeRef = useRef<number>(0);
   const detectionCounter = useRef(0);
-  const inFlightGemini = useRef(false);
 
-  const processAndEmitDetection = useCallback(
+  const processAndEmitPipelineResult = useCallback(
     (
-      judgment: CausalJudgment,
+      trace: ExecutionTrace,
+      verifiedClassification: AnomalyClassification,
+      visual: VisualTriageResult | null,
       drain: SilkboardDrainTelemetry,
       tick: number,
       currentSnapshot: SilkboardSnapshot,
     ) => {
-      // Only generate detection if there's something worth reporting
-      if (judgment.classification === "normal_runoff" && judgment.blockage_probability < 30) {
-        return;
-      }
-
-      // Step 2: Visual triage (if blockage probability high enough)
-      let visualResult: VisualTriageResult | null = null;
-      if (judgment.trigger_visual_triage) {
-        const drainNode = DRAIN_NODES.find((n) => n.drain_id === drain.drain_id);
-        if (drainNode) {
-          const nearestCam = getNearestCamera(drainNode.position);
-          visualResult = simulateVisualTriage(nearestCam.id, drain.drain_id, tick);
-        }
-      }
-
       // Step 3: Risk classification
       let riskLevel: SilkboardRiskLevel = "green";
-      if (judgment.classification === "confirmed_blockage" || judgment.blockage_probability >= 80) {
+      const g2Confidence = trace.gates[1]?.confidence ?? 0;
+      if (verifiedClassification === "confirmed_blockage" || g2Confidence >= 80) {
         riskLevel = "red";
-      } else if (judgment.classification === "probable_blockage" || judgment.blockage_probability >= 50) {
+      } else if (verifiedClassification === "probable_blockage" || g2Confidence >= 50) {
         riskLevel = "yellow";
       }
 
@@ -328,12 +423,37 @@ export function useSilkboardAgent(
         return sensor?.drain_node_id === drain.drain_id;
       });
 
+      const causalJudgment: CausalJudgment = {
+        drain_id: drain.drain_id,
+        classification: verifiedClassification,
+        blockage_probability: g2Confidence,
+        reasoning: trace.gates[1]?.evidence[0]?.claim || "Causal evidence evaluated.",
+        trigger_visual_triage: Boolean(visual),
+      };
+
       const { matched, isNovel } = matchScenario(
-        judgment,
+        causalJudgment,
         drain,
         nearbyInlets,
         nearbyRoadSensors,
       );
+
+      // Build self-healing narrative for audit trail
+      const selfHealingNotes = trace.gates
+        .filter((g) => g.recovery?.executed)
+        .map((g) => `[${g.gate_name} Self-Heal]: ${g.recovery?.outcome}`)
+        .join(" | ");
+
+      const primaryGateEvidence = trace.gates
+        .flatMap((g) => g.evidence)
+        .filter((e) => e.status === "pass")
+        .slice(0, 3)
+        .map((e) => e.claim)
+        .join("; ");
+
+      const reasoning = selfHealingNotes
+        ? `${selfHealingNotes} — Multi-Gate Evidence: ${primaryGateEvidence}`
+        : `Verified across 5 evidence gates: ${primaryGateEvidence}`;
 
       // Step 5: Build detection
       detectionCounter.current += 1;
@@ -341,16 +461,16 @@ export function useSilkboardAgent(
         id: `DET-${String(detectionCounter.current).padStart(4, "0")}`,
         timestamp: new Date().toISOString(),
         drain_id: drain.drain_id,
-        classification: judgment.classification,
-        blockage_probability: judgment.blockage_probability,
-        reasoning: judgment.reasoning,
+        classification: verifiedClassification,
+        blockage_probability: g2Confidence,
+        reasoning,
         evidence: buildEvidence(drain, currentSnapshot.road_sensors, currentSnapshot.inlets),
         risk_level: riskLevel,
-        visual_result: visualResult,
-        dispatch_action: generateDispatchAction(judgment, visualResult),
+        visual_result: visual,
+        dispatch_action: generateDispatchAction(verifiedClassification, visual),
         matched_scenario: matched,
         is_novel: isNovel,
-        engine_source: judgment.engine_source ?? "heuristic",
+        engine_source: trace.gates[1]?.recovery?.type === "fallback" ? "heuristic" : isGeminiActive() ? "gemini-live" : "heuristic",
       };
 
       addDetection(detection);
@@ -361,44 +481,96 @@ export function useSilkboardAgent(
   useEffect(() => {
     if (!snapshot || !snapshot.config.running) return;
 
-    const tick = snapshot.tick;
+    const now = Date.now();
+    const scenarioChanged = snapshot.config.scenario !== prevScenarioRef.current;
+    const failuresChanged = (activeFailures?.size ?? 0) !== prevFailuresSizeRef.current;
+    prevScenarioRef.current = snapshot.config.scenario;
+    prevFailuresSizeRef.current = activeFailures?.size ?? 0;
 
-    // Evaluate each drain node
-    for (const drain of snapshot.drains) {
-      // Skip if on cooldown
-      const lastEval = cooldowns.current[drain.drain_id] ?? 0;
-      if (tick - lastEval < AGENT_COOLDOWN_TICKS) continue;
+    // Strictly enforce 15-second agent execution cycle (never polling rapidly every second)
+    const minElapsed = AGENT_CYCLE_INTERVAL_MS;
+    if (lastCycleTimeRef.current > 0 && now - lastCycleTimeRef.current < minElapsed) return;
+    if (isEvaluatingRef.current) return;
 
-      // Only evaluate if drain is showing anomalous behavior
-      if (drain.status === "green" && drain.telemetry.water_level_cm < 50) continue;
+    // Prioritize the candidate drain node for this 15-second evaluation cycle
+    const targetBlockedDrain = snapshot.config.blocked_drain_id || "BLR-SKB-103";
+    const hasActiveFault = Boolean(activeFailures && activeFailures.size > 0);
 
-      // Get neighbors for the 4-signal read
-      const neighbors = snapshot.drains.filter((d) => d.drain_id !== drain.drain_id);
-      const history = drainHistory[drain.drain_id]?.water_levels ?? [];
+    let candidateDrain: SilkboardDrainTelemetry | null = null;
 
-      cooldowns.current[drain.drain_id] = tick;
+    if (hasActiveFault) {
+      candidateDrain = snapshot.drains.find((d) => d.drain_id === targetBlockedDrain) ?? null;
+    } else if (snapshot.config.scenario === "blockage") {
+      candidateDrain = snapshot.drains.find((d) => d.drain_id === targetBlockedDrain) ?? null;
+    }
 
-      // If Gemini Live is active and not currently processing another query, call live API
-      if (isGeminiActive() && !inFlightGemini.current) {
-        inFlightGemini.current = true;
-        callGeminiCausalDisambiguation({ drain, neighbors, historyWaterLevels: history })
-          .then((geminiJudgment) => {
-            const judgment =
-              geminiJudgment || causalDisambiguation(drain, neighbors, history);
-            processAndEmitDetection(judgment, drain, tick, snapshot);
-          })
-          .catch(() => {
-            const judgment = causalDisambiguation(drain, neighbors, history);
-            processAndEmitDetection(judgment, drain, tick, snapshot);
-          })
-          .finally(() => {
-            inFlightGemini.current = false;
-          });
-      } else {
-        // Fallback to fast deterministic heuristic model
-        const judgment = causalDisambiguation(drain, neighbors, history);
-        processAndEmitDetection(judgment, drain, tick, snapshot);
+    if (!candidateDrain) {
+      const sorted = [...snapshot.drains].sort(
+        (a, b) => b.telemetry.water_level_cm - a.telemetry.water_level_cm,
+      );
+      if (sorted[0] && (sorted[0].telemetry.water_level_cm >= 48 || sorted[0].status !== "green")) {
+        candidateDrain = sorted[0];
       }
     }
-  }, [snapshot?.tick, processAndEmitDetection]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Completely skip API calls if all nodes are nominal (< 48cm and green)
+    if (!candidateDrain) return;
+
+    const drain = candidateDrain;
+    const neighbors = snapshot.drains.filter((d) => d.drain_id !== drain.drain_id);
+    const history = drainHistory[drain.drain_id]?.water_levels ?? [];
+
+    // Extract the rich 15-second continuous temporal chunk from history
+    const temporalChunk = buildTemporalChunk(drainHistory[drain.drain_id], drain, neighbors, snapshot);
+
+    lastCycleTimeRef.current = now;
+    isEvaluatingRef.current = true;
+
+    const canCallGemini = isGeminiActive();
+
+    executeEvidenceGatedPipeline(
+      {
+        drain,
+        neighbors,
+        historyWaterLevels: history,
+        snapshot,
+        activeFailures,
+        tick: snapshot.tick,
+        callGemini: canCallGemini,
+        temporalChunk,
+      },
+      (_gate, inProgressTrace) => {
+        if (addTrace) {
+          addTrace(inProgressTrace);
+        }
+      },
+    )
+      .then(({ trace, verifiedClassification, visual }) => {
+        if (addTrace) {
+          addTrace(trace);
+        }
+
+        // Emit detection if there's a problem or self-healing event
+        if (
+          verifiedClassification !== "normal_runoff" ||
+          trace.gates[1]?.confidence >= 40 ||
+          trace.self_healing_count > 0
+        ) {
+          processAndEmitPipelineResult(
+            trace,
+            verifiedClassification,
+            visual,
+            drain,
+            snapshot.tick,
+            snapshot,
+          );
+        }
+      })
+      .catch((err) => {
+        console.warn("Evidence gate pipeline execution error:", err);
+      })
+      .finally(() => {
+        isEvaluatingRef.current = false;
+      });
+  }, [snapshot?.tick, processAndEmitPipelineResult, addTrace, activeFailures, snapshot]); // eslint-disable-line react-hooks/exhaustive-deps
 }

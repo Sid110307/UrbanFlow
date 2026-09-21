@@ -4,6 +4,7 @@ import { SilkboardMapView } from "../components/silkboard/SilkboardMapView";
 import { SilkboardAgentPanel } from "../components/silkboard/SilkboardAgent";
 import { CameraStrip, CameraDetailModal } from "../components/silkboard/CameraFeed";
 import { GeminiConfigModal } from "../components/silkboard/GeminiConfigModal";
+import { FailureInjectionPanel } from "../components/silkboard/FailureInjection";
 import { useSilkboardSimulation } from "../simulation/useSilkboardSimulation";
 import { useSilkboardAgent } from "../simulation/useSilkboardAgent";
 import { isGeminiActive } from "../services/geminiService";
@@ -62,8 +63,14 @@ export function SilkboardView() {
   const [showGeminiModal, setShowGeminiModal] = useState(false);
   const [configCounter, setConfigCounter] = useState(0);
 
-  // Wire up the agent
-  useSilkboardAgent(sim.snapshot, sim.drainHistory, sim.addDetection);
+  // Wire up the agent with evidence-gated trace pipeline and fault injection
+  useSilkboardAgent(
+    sim.snapshot,
+    sim.drainHistory,
+    sim.addDetection,
+    sim.addTrace,
+    sim.activeFailures,
+  );
 
   const geminiActive = useMemo(() => isGeminiActive(), [configCounter]);
   const metrics = sim.snapshot?.metrics;
@@ -167,6 +174,16 @@ export function SilkboardView() {
           value={(metrics?.risk_level ?? "green").toUpperCase()}
           tone={metrics?.risk_level ?? "green"}
         />
+        <MetricChip
+          label="Self-healed events"
+          value={`${metrics?.self_heals ?? 0}`}
+          tone={metrics && (metrics.self_heals ?? 0) > 0 ? "green" : undefined}
+        />
+        <MetricChip
+          label="Gates passed"
+          value={`${metrics?.gates_passed ?? 5} / 5`}
+          tone="teal"
+        />
       </section>
 
       {/* Main workspace */}
@@ -194,24 +211,35 @@ export function SilkboardView() {
           selectedDrainId={selectedDrainId}
           onSelectDrain={handleSelectDrain}
           onTriggerScenario={sim.startScenario}
+          traces={sim.traces}
+          activeTraceId={sim.activeTraceId}
+          onSelectTrace={sim.setActiveTraceId}
         />
       </main>
 
-      {/* Simulation controls */}
+      {/* Simulation controls & Fault Injection Demo Controls */}
       <footer className="silkboard-controls">
-        <div className="silkboard-scenarios">
-          {SCENARIOS.map((scenario) => (
-            <button
-              type="button"
-              key={scenario.id}
-              className={`silkboard-scenario-btn ${sim.config.scenario === scenario.id ? "active" : ""}`}
-              onClick={() => sim.startScenario(scenario.id)}
-            >
-              <span className="scenario-icon">{scenario.icon}</span>
-              <strong>{scenario.label}</strong>
-              <small>{scenario.detail}</small>
-            </button>
-          ))}
+        <div className="silkboard-scenarios-group">
+          <div className="silkboard-scenarios">
+            {SCENARIOS.map((scenario) => (
+              <button
+                type="button"
+                key={scenario.id}
+                className={`silkboard-scenario-btn ${sim.config.scenario === scenario.id ? "active" : ""}`}
+                onClick={() => sim.startScenario(scenario.id)}
+              >
+                <span className="scenario-icon">{scenario.icon}</span>
+                <strong>{scenario.label}</strong>
+                <small>{scenario.detail}</small>
+              </button>
+            ))}
+          </div>
+
+          <FailureInjectionPanel
+            toggleFailure={sim.toggleFailure}
+            activeFailures={sim.activeFailures}
+            onClearAll={sim.clearAllFailures}
+          />
         </div>
 
         <div className="silkboard-sim-controls">

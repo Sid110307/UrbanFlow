@@ -299,6 +299,8 @@ export interface SilkboardMetrics {
   avg_drain_utilization: number;
   cameras_online: number;
   risk_level: SilkboardRiskLevel;
+  self_heals?: number;
+  gates_passed?: number;
 }
 
 export interface SilkboardSimConfig {
@@ -318,11 +320,38 @@ export interface SilkboardSnapshot {
   inlets: SilkboardInletReading[];
   cameras: SilkboardCameraState[];
   detections: AgentDetection[];
+  traces?: ExecutionTrace[];
+  activeFailures?: FailureType[];
   metrics: SilkboardMetrics;
   config: SilkboardSimConfig;
 }
 
 // ─── A1: Evidence-Gated Self-Healing Workflow Types ─────────────────────────
+
+export interface TemporalChunkRecording {
+  durationSeconds: number;     // e.g. 15s window
+  sampleCount: number;         // number of temporal frames (e.g. 8)
+  waterLevels: number[];       // sequential level readings over 15s
+  flowVelocities: number[];    // sequential velocity readings over 15s
+  turbidities: number[];       // sequential turbidity readings over 15s
+  rateOfRiseCmPerSec: number;  // hydraulic rise gradient (cm/s)
+  flowDecelerationRate: number;// hydraulic choke deceleration (m/s²)
+  turbidityRateOfChange: number;// NTU/s
+  startLevel: number;
+  endLevel: number;
+  startVelocity: number;
+  endVelocity: number;
+  // Multi-sensor spatial & environmental correlations across the 15s chunk:
+  rainfallMmHr: number;
+  expectedRainRiseRate: number;
+  hydraulicAnomalyRatio: number;
+  upstreamDownstreamGradientCm?: number;
+  inletBackflowActive: boolean;
+  inletBackflowRateLps: number;
+  nearbyPondingSensorsCount: number;
+  maxSurfaceDepthCm: number;
+  hydraulicChokeSignature: boolean;
+}
 
 export type EvidenceCheckStatus = "pass" | "fail" | "pending";
 
@@ -372,6 +401,7 @@ export interface ExecutionTrace {
   final_status: "completed" | "recovered" | "aborted" | "in_progress";
   self_healing_count: number;
   total_duration_ms: number;
+  temporal_chunk?: TemporalChunkRecording;
 }
 
 export type FailureType =
