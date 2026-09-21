@@ -321,3 +321,62 @@ export interface SilkboardSnapshot {
   metrics: SilkboardMetrics;
   config: SilkboardSimConfig;
 }
+
+// ─── A1: Evidence-Gated Self-Healing Workflow Types ─────────────────────────
+
+export type EvidenceCheckStatus = "pass" | "fail" | "pending";
+
+export interface EvidenceItem {
+  id: string;
+  source: string;             // e.g. "sensor:BLR-SKB-103", "gemini:flash", "camera:CAM-02"
+  claim: string;              // Human-readable: "Water level exceeds 75cm threshold"
+  assertion: string;          // Machine-checkable assertion: "water_level_cm > 75"
+  actual: string;             // Actual observed value: "92 cm"
+  status: EvidenceCheckStatus;
+  confidence: number;         // 0-100
+  timestamp?: string;
+}
+
+export type GateStatus = "pass" | "fail" | "partial" | "running" | "pending" | "skipped";
+
+export interface RecoveryAction {
+  type: "retry" | "fallback" | "escalate" | "re-plan" | "abort";
+  description: string;        // Human-readable: "Falling back to heuristic engine"
+  outcome: string | null;     // Outcome summary: "Heuristic engine returned: probable_blockage (72%)"
+  executed: boolean;
+}
+
+export interface GateResult {
+  gate_id: string;            // "G1" through "G5"
+  gate_name: string;          // "Anomaly Detection", "Causal Disambiguation", etc.
+  gate_icon: string;          // emoji: "📡", "🧠", "📷", "⚖️", "📲"
+  status: GateStatus;
+  evidence: EvidenceItem[];
+  passing_count: number;
+  total_count: number;
+  confidence: number;         // 0-100 aggregate gate confidence
+  failure_reason: string | null;
+  recovery: RecoveryAction | null;
+  duration_ms: number;
+}
+
+export interface ExecutionTrace {
+  trace_id: string;           // "TRACE-0001"
+  drain_id: string;           // "BLR-SKB-103"
+  trigger: string;            // "Water level anomaly at BLR-SKB-103 (92cm, rising)"
+  started_at: string;         // ISO timestamp
+  gates: GateResult[];        // Always 5 gates in order
+  original_plan: string[];    // ["detect", "classify", "verify", "validate", "dispatch"]
+  actual_plan: string[];      // May differ if re-planned
+  was_replanned: boolean;
+  final_status: "completed" | "recovered" | "aborted" | "in_progress";
+  self_healing_count: number;
+  total_duration_ms: number;
+}
+
+export type FailureType =
+  | "camera_offline"        // Kill CAM-02 -> tests camera rerouting recovery
+  | "sensor_corrupt"        // Sensor BLR-SKB-103 returns 0s -> tests sensor outlier exclusion
+  | "gemini_hallucination"  // Force Gemini to contradict sensors -> tests zero-trust cross-validation
+  | "gemini_timeout"        // Simulate Gemini API timeout (>4s) -> tests fallback to heuristic engine
+  | "dispatch_no_ack";      // Dispatch ACK timeout -> tests alternate dispatch channel fallback
