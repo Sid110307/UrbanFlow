@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "title": "BBMP / OpenCity flood-vulnerability records near Silk Board Junction",
+    "sourceName": "OpenCity / BBMP",
+    "sourceUrl": "https://data.opencity.in/dataset/flooding-locations-in-bengaluru-urban",
+    "dataUpdated": "2026-09-21",
+    "totalFeatures": 5,
+    "bounds": [
+      77.614,
+      12.911,
+      77.631,
+      12.923
+    ]
+  },
+  "features": [
+    {
+      "id": "SKB-FLOOD-01",
+      "name": "SOMESHWARA COLONY NEAR SILK BOARD JUNCTION",
+      "position": [
+        77.6159962568356,
+        12.9155182467913
+      ],
+      "wardName": null,
+      "wardNo": null,
+      "zone": null,
+      "source": "BBMP low lying areas"
+    },
+    {
+      "id": "SKB-FLOOD-02",
+      "name": "MARUTHI NAGAR, SANKRAPPA LAYOUT",
+      "position": [
+        77.628961332382,
+        12.9178430901315
+      ],
+      "wardName": null,
+      "wardNo": null,
+      "zone": null,
+      "source": "BBMP low lying areas"
+    },
+    {
+      "id": "SKB-FLOOD-03",
+      "name": "BTM layout",
+      "position": [
+        77.6167499995868,
+        12.9157499999453
+      ],
+      "wardName": "BTM Layout",
+      "wardNo": "176",
+      "zone": "South",
+      "source": "Flood vulnerable locations"
+    },
+    {
+      "id": "SKB-FLOOD-04",
+      "name": "Silk Board junction",
+      "position": [
+        77.6227219995918,
+        12.9171940003384
+      ],
+      "wardName": "Bommanahalli",
+      "wardNo": "175",
+      "zone": "South",
+      "source": "Flood vulnerable locations"
+    },
+    {
+      "id": "SKB-FLOOD-05",
+      "name": "Silk Board",
+      "position": [
+        77.6218890001268,
+        12.9186389995745
+      ],
+      "wardName": "Jakkasandra",
+      "wardNo": "173",
+      "zone": "South",
+      "source": "Flood vulnerable locations"
+    }
+  ]
+}
