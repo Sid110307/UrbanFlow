@@ -345,6 +345,35 @@ export function SilkboardAgentPanel({
 
   const novelCount = useMemo(() => detections.filter((d) => d.is_novel).length, [detections]);
 
+  const announcedRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    for (const detection of activeAlerts) {
+      if (announcedRef.current.has(detection.id)) continue;
+      announcedRef.current.add(detection.id);
+
+      const node = DRAIN_NODES.find((n) => n.drain_id === detection.drain_id);
+      const severity = detection.classification === "confirmed_blockage" ? "Confirmed" : "Probable";
+      const parts = [
+        `${severity} incident at ${detection.drain_id}${node ? ` (${node.label})` : ""}: ${detection.blockage_probability}% probability.`,
+        detection.reasoning,
+      ];
+      if (detection.dispatch_action) {
+        parts.push(`Recommended: ${detection.dispatch_action}.`);
+      }
+
+      messageId.current += 1;
+      const alertMsg: ChatMessage = {
+        id: messageId.current,
+        role: "assistant",
+        text: parts.join(" "),
+        attachment: { kind: "detections", detectionItems: [detection] },
+      };
+      setMessages((current) => [...current, alertMsg].slice(-40));
+      setPanelTab("assist");
+    }
+  }, [activeAlerts]);
+
   function findDrain(id: string): SilkboardDrainTelemetry | undefined {
     return snapshot?.drains.find((d) => d.drain_id === id);
   }

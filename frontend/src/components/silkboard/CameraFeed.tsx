@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect, useRef } from "react";
 import { CAMERAS, DRAIN_NODES, ROAD_SENSORS, distance } from "../../silkboard";
 import { DispatchModal } from "./DispatchModal";
+import { ObjectScan } from "./ObjectScan";
 import type {
   AgentDetection,
   SilkboardRoadSensorReading,
@@ -224,6 +225,7 @@ export function CameraFeedCanvas({
   nearbyFloodingSensors,
   showSpecs = false,
   rainfallMmHr = 0,
+  compact = false,
 }: {
   cameraId: string;
   label: string;
@@ -234,6 +236,7 @@ export function CameraFeedCanvas({
   nearbyFloodingSensors: number;
   showSpecs?: boolean;
   rainfallMmHr?: number;
+  compact?: boolean;
 }) {
   const isAlerting = detectionActive || status === "alert";
   const bgImage = getCameraImage(cameraId, isAlerting);
@@ -288,8 +291,12 @@ export function CameraFeedCanvas({
               <span className={`camera-rec-badge ${status === "offline" ? "is-off" : ""}`}>
                 {status === "offline" ? "OFFLINE" : "● REC"}
               </span>
-              <span className="camera-fps-tag">29.97 FPS</span>
-              <span className="camera-bitrate-tag">4.8 Mbps H.264</span>
+              {!compact && (
+                <>
+                  <span className="camera-fps-tag">29.97 FPS</span>
+                  <span className="camera-bitrate-tag">4.8 Mbps H.264</span>
+                </>
+              )}
             </div>
 
             <div className="camera-hud-top-right">
@@ -306,10 +313,12 @@ export function CameraFeedCanvas({
             </div>
           )}
 
-          <div className="camera-hud-bottom">
-            <span className="camera-timestamp">{liveTimestamp}</span>
-            <span className="camera-label">{label}</span>
-          </div>
+          {!compact && (
+            <div className="camera-hud-bottom">
+              <span className="camera-timestamp">{liveTimestamp}</span>
+              <span className="camera-label">{label}</span>
+            </div>
+          )}
         </div>
 
         {isAlerting && status !== "offline" && (
@@ -525,6 +534,14 @@ export function CameraDetailModal({
                 </div>
               </div>
 
+              <div className="camera-info-section">
+                <ObjectScan
+                  imageSrc={getCameraImage(selectedCamId, cameraState.detection_active)}
+                  cameraId={selectedCamId}
+                  surfaceReadings={nearbyReadings}
+                />
+              </div>
+
               {latestDetection && (
                 <div className="camera-info-section">
                   <h4>Field Crew Escalation</h4>
@@ -607,6 +624,7 @@ export function CameraStrip({
                 elapsedSeconds={snapshot.config.elapsed_seconds}
                 nearbyFloodingSensors={floodingCount}
                 rainfallMmHr={snapshot.config.rainfall_mm_hr}
+                compact
               />
             </button>
           );

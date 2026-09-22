@@ -1,4 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
+import { isAuthenticated } from "./auth";
+import { LoginGate } from "./LoginGate";
 
 const App = lazy(() => import("./App"));
 const Landing = lazy(() => import("./Landing").then((m) => ({ default: m.Landing })));
@@ -20,12 +22,17 @@ export function navigateTo(path: string) {
 
 export default function Root() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
+  const [authed, setAuthed] = useState(() => isAuthenticated());
 
   useEffect(() => {
     const onPopState = () => setPathname(window.location.pathname);
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
+
+  if (isAppPath(pathname) && !authed) {
+    return <LoginGate onSuccess={() => setAuthed(true)} />;
+  }
 
   return (
     <Suspense fallback={null}>

@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { AgentDetection } from "../../types";
+
+type DeliveryStage = "draft" | "sent" | "delivered" | "read";
 
 export function DispatchModal({
   detection,
@@ -8,9 +10,22 @@ export function DispatchModal({
   detection: AgentDetection;
   onClose: () => void;
 }) {
-  const [dispatched, setDispatched] = useState(false);
+  const [stage, setStage] = useState<DeliveryStage>("draft");
   const [smsSent, setSmsSent] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [showPayload, setShowPayload] = useState(false);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
+
+  function handleDispatch() {
+    if (stage !== "draft") return;
+    setStage("sent");
+    timers.current.push(setTimeout(() => setStage("delivered"), 900));
+    timers.current.push(setTimeout(() => setStage("read"), 2700));
+  }
+
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  const dispatched = stage !== "draft";
 
   const isBlockage =
     detection.classification === "confirmed_blockage" ||
@@ -98,7 +113,9 @@ export function DispatchModal({
               <div className="whatsapp-avatar">WA</div>
               <div className="whatsapp-contact-info">
                 <strong>BBMP SEOC Dispatch Bot</strong>
-                <span className="whatsapp-verified">Official Municipal Channel</span>
+                <span className="whatsapp-verified">
+                  {stage === "delivered" ? "typing..." : "online"}
+                </span>
               </div>
             </div>
 
@@ -149,12 +166,20 @@ export function DispatchModal({
                 </div>
 
                 <div className="whatsapp-msg-meta">
-                  <span>{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
-                  <span className="whatsapp-double-check">✓✓</span>
+                  {stage === "draft" ? (
+                    <span className="whatsapp-preview-tag">Preview, not yet sent</span>
+                  ) : (
+                    <>
+                      <span>{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                      <span className={stage === "read" ? "whatsapp-double-check" : "whatsapp-single-check"}>
+                        {stage === "sent" ? "✓" : "✓✓"}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
 
-              {dispatched && (
+              {stage === "read" && (
                 <div className="whatsapp-system-msg">
                   Field Crew #4 acknowledged receipt via WhatsApp Cloud API webhook.
                 </div>
@@ -173,9 +198,16 @@ export function DispatchModal({
                 <button
                   type="button"
                   className={`btn-dispatch-primary ${dispatched ? "is-dispatched" : ""}`}
-                  onClick={() => setDispatched(true)}
+                  onClick={handleDispatch}
+                  disabled={dispatched}
                 >
-                  {dispatched ? "Crew Dispatched via WhatsApp" : "Send WhatsApp Dispatch to Crew"}
+                  {stage === "draft"
+                    ? "Send WhatsApp Dispatch to Crew"
+                    : stage === "sent"
+                      ? "Sending..."
+                      : stage === "delivered"
+                        ? "Delivered to crew..."
+                        : "Crew Dispatched via WhatsApp"}
                 </button>
 
                 <button
@@ -197,8 +229,16 @@ export function DispatchModal({
             </div>
 
             <div className="action-card raw-contract-card">
-              <h4>WhatsApp Cloud API Payload</h4>
-              <pre className="json-code-block">{JSON.stringify(jsonPayload, null, 2)}</pre>
+              <button
+                type="button"
+                className="btn-toggle-payload"
+                onClick={() => setShowPayload((v) => !v)}
+              >
+                {showPayload ? "Hide" : "View"} WhatsApp Cloud API Payload
+              </button>
+              {showPayload && (
+                <pre className="json-code-block">{JSON.stringify(jsonPayload, null, 2)}</pre>
+              )}
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import type {
   ExecutionTrace,
   GateResult,
@@ -26,22 +26,6 @@ export function ExecutionTracePanel({
     }
     return traces[0];
   }, [traces, activeTraceId]);
-
-  const [selectedGateId, setSelectedGateId] = useState<string | null>(null);
-
-  const activeGate = useMemo(() => {
-    if (!selectedTrace) return null;
-    if (selectedGateId) {
-      const g = selectedTrace.gates.find((gate) => gate.gate_id === selectedGateId);
-      if (g) return g;
-    }
-    // Default to the first failed or recovered gate, or the latest completed gate
-    const healedGate = selectedTrace.gates.find((g) => g.recovery?.executed);
-    if (healedGate) return healedGate;
-    const failedGate = selectedTrace.gates.find((g) => g.status === "fail");
-    if (failedGate) return failedGate;
-    return selectedTrace.gates[selectedTrace.gates.length - 1] || selectedTrace.gates[0];
-  }, [selectedTrace, selectedGateId]);
 
   if (!traces || traces.length === 0) {
     return (
@@ -75,10 +59,7 @@ export function ExecutionTracePanel({
               key={trace.trace_id}
               type="button"
               className={`exec-trace-tab ${isSelected ? "is-active" : ""} ${isHealed ? "is-healed" : ""}`}
-              onClick={() => {
-                onSelectTrace(trace.trace_id);
-                setSelectedGateId(null);
-              }}
+              onClick={() => onSelectTrace(trace.trace_id)}
             >
               <div className="exec-trace-tab-top">
                 <span className="exec-trace-tab-id">{trace.trace_id}</span>
@@ -132,75 +113,60 @@ export function ExecutionTracePanel({
             </div>
           )}
 
-          <div className="exec-trace-stepper-wrap">
-            <div className="exec-trace-stepper">
-              {selectedTrace.gates.map((gate, index) => {
-                const isGateSelected = activeGate?.gate_id === gate.gate_id;
-                const isHealed = Boolean(gate.recovery?.executed);
-                const hasNext = index < selectedTrace.gates.length - 1;
+          <div className="exec-trace-flow">
+            {selectedTrace.gates.map((gate, index) => {
+              const isHealed = Boolean(gate.recovery?.executed);
+              const hasNext = index < selectedTrace.gates.length - 1;
 
-                return (
-                  <div key={gate.gate_id} className="exec-trace-step-item">
-                    <button
-                      type="button"
-                      className={`exec-trace-gate-node status-${gate.status} ${isGateSelected ? "is-selected" : ""} ${isHealed ? "is-healed" : ""}`}
-                      onClick={() => setSelectedGateId(gate.gate_id)}
-                      title={`Click to inspect ${gate.gate_name} evidence`}
-                    >
-                      <span className="gate-node-id">{gate.gate_id}</span>
-                      {isHealed && <span className="gate-node-heal-dot" title="Self-healed" />}
-                    </button>
-                    <span className="gate-node-label">{gate.gate_name.split(" ")[0]}</span>
-                    <span className="gate-node-conf">{gate.confidence}%</span>
+              return (
+                <div key={gate.gate_id} className="gate-flow-item">
+                  <div className={`gate-flow-card status-${gate.status} ${isHealed ? "is-healed" : ""}`}>
+                    <div className="gate-flow-header">
+                      <div>
+                        <span className="gate-flow-id">{gate.gate_id}</span>
+                        <strong className="gate-flow-name">{gate.gate_name}</strong>
+                      </div>
+                      <span className={`gate-flow-badge status-${gate.status}`}>
+                        {gate.status.toUpperCase()} · {gate.confidence}%
+                      </span>
+                    </div>
 
-                    {hasNext && (
-                      <div
-                        className={`exec-trace-connector ${
-                          gate.status === "pass" ? "connector-pass" : gate.status === "fail" ? "connector-fail" : ""
-                        }`}
-                      />
+                    <ul className="gate-flow-evidence">
+                      {gate.evidence.map((item) => (
+                        <li key={item.id} className={item.status === "pass" ? "is-pass" : "is-fail"}>
+                          <span className="gate-flow-evidence-icon">{item.status === "pass" ? "✓" : "✕"}</span>
+                          <span>
+                            {item.claim} <em>({item.actual})</em>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    {gate.recovery && (
+                      <div className="gate-flow-recovery">
+                        <strong>{gate.recovery.type === "abort" ? "Escalated" : "Re-plan"}:</strong>{" "}
+                        {gate.recovery.description}
+                        {gate.recovery.outcome && <span> — {gate.recovery.outcome}</span>}
+                      </div>
                     )}
                   </div>
-                );
-              })}
-            </div>
-          </div>
 
-          {activeGate && (
-            <div className="exec-trace-inspector">
-              <div className="inspector-header">
-                <div className="inspector-title">
-                  <div>
-                    <h5>
-                      {activeGate.gate_id}: {activeGate.gate_name}
-                    </h5>
-                    <span className="inspector-duration">{activeGate.duration_ms}ms execution time</span>
-                  </div>
-                </div>
-                <div className="inspector-meta">
-                  <span className={`inspector-badge status-${activeGate.status}`}>
-                    {activeGate.status.toUpperCase()} ({activeGate.passing_count}/{activeGate.total_count})
-                  </span>
-                </div>
-              </div>
-
-              {activeGate.recovery && (
-                <div className="exec-trace-recovery-card">
-                  <div className="recovery-badge">
-                    <span className="recovery-pill">{activeGate.recovery.type.toUpperCase()}</span>
-                    <strong>Self-Healing Recovery Action</strong>
-                  </div>
-                  <p className="recovery-desc">{activeGate.recovery.description}</p>
-                  {activeGate.recovery.outcome && (
-                    <div className="recovery-outcome">
-                      <span className="outcome-label">OUTCOME:</span>
-                      <span>{activeGate.recovery.outcome}</span>
+                  {hasNext && (
+                    <div
+                      className={`gate-flow-connector ${
+                        gate.status === "pass" ? "connector-pass" : gate.status === "fail" ? "connector-fail" : ""
+                      }`}
+                    >
+                      →
                     </div>
                   )}
                 </div>
-              )}
+              );
+            })}
+          </div>
 
-              {selectedTrace.temporal_chunk && (
+          {selectedTrace.temporal_chunk && (
+            <div className="exec-trace-inspector">
                 <div className="exec-trace-chunk-card">
                   <div className="chunk-card-header">
                     <div className="chunk-card-title">
@@ -274,53 +240,6 @@ export function ExecutionTracePanel({
                     </div>
                   )}
                 </div>
-              )}
-
-              <div className="inspector-evidence-list">
-                <div className="evidence-list-header">
-                  <span>Machine-Checkable Evidence Chain</span>
-                  <span className="evidence-count">
-                    {activeGate.passing_count} of {activeGate.total_count} assertions verified
-                  </span>
-                </div>
-
-                {activeGate.evidence.map((item) => {
-                  const isPass = item.status === "pass";
-                  return (
-                    <div key={item.id} className={`evidence-row ${isPass ? "is-pass" : "is-fail"}`}>
-                      <div className="evidence-status-icon">
-                        {isPass ? "PASS" : "FAIL"}
-                      </div>
-                      <div className="evidence-details">
-                        <div className="evidence-top">
-                          <span className="evidence-source">{item.source}</span>
-                          <span className="evidence-claim">{item.claim}</span>
-                        </div>
-                        <div className="evidence-assertion">
-                          <span className="assertion-label">ASSERTION:</span>
-                          <code>{item.assertion}</code>
-                        </div>
-                        <div className="evidence-actual">
-                          <span className="actual-label">OBSERVED:</span>
-                          <span className="actual-val">{item.actual}</span>
-                        </div>
-                      </div>
-                      <div className="evidence-conf">
-                        <div className="conf-bar-wrap">
-                          <div
-                            className="conf-bar"
-                            style={{
-                              width: `${Math.min(100, Math.max(0, item.confidence))}%`,
-                              backgroundColor: isPass ? "var(--primary, #087f75)" : "#dc2626",
-                            }}
-                          />
-                        </div>
-                        <span className="conf-num">{item.confidence}%</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
             </div>
           )}
 

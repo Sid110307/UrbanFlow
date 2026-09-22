@@ -36,38 +36,38 @@ const NETWORK_STATS: Array<NumericStat | TextStat> = [
 const FEATURES = [
   {
     tag: "01",
-    title: "A real drain network",
-    body: "6,839 mapped stormwater segments across primary, secondary, and tertiary hierarchy, sourced from BBMP through OpenCity's public dataset and rendered as a searchable, filterable map.",
+    title: "The actual drain network",
+    body: "6,839 real segments pulled from BBMP's own GIS records via OpenCity, not a synthetic layout. Search any of them by ID, filter by hierarchy, and see exactly what's on the ground.",
   },
   {
     tag: "02",
-    title: "A live scenario engine",
-    body: "Run the nominal monsoon baseline, a cloudburst, or inject a manual blockage, and watch utilization propagate across the whole network in real time.",
+    title: "A storm that behaves like one",
+    body: "Push rainfall up, drop a blockage in, and watch pressure move through the network the way it actually would, one segment backing up into the next.",
   },
   {
     tag: "03",
-    title: "An AI assistant",
-    body: "Flow Assist is an AI assistant that answers directly from what the network is doing right now: what needs attention, how two drains compare, which segments are worst, or why the one you picked is at risk.",
+    title: "Flow Assist",
+    body: "Ask it what's about to fail, why a segment is critical, or how two drains stack up, and it answers from the live network state, not a script.",
   },
 ];
 
 const STEPS = [
   {
     tag: "01",
-    title: "Explore the network",
-    body: "Search by ID or source reference, filter by drain order, and inspect any of the 6,839 real segments for its recorded length and GIS source record.",
+    title: "Find a segment",
+    body: "Look one up by ID or source reference, filter down to a single hierarchy order, and pull its recorded length straight from the GIS source.",
     image: "/landing/network-overview.jpg",
   },
   {
     tag: "02",
-    title: "Run a scenario",
-    body: "Switch between the baseline, a cloudburst, or a manually injected blockage. Utilization, water level, flow, and the propagation log update continuously.",
+    title: "Break something on purpose",
+    body: "Baseline monsoon, a full cloudburst, or a hand-placed blockage. Water level, flow, and utilization move in response as it plays out.",
     image: "/landing/cloudburst-overlay.jpg",
   },
   {
     tag: "03",
-    title: "Ask Flow Assist",
-    body: "Type a question or tap a starter and get an answer from Flow Assist's AI, grounded in exactly what the network is doing right now.",
+    title: "Ask Flow Assist about it",
+    body: "Type a question or tap a starter prompt. The answer comes back grounded in whatever the network is actually doing at that moment.",
     image: "/landing/flow-assist.jpg",
   },
 ];
@@ -485,13 +485,13 @@ export function Landing() {
         <div className="landing-hero-glow" aria-hidden="true" />
         <div className="landing-hero-split">
           <div className="landing-hero-copy">
-            <p className="eyebrow reveal is-visible">Bengaluru's stormwater network</p>
+            <p className="eyebrow reveal is-visible">Bengaluru stormwater drains</p>
             <h1 className="reveal is-visible" style={revealStyle(80)}>
-              See how the city&apos;s drains behave before the monsoon does.
+              Find out which drain fails first, before the rain does.
             </h1>
             <p className="landing-hero-sub reveal is-visible" style={revealStyle(160)}>
-              UrbanFlow maps every drain in Bengaluru's stormwater network, then lets you run a cloudburst
-              or a blockage and watch exactly which segments go critical, in what order, and why.
+              Every mapped drain in Bengaluru, live. Drop in a cloudburst or a blockage and watch
+              which segments go critical, in what order, and why.
             </p>
             <div className="landing-hero-actions reveal is-visible" style={revealStyle(240)}>
               <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app")}>
@@ -540,22 +540,22 @@ export function Landing() {
       <section className="landing-section">
         <Reveal as="div">
           <p className="eyebrow">Why this exists</p>
-          <h2>A GIS layer cannot tell you which segment is about to overflow.</h2>
+          <h2>A shapefile doesn't tell you what's about to overflow.</h2>
         </Reveal>
         <div className="landing-twocol">
           <Reveal delay={60}>
             <p>
-              Bengaluru's stormwater network is already mapped in public records: roughly 6,800 segments
-              across three hierarchy orders. What that record cannot show is which segment is closest to
-              capacity right now, or how a single obstruction two kilometers upstream shows up somewhere
-              else twenty minutes later.
+              BBMP's records already have roughly 6,800 drain segments mapped, split across
+              primary, secondary, and tertiary hierarchy. What that record can't tell you is which
+              of them is closest to capacity right now, or how an obstruction two kilometers upstream
+              turns into a flooded intersection twenty minutes later.
             </p>
           </Reveal>
           <Reveal delay={140}>
             <p>
-              UrbanFlow adds that missing layer: a capacity model for every segment, a storm cell that
-              ramps and moves, and a blockage that propagates pressure through the network the way a
-              real obstruction would, so you can see where the pressure is building before it overflows.
+              UrbanFlow fills that gap: a capacity model on every segment, a storm cell that actually
+              ramps and moves across the map, and a blockage that pushes pressure through the network
+              the way a real one would, so you can watch it build before anything overflows.
             </p>
           </Reveal>
         </div>
@@ -564,13 +564,47 @@ export function Landing() {
       <section className="landing-section">
         <Reveal as="div">
           <p className="eyebrow">What it does</p>
-          <h2>Three parts, all running in the tab you have open.</h2>
+          <h2>Everything below runs live, right in this browser tab.</h2>
         </Reveal>
         <div className="landing-feature-grid">
           {FEATURES.map((feature, index) => (
             <FeatureCard key={feature.tag} feature={feature} delay={index * 90} />
           ))}
         </div>
+      </section>
+
+      <section className="landing-section landing-silkboard-pitch">
+        <Reveal as="div">
+          <p className="eyebrow">Silk Board Junction</p>
+          <h2>A sensor reading 94 cm doesn't tell you which emergency you have.</h2>
+        </Reveal>
+        <div className="landing-twocol">
+          <Reveal delay={60}>
+            <p>
+              Picture a cloudburst tearing through a wide-open culvert at 1.6 m/s, clearing itself
+              in twenty minutes on its own. Now picture the same sensor reading during a real choke:
+              cement sacks flat against the grate, flow collapsed to 0.02 m/s, water with nowhere to
+              go. Same 94 cm. Opposite emergencies, and dispatching the wrong response to either one
+              costs real time.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <p>
+              UrbanFlow's Silk Board pipeline reads 15-second hydrodynamic chunks instead of a single
+              threshold, runs the physical signature through Gemini for causal disambiguation, and
+              cross-checks it against the camera feed before anything gets dispatched. Five evidence
+              gates hold veto power over all of it: a flatlined sensor gets reconstructed from inlet
+              backpressure, a stalled Gemini call falls back to a deterministic heuristic in
+              milliseconds, a dead camera reroutes triage to its neighbor, and a hallucinated "normal
+              runoff" gets caught and overridden the moment it contradicts the flow data.
+            </p>
+          </Reveal>
+        </div>
+        <Reveal delay={200} className="landing-silkboard-cta">
+          <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app/silkboard")}>
+            Watch it self-heal
+          </button>
+        </Reveal>
       </section>
 
       <Reveal as="div" className="landing-shot reveal-scale">
@@ -585,7 +619,7 @@ export function Landing() {
       <section className="landing-section landing-steps">
         <Reveal as="div">
           <p className="eyebrow">How it works</p>
-          <h2>From a static map to a live control room in three steps.</h2>
+          <h2>From a static map to a live control room.</h2>
         </Reveal>
         <div className="landing-steps-layout">
           <div className="landing-step-list">

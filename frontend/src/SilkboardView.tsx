@@ -212,6 +212,14 @@ export function SilkboardView() {
         <div className="silkboard-topbar-right">
           <button
             type="button"
+            className="silkboard-play-btn"
+            onClick={() => sim.setRunning(!sim.config.running)}
+            aria-label={sim.config.running ? "Pause" : "Play"}
+          >
+            {sim.config.running ? "⏸" : "▶"}
+          </button>
+          <button
+            type="button"
             className="silkboard-demo-btn"
             onClick={runDemo}
             disabled={demoStep !== null}
@@ -326,15 +334,6 @@ export function SilkboardView() {
         </div>
 
         <div className="silkboard-sim-controls">
-          <button
-            type="button"
-            className="silkboard-play-btn"
-            onClick={() => sim.setRunning(!sim.config.running)}
-            aria-label={sim.config.running ? "Pause" : "Play"}
-          >
-            {sim.config.running ? "⏸" : "▶"}
-          </button>
-
           <label className="silkboard-rain-control">
             <span>
               Rainfall <strong>{Math.round(sim.config.rainfall_mm_hr)} mm/hr</strong>

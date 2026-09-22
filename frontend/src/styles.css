@@ -2371,6 +2371,10 @@ input:focus-visible {
   padding: 64px 40px;
 }
 
+.landing-silkboard-cta {
+  margin-top: 24px;
+}
+
 .landing-section h2 {
   max-width: 680px;
   margin: 10px 0 26px;
@@ -3946,11 +3950,15 @@ input:focus-visible {
   display: flex;
   gap: 6px;
   flex: 1;
+  min-width: 0;
 }
 
 .camera-thumb {
-  width: 180px;
-  height: 100px;
+  flex: 1 1 0;
+  min-width: 90px;
+  max-width: 180px;
+  aspect-ratio: 16 / 10;
+  height: auto;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 6px;
   overflow: hidden;
@@ -3958,7 +3966,6 @@ input:focus-visible {
   background: #111;
   padding: 0;
   transition: all 0.2s;
-  flex-shrink: 0;
 }
 .camera-thumb:hover {
   border-color: rgba(255, 255, 255, 0.4);
@@ -4267,6 +4274,79 @@ input:focus-visible {
   font-weight: 700;
 }
 
+/* ─── Object scan ─────────────────────────────────────────────────────────── */
+
+.object-scan-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0a0a0a;
+  border-radius: 8px;
+}
+
+.object-scan-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.object-scan-box {
+  position: absolute;
+  border: 2px solid #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.object-scan-label {
+  position: absolute;
+  top: -20px;
+  left: -2px;
+  padding: 1px 6px;
+  font-family: "DM Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #0a0a0a;
+  background: #22c55e;
+  white-space: nowrap;
+  border-radius: 3px 3px 0 0;
+}
+
+.object-scan-error {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  padding: 3px 8px;
+  font-size: 0.68rem;
+  color: #fff;
+  background: rgba(185, 28, 28, 0.85);
+  border-radius: 4px;
+}
+
+.object-scan-surface {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.object-scan-surface-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+.object-scan-surface.status-damp .object-scan-surface-dot {
+  background: #60a5fa;
+}
+.object-scan-surface.status-pooling .object-scan-surface-dot {
+  background: #f59e0b;
+}
+.object-scan-surface.status-flooding .object-scan-surface-dot {
+  background: #ef4444;
+}
+
 .camera-sensor-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -4342,11 +4422,10 @@ input:focus-visible {
 .silkboard-controls {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   padding: 8px 20px;
   background: var(--paper);
   border-top: 1px solid var(--line);
-  gap: 16px;
+  gap: 24px;
   flex-shrink: 0;
 }
 
@@ -4390,33 +4469,35 @@ input:focus-visible {
 .silkboard-sim-controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
 }
 
 .silkboard-play-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: 1px solid var(--line);
-  background: var(--panel-soft);
-  font-size: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: #f6faf7;
+  font-size: 0.9rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.15s;
 }
 .silkboard-play-btn:hover {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.16);
 }
 
 .silkboard-rain-control {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  flex: 1;
   min-width: 160px;
+  max-width: 480px;
 }
 .silkboard-rain-control span {
   font-size: 0.72rem;
@@ -5210,6 +5291,10 @@ input:focus-visible {
   color: #53bdeb;
 }
 
+.whatsapp-single-check {
+  color: #8696a0;
+}
+
 .whatsapp-system-msg {
   background: #182229;
   color: #8696a0;
@@ -5256,14 +5341,15 @@ input:focus-visible {
 .btn-dispatch-primary {
   padding: 10px 16px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: #059669;
   color: #fff;
   border: none;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 3px 10px rgba(16, 185, 129, 0.3);
+}
+.btn-dispatch-primary:hover {
+  background: #047857;
 }
 
 .btn-dispatch-primary.is-dispatched {
@@ -5275,13 +5361,15 @@ input:focus-visible {
 .btn-dispatch-sms {
   padding: 10px 16px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #0284c7, #0369a1);
+  background: #0369a1;
   color: #fff;
   border: none;
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
+}
+.btn-dispatch-sms:hover {
+  background: #075985;
 }
 
 .btn-dispatch-sms.is-sent {
@@ -5309,7 +5397,29 @@ input:focus-visible {
   background: #080d16;
 }
 
+.btn-toggle-payload {
+  width: 100%;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.btn-toggle-payload:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.whatsapp-preview-tag {
+  font-style: italic;
+  color: #667781;
+}
+
 .json-code-block {
+  margin-top: 10px;
   background: #04070d;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 8px;
@@ -5672,122 +5782,122 @@ input:focus-visible {
   font-family: "DM Mono", monospace;
 }
 
-/* ── Stepper ── */
-.exec-trace-stepper-wrap {
-  padding: 14px 10px 10px;
-  background: var(--panel-soft);
-  border: 1px solid var(--line);
-  border-radius: 10px;
+/* ── Gate flow (all 5 gates shown at once) ── */
+.exec-trace-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.exec-trace-stepper {
+.gate-flow-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.gate-flow-card {
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: 8px;
+}
+.gate-flow-card.status-pass {
+  border-left-color: var(--primary);
+}
+.gate-flow-card.status-fail {
+  border-left-color: #dc2626;
+}
+.gate-flow-card.is-healed {
+  border-left-color: var(--secondary);
+}
+
+.gate-flow-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
+  gap: 8px;
+  margin-bottom: 8px;
 }
 
-.exec-trace-step-item {
+.gate-flow-id {
+  font: 700 0.65rem/1 "DM Mono", monospace;
+  color: var(--muted);
+  margin-right: 6px;
+}
+
+.gate-flow-name {
+  font-size: 0.85rem;
+}
+
+.gate-flow-badge {
+  font: 600 0.68rem/1 "DM Mono", monospace;
+  padding: 3px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+.gate-flow-badge.status-pass {
+  color: var(--primary);
+  background: rgba(8, 127, 117, 0.1);
+}
+.gate-flow-badge.status-fail {
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.1);
+}
+
+.gate-flow-evidence {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
-  flex: 1;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.exec-trace-connector {
-  position: absolute;
-  top: 18px;
-  left: 50%;
-  width: 100%;
-  height: 2px;
-  background: var(--line);
-  z-index: 1;
-}
-
-.exec-trace-connector.connector-pass {
-  background: var(--primary);
-}
-
-.exec-trace-connector.connector-fail {
-  background: #dc2626;
-}
-
-.exec-trace-gate-node {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
+.gate-flow-evidence li {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--paper);
-  border: 2px solid var(--line-strong);
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  z-index: 2;
-  box-shadow: 0 1px 3px rgba(23, 48, 44, 0.06);
-  font-family: inherit;
+  align-items: baseline;
+  gap: 6px;
+  font-size: 0.76rem;
+  color: var(--ink-soft);
 }
 
-.exec-trace-gate-node:hover {
-  transform: scale(1.08);
-  border-color: var(--primary);
+.gate-flow-evidence li em {
+  color: var(--muted);
+  font-style: normal;
 }
 
-.exec-trace-gate-node.is-selected {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(8, 127, 117, 0.2), 0 2px 8px rgba(8, 127, 117, 0.15);
+.gate-flow-evidence-icon {
+  flex: none;
+  font-weight: 700;
 }
-
-.exec-trace-gate-node.status-pass {
-  border-color: var(--primary);
+.gate-flow-evidence li.is-pass .gate-flow-evidence-icon {
   color: var(--primary);
 }
-
-.exec-trace-gate-node.status-fail {
-  border-color: #dc2626;
+.gate-flow-evidence li.is-fail .gate-flow-evidence-icon {
   color: #dc2626;
 }
 
-.exec-trace-gate-node.is-healed {
-  border-color: var(--secondary);
-}
-
-.gate-node-icon {
-  font-size: 0.9rem;
-  line-height: 1;
-}
-
-.gate-node-id {
-  font: 700 9px/1 "DM Mono", monospace;
-  color: var(--ink-soft);
-  margin-top: 1px;
-}
-
-.gate-node-heal-dot {
-  position: absolute;
-  top: -2px;
-  right: -2px;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--secondary);
-  box-shadow: 0 0 6px var(--secondary);
-}
-
-.gate-node-label {
-  font-size: 0.65rem;
-  font-weight: 600;
+.gate-flow-recovery {
+  margin-top: 8px;
+  padding: 8px 10px;
+  font-size: 0.76rem;
   color: var(--ink);
-  margin-top: 5px;
+  background: rgba(245, 158, 11, 0.1);
+  border-radius: 6px;
 }
 
-.gate-node-conf {
-  font: 500 10px/1 "DM Mono", monospace;
+.gate-flow-connector {
+  align-self: center;
+  padding: 2px 0;
   color: var(--muted);
-  margin-top: 1px;
+  font-size: 0.9rem;
+  transform: rotate(90deg);
+}
+.gate-flow-connector.connector-pass {
+  color: var(--primary);
+}
+.gate-flow-connector.connector-fail {
+  color: #dc2626;
 }
 
 /* ── Inspector ── */
@@ -6670,5 +6780,119 @@ input:focus-visible {
   border-radius: 6px;
   color: #4ade80;
   font-size: 0.72rem;
+}
+
+/* ─── Login / OTP auth ───────────────────────────────────────────────────── */
+
+.auth-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg, #f3f2eb);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 32px 28px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.auth-card .eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.auth-card h1 {
+  margin: 0 0 20px;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-form label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.auth-form input {
+  padding: 10px 12px;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: none;
+}
+.auth-form input:focus {
+  border-color: var(--primary);
+}
+
+.auth-otp-input {
+  font-family: "DM Mono", monospace;
+  letter-spacing: 0.3em;
+  text-align: center;
+  font-size: 1.1rem !important;
+}
+
+.auth-sub {
+  margin: 0 0 4px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.auth-error {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #b91c1c;
+}
+
+.auth-form button[type="submit"] {
+  margin-top: 8px;
+  padding: 11px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--ink);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.auth-form button[type="submit"]:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.auth-form-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.auth-link {
+  padding: 0;
+  font-size: 0.76rem;
+  color: var(--primary);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.auth-link:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 
