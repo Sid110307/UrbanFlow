@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { navigateTo } from "./Root";
-import { SilkboardMapView } from "./components/silkboard/SilkboardMapView";
+import { SilkboardMapView3D as SilkboardMapView } from "./components/silkboard/SilkboardMapView3D";
 import { SilkboardAgentPanel } from "./components/silkboard/SilkboardAgent";
 import { CameraStrip, CameraDetailModal } from "./components/silkboard/CameraFeed";
 import { FailureInjectionPanel } from "./components/silkboard/FailureInjection";
