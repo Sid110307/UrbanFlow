@@ -81,6 +81,14 @@ const SCREENSHOTS = [
     src: "/landing/flow-assist.jpg",
     caption: "Flow Assist answering a direct question about the network.",
   },
+  {
+    src: "/landing/silkboard-overview.jpg",
+    caption: "Silk Board Junction: live drain, camera, and flood-sensor telemetry over the real interchange.",
+  },
+  {
+    src: "/landing/silkboard-assist.jpg",
+    caption: "UrbanFlow Assist reasoning over Silk Board's evidence-gated self-healing pipeline.",
+  },
 ];
 
 function useReveal<T extends HTMLElement>(threshold = 0.18) {

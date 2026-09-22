@@ -47,7 +47,7 @@ export default defineConfig({
             },
           },
           {
-            urlPattern: /^https:\/\/.*\.tile\.openstreetmap\.org\//,
+            urlPattern: /^https:\/\/maps\.wikimedia\.org\//,
             handler: "StaleWhileRevalidate",
             options: {
               cacheName: "urbanflow-raster-tiles",

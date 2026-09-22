@@ -210,6 +210,14 @@ export function SilkboardView() {
           </div>
         </div>
         <div className="silkboard-topbar-right">
+          <button
+            type="button"
+            className="silkboard-demo-btn"
+            onClick={runDemo}
+            disabled={demoStep !== null}
+          >
+            {demoStep ?? "Run Demo"}
+          </button>
           <span className={`live-status${sim.snapshot ? "" : " is-connecting"}`}>
             {sim.snapshot ? "Live" : "Connecting"}
           </span>
@@ -288,6 +296,9 @@ export function SilkboardView() {
           traces={sim.traces}
           activeTraceId={sim.activeTraceId}
           onSelectTrace={sim.setActiveTraceId}
+          onToggleFailure={sim.toggleFailure}
+          onClearFailures={sim.clearAllFailures}
+          onRunDemo={runDemo}
         />
       </main>
 

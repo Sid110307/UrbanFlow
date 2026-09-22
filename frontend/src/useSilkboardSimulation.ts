@@ -222,8 +222,19 @@ function generateCameraStates(
   drainTelemetry: SilkboardDrainTelemetry[],
   roadSensors: SilkboardRoadSensorReading[],
   activeFailures?: Set<FailureType>,
+  isOnline = true,
 ): SilkboardCameraState[] {
   return CAMERAS.map((camera) => {
+    if (!isOnline) {
+      return {
+        camera_id: camera.id,
+        status: "offline" as const,
+        last_detection: null,
+        detection_active: false,
+        waterlogging_confidence: 0,
+      };
+    }
+
     if (activeFailures?.has("camera_offline") && camera.id === DEFAULT_CAMERA_OFFLINE_ID) {
       return {
         camera_id: camera.id,
@@ -234,7 +245,6 @@ function generateCameraStates(
       };
     }
 
-    // Check if any sensors in camera's coverage area are alerting
     const nearbySensors = ROAD_SENSORS.filter((s) => {
       const dist = distance(s.position, camera.position);
       return dist < camera.coverage_radius / 100000;
@@ -322,6 +332,18 @@ export function useSilkboardSimulation() {
 
   const [activeTraceId, setActiveTraceId] = useState<string | null>(null);
 
+  const isOnlineRef = useRef(typeof navigator === "undefined" ? true : navigator.onLine);
+  useEffect(() => {
+    const setOnline = () => { isOnlineRef.current = true; };
+    const setOffline = () => { isOnlineRef.current = false; };
+    window.addEventListener("online", setOnline);
+    window.addEventListener("offline", setOffline);
+    return () => {
+      window.removeEventListener("online", setOnline);
+      window.removeEventListener("offline", setOffline);
+    };
+  }, []);
+
   useEffect(() => {
     if (!config.running) return;
 
@@ -334,7 +356,7 @@ export function useSilkboardSimulation() {
       const drains = generateDrainTelemetry(tick, currentConfig, activeFailuresRef.current);
       const roadSensors = generateRoadSensorReadings(tick, currentConfig, drains);
       const inlets = generateInletReadings(tick, currentConfig, drains);
-      const cameras = generateCameraStates(tick, currentConfig, drains, roadSensors, activeFailuresRef.current);
+      const cameras = generateCameraStates(tick, currentConfig, drains, roadSensors, activeFailuresRef.current, isOnlineRef.current);
       const metrics = computeMetrics(drains, roadSensors, cameras, tracesRef.current);
 
       setDrainHistory((prev) => {

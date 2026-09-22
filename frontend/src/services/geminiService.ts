@@ -26,7 +26,7 @@ export async function callGeminiCausalDisambiguation({
   const now = Date.now();
   if (lastGeminiApiCallTime > 0 && now - lastGeminiApiCallTime < MIN_GEMINI_CALL_INTERVAL_MS) {
     const waitSec = Math.ceil((MIN_GEMINI_CALL_INTERVAL_MS - (now - lastGeminiApiCallTime)) / 1000);
-    console.info(`[DrainGuard Quota Guard] Gemini call throttled (${waitSec}s remaining until 15s window). Returning null to allow heuristic fallback.`);
+    console.info(`[UrbanFlow Quota Guard] Gemini call throttled (${waitSec}s remaining until 15s window). Returning null to allow heuristic fallback.`);
     return null;
   }
 
@@ -62,7 +62,7 @@ export async function callGeminiCausalDisambiguation({
 Recent Water Level History: [${historyWaterLevels.slice(-6).map((v) => v.toFixed(0)).join(", ")}] cm
 `;
 
-  const prompt = `You are the DrainGuard L3 AI Causal Disambiguation Engine for Bengaluru's Silk Board Junction stormwater network.
+  const prompt = `You are the UrbanFlow L3 AI Causal Disambiguation Engine for Bengaluru's Silk Board Junction stormwater network.
 Analyze the following drain sensor telemetry chunk and classify whether the condition is normal rain runoff or a physical drain blockage.
 
 Apply the 4-signal weighted decision logic using the 15-second dynamic recording chunk:
@@ -91,7 +91,7 @@ Respond strictly with JSON according to this schema:
 }`;
 
   const systemInstruction =
-    "You are DrainGuard L3 Stormwater Telemetry Classifier. Return ONLY a valid JSON object matching the requested schema. No markdown backticks or commentary outside JSON.";
+    "You are UrbanFlow L3 Stormwater Telemetry Classifier. Return ONLY a valid JSON object matching the requested schema. No markdown backticks or commentary outside JSON.";
 
   try {
     lastGeminiApiCallTime = Date.now();

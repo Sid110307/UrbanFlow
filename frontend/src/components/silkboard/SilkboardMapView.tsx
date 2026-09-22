@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PathOptions, Layer, LatLngExpression } from "leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -138,7 +138,6 @@ function WaterloggingZones({
       const radius = reading.status === "flooding" ? 0.00035 : 0.00020;
       const center = sensor.position;
 
-      // Create a rough circle as polygon points
       const points: [number, number][] = [];
       for (let a = 0; a < 360; a += 30) {
         const rad = (a * Math.PI) / 180;
@@ -181,7 +180,6 @@ function AgentAnnotations({
   detections: AgentDetection[];
   onSelectDetection: (d: AgentDetection) => void;
 }) {
-  // Show only the most recent detection per drain
   const latestByDrain = useMemo(() => {
     const map = new Map<string, AgentDetection>();
     for (const d of detections) {
@@ -255,6 +253,7 @@ export function SilkboardMapView({
 }) {
   const tick = snapshot?.tick ?? 0;
   const svgRenderer = useMemo(() => L.svg(), []);
+  const [legendOpen, setLegendOpen] = useState(true);
 
   const drainTelemetryMap = useMemo(() => {
     const map = new Map<string, SilkboardDrainTelemetry>();
@@ -291,8 +290,8 @@ export function SilkboardMapView({
       className="silkboard-map"
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, style by Wikimedia'
+        url="https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png"
         className="clean-map-tiles"
         maxZoom={19}
       />
@@ -533,27 +532,43 @@ export function SilkboardMapView({
         </CircleMarker>
       ))}
 
-      <div className="silkboard-map-legend">
-        <p><strong>Silk Board Junction Network</strong></p>
-        <div className="legend-section">
-          <span><i style={{ background: "#475569", height: 4, width: 14 }} /> Flyover Deck (L1/L2)</span>
-          <span><i style={{ background: "#1d4ed8", height: 3, width: 14 }} /> Ground Drain</span>
-          <span><i style={{ background: "#ef4444", borderRadius: "50%" }} /> Drain Inlet</span>
-          <span><i style={{ background: "#22c55e", borderRadius: "50%" }} /> Drain Node Hub</span>
+      <div className={`silkboard-map-legend ${legendOpen ? "" : "is-collapsed"}`}>
+        <div className="legend-header">
+          <p><strong>Silk Board Junction Network</strong></p>
+          <button
+            type="button"
+            className="legend-toggle"
+            onClick={() => setLegendOpen((v) => !v)}
+            aria-label={legendOpen ? "Minimize legend" : "Expand legend"}
+          >
+            {legendOpen ? "−" : "+"}
+          </button>
         </div>
-        <div className="legend-section">
-          <span><i style={{ background: "#94a3b8", borderRadius: "50%", width: 6, height: 6 }} /> Dry</span>
-          <span><i style={{ background: "#60a5fa", borderRadius: "50%", width: 6, height: 6 }} /> Damp</span>
-          <span><i style={{ background: "#f59e0b", borderRadius: "50%", width: 6, height: 6 }} /> Pooling</span>
-          <span><i style={{ background: "#ef4444", borderRadius: "50%", width: 6, height: 6 }} /> Flooding</span>
-        </div>
-        <div className="legend-section">
-          <span>Intersection CCTV Camera</span>
-        </div>
-        <div className="legend-section">
-          <span><i style={{ background: "#94a3b8", height: 2, width: 14 }} /> Real Drain Network (OpenCity)</span>
-          <span><i style={{ background: "#f59e0b", borderRadius: "50%" }} /> BBMP-Flagged Flood Point</span>
-        </div>
+        {legendOpen && (
+          <>
+            <div className="legend-section">
+              <span><i style={{ background: "#475569", height: 4, width: 14 }} /> Flyover Deck (L1/L2)</span>
+              <span><i style={{ background: "#1d4ed8", height: 3, width: 14 }} /> Ground Drain</span>
+              <span><i style={{ background: "#ef4444", borderRadius: "50%" }} /> Drain Inlet</span>
+              <span><i style={{ background: "#22c55e", borderRadius: "50%" }} /> Drain Node Hub</span>
+            </div>
+            <div className="legend-section">
+              <span><i style={{ background: "#94a3b8", borderRadius: "50%", width: 6, height: 6 }} /> Dry</span>
+              <span><i style={{ background: "#60a5fa", borderRadius: "50%", width: 6, height: 6 }} /> Damp</span>
+              <span><i style={{ background: "#f59e0b", borderRadius: "50%", width: 6, height: 6 }} /> Pooling</span>
+              <span><i style={{ background: "#ef4444", borderRadius: "50%", width: 6, height: 6 }} /> Flooding</span>
+            </div>
+            <div className="legend-section">
+              <span><i style={{ background: "#22c55e", borderRadius: "50%", border: "1.5px solid #fff" }} /> Camera Online</span>
+              <span><i style={{ background: "#ef4444", borderRadius: "50%", border: "1.5px solid #fff" }} /> Camera Alert</span>
+              <span><i style={{ background: "#6b7280", borderRadius: "50%", border: "1.5px solid #fff" }} /> Camera Offline</span>
+            </div>
+            <div className="legend-section">
+              <span><i style={{ background: "#94a3b8", height: 2, width: 14 }} /> Real Drain Network (OpenCity)</span>
+              <span><i style={{ background: "#f59e0b", borderRadius: "50%" }} /> BBMP-Flagged Flood Point</span>
+            </div>
+          </>
+        )}
       </div>
     </MapContainer>
   );

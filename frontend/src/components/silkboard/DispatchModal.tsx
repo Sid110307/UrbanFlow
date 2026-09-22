@@ -29,6 +29,9 @@ export function DispatchModal({
       ? "Emergency Desilting Crew #4, Heavy Debris Removal Unit"
       : "Rapid Response Drainage Patrol, Stormwater Runoff Monitoring");
 
+  const confidencePct = detection.visual_result?.confidence ?? detection.blockage_probability;
+  const minutesToBreach = Math.max(4, Math.round(30 - confidencePct / 3.5));
+
   const jsonPayload = {
     to: "+919845012345",
     type: "template",
@@ -59,7 +62,7 @@ export function DispatchModal({
               type: "text",
               text: `${detection.visual_result?.confidence ?? detection.blockage_probability}% confidence`,
             },
-            { type: "text", text: "12 minutes to overflow" },
+            { type: "text", text: `${minutesToBreach} minutes to overflow` },
             {
               type: "text",
               text: `urbanflow.bbmp.gov.in/incident/${detection.drain_id.toLowerCase()}`,
@@ -82,7 +85,7 @@ export function DispatchModal({
         <header className="dispatch-modal-header">
           <div>
             <h3>Field Dispatch System</h3>
-            <p>Layer 4 Decision & Layer 5 WhatsApp / SMS Delivery (§5.3)</p>
+            <p>Municipal crew alerting via WhatsApp and SMS</p>
           </div>
           <button type="button" className="dispatch-modal-close" onClick={onClose}>
             ✕
@@ -124,7 +127,7 @@ export function DispatchModal({
                   <p>
                     <strong>Confidence:</strong>{" "}
                     {detection.visual_result?.confidence ?? detection.blockage_probability}% (
-                    {detection.engine_source === "gemini-live" ? "Gemini Flash Live" : "DrainGuard AI"}
+                    {detection.engine_source === "gemini-live" ? "Gemini Flash Live" : "UrbanFlow AI"}
                     )
                   </p>
                   {detection.visual_result && (
@@ -137,7 +140,7 @@ export function DispatchModal({
                     <strong>Recommended Action:</strong> {crewType}
                   </p>
                   <p>
-                    <strong>Est. Time to Breach:</strong> ~12 mins without clearance
+                    <strong>Est. Time to Breach:</strong> ~{minutesToBreach} mins without clearance
                   </p>
                   <hr className="whatsapp-divider" />
                   <p className="whatsapp-footer-note">
@@ -188,13 +191,13 @@ export function DispatchModal({
                   className="btn-dispatch-copy"
                   onClick={handleCopyJson}
                 >
-                  {copied ? "Copied Payload to Clipboard" : "Copy §5.3 JSON Contract"}
+                  {copied ? "Copied Payload to Clipboard" : "Copy WhatsApp API Payload"}
                 </button>
               </div>
             </div>
 
             <div className="action-card raw-contract-card">
-              <h4>Architecture Contract (§5.3 Payload)</h4>
+              <h4>WhatsApp Cloud API Payload</h4>
               <pre className="json-code-block">{JSON.stringify(jsonPayload, null, 2)}</pre>
             </div>
           </div>
