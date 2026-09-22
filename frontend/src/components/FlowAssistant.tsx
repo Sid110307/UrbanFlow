@@ -66,8 +66,9 @@ function normalizeId(raw: string): string | null {
 
 interface GeminiPart {
   text?: string;
-  functionCall?: { name: string; args?: Record<string, unknown> };
-  functionResponse?: { name: string; response: Record<string, unknown> };
+  functionCall?: { name: string; args?: Record<string, unknown>; id?: string };
+  functionResponse?: { name: string; response: Record<string, unknown>; id?: string };
+  thoughtSignature?: string;
 }
 
 interface GeminiContent {
@@ -616,12 +617,13 @@ export function FlowAssistant({
 
       contents = [
         ...contents,
-        { role: "model", parts: calls.map((call) => ({ functionCall: call.functionCall })) },
+        { role: "model", parts: calls },
         {
           role: "user",
           parts: calls.map((call) => ({
             functionResponse: {
               name: call.functionCall.name,
+              id: call.functionCall.id,
               response: executeTool(call.functionCall.name, call.functionCall.args ?? {}),
             },
           })),

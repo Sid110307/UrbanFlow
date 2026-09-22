@@ -275,8 +275,9 @@ function recordAiUsage(count: number) {
 
 interface GeminiPart {
   text?: string;
-  functionCall?: { name: string; args?: Record<string, unknown> };
-  functionResponse?: { name: string; response: Record<string, unknown> };
+  functionCall?: { name: string; args?: Record<string, unknown>; id?: string };
+  functionResponse?: { name: string; response: Record<string, unknown>; id?: string };
+  thoughtSignature?: string;
 }
 
 interface GeminiContent {
@@ -674,12 +675,12 @@ export function SilkboardAgentPanel({
       const responses = calls.map((call) => {
         const { result, attachment: att } = executeTool(call.functionCall.name, call.functionCall.args ?? {});
         if (att) attachment = att;
-        return { name: call.functionCall.name, response: result };
+        return { name: call.functionCall.name, id: call.functionCall.id, response: result };
       });
 
       contents = [
         ...contents,
-        { role: "model", parts: calls.map((call) => ({ functionCall: call.functionCall })) },
+        { role: "model", parts: calls },
         { role: "user", parts: responses.map((r) => ({ functionResponse: r })) },
       ];
     }

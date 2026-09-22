@@ -1,12 +1,25 @@
 # UrbanFlow
 
-UrbanFlow is an atlas of Bengaluru's mapped stormwater drain
-network. It renders the OpenCity / BBMP dataset as searchable primary,
-secondary, and tertiary linework with source metadata for every segment. On
-top of that it adds browser-based rainfall, cloudburst, and blockage
-scenarios, a 3D interactive map with real-time risk-height visualization,
-live risk overlays, a propagation timeline, and Flow Assist, an AI
-operations assistant.
+UrbanFlow is an atlas of Bengaluru's mapped stormwater drain network, built
+around an evidence-gated, self-healing agentic pipeline for Silk Board
+Junction. A single sensor reading, say 94cm of water, can mean two opposite
+emergencies: a cloudburst clearing itself in twenty minutes, or a physical
+choke about to flood an underpass for hours. UrbanFlow's Silk Board pipeline
+never trusts one signal. It reads 15-second hydrodynamic chunks, runs causal
+disambiguation through Gemini, and cross-checks the result against live
+camera evidence before anything gets dispatched, with five zero-trust
+evidence gates holding veto power over every step: a flatlined sensor is
+reconstructed from inlet backpressure, a stalled Gemini call falls back to a
+deterministic heuristic in milliseconds, a dead camera reroutes triage to its
+neighbor, and a hallucinated "normal runoff" gets caught and overridden the
+moment it contradicts the physical flow data.
+
+On top of that, UrbanFlow renders the OpenCity / BBMP dataset for
+Bengaluru's wider drain network as searchable primary, secondary, and
+tertiary linework with source metadata for every segment, adds browser-based
+rainfall, cloudburst, and blockage scenarios, a 3D interactive map with
+real-time risk-height visualization, live risk overlays, a propagation
+timeline, and Flow Assist, an AI operations assistant.
 
 ## Run locally
 

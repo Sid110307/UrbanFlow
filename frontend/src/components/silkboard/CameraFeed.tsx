@@ -4,21 +4,49 @@ import { DispatchModal } from "./DispatchModal";
 import { ObjectScan } from "./ObjectScan";
 import type {
   AgentDetection,
+  DebrisClass,
+  RoadSensorStatus,
   SilkboardRoadSensorReading,
   SilkboardSnapshot,
 } from "../../types";
 
-export function getCameraImage(cameraId: string, isAlert: boolean): string {
-  if (cameraId === "CAM-01") {
-    return isAlert ? "/cctv/cam01_alert.jpg" : "/cctv/cam01_normal.jpg";
+export interface CameraImageContext {
+  surfaceStatus?: RoadSensorStatus;
+  debrisClass?: DebrisClass | null;
+}
+
+export function getCameraImage(cameraId: string, isAlert: boolean, context: CameraImageContext = {}): string {
+  const { surfaceStatus, debrisClass } = context;
+
+  switch (cameraId) {
+    case "CAM-01":
+      return isAlert ? "/cctv/cam01_alert.jpg" : "/cctv/cam01_normal.jpg";
+    case "CAM-02":
+      return isAlert ? "/cctv/cam02_alert.jpg" : "/cctv/cam02_normal.jpg";
+    case "CAM-03":
+      return isAlert ? "/cctv/cam03_alert.jpg" : "/cctv/cam03_normal.jpg";
+    case "CAM-04":
+      if (surfaceStatus === "flooding") return "/cctv/cam04_waterlogged.jpg";
+      if (surfaceStatus === "pooling" || surfaceStatus === "damp") return "/cctv/cam04_puddle.jpg";
+      return "/cctv/cam04_normal.jpg";
+    case "CAM-05":
+      if (surfaceStatus === "flooding") return "/cctv/cam05_flooded.jpg";
+      if (surfaceStatus === "pooling" || surfaceStatus === "damp") return "/cctv/cam05_puddle.jpg";
+      return "/cctv/cam05_normal.jpg";
+    case "CAM-06":
+      if (debrisClass === "plastic") return "/cctv/cam06_plastic_debris.jpg";
+      if (debrisClass === "silt") return "/cctv/cam06_silt_debris.jpg";
+      if (debrisClass === "construction_debris") return "/cctv/cam06_construction_debris.jpg";
+      return "/cctv/cam06_normal.jpg";
+    case "CAM-07":
+      return isAlert || surfaceStatus === "flooding" ? "/cctv/cam07_heavy_rain.jpg" : "/cctv/cam07_night_puddle.jpg";
+    case "CAM-08":
+      if (surfaceStatus === "flooding") return "/cctv/cam08_dawn_waterlogging.jpg";
+      if (surfaceStatus === "pooling") return "/cctv/cam08_pothole_puddle.jpg";
+      return "/cctv/cam08_leaf_litter_puddle.jpg";
+    default:
+      return isAlert ? "/cctv/cam02_alert.jpg" : "/cctv/cam02_normal.jpg";
   }
-  if (cameraId === "CAM-02") {
-    return isAlert ? "/cctv/cam02_alert.jpg" : "/cctv/cam02_normal.jpg";
-  }
-  if (cameraId === "CAM-03") {
-    return isAlert ? "/cctv/cam03_alert.jpg" : "/cctv/cam03_normal.jpg";
-  }
-  return isAlert ? "/cctv/cam02_alert.jpg" : "/cctv/cam02_normal.jpg";
 }
 
 export interface OpticalDetectionBox {
@@ -128,6 +156,46 @@ const CAMERA_SPECS: Record<
     coverage: "115m curb drain run & footpath",
     targetDrain: "BLR-SKB-105 / 106",
   },
+  "CAM-04": {
+    location: "Hosur Road South, BTM Approach",
+    ptz: "AZ 145° · EL -12° · 1.0x Optical",
+    lens: "2.8mm F/1.6 Starlight WDR",
+    elevation: "7.0m Above Grade (Pole Mount)",
+    coverage: "110m corridor, curb drain line",
+    targetDrain: "BLR-SKB-101",
+  },
+  "CAM-05": {
+    location: "Silk Board Underpass, Secondary Bore",
+    ptz: "AZ 210° · EL -20° · 1.2x Optical",
+    lens: "4.0mm F/1.4 Low-Light IR",
+    elevation: "5.5m Pier Mount",
+    coverage: "110m underpass basin, second bore",
+    targetDrain: "BLR-SKB-103",
+  },
+  "CAM-06": {
+    location: "ORR East, Drain Grate Watch",
+    ptz: "AZ 300° · EL -25° · 1.5x Optical",
+    lens: "3.6mm F/1.6 Fixed Narrow",
+    elevation: "4.8m Curb Cantilever",
+    coverage: "90m grate & inlet close watch",
+    targetDrain: "BLR-SKB-105",
+  },
+  "CAM-07": {
+    location: "West Corridor, Low-Light Post",
+    ptz: "AZ 95° · EL -16° · 1.0x Optical",
+    lens: "2.8mm F/1.2 Ultra Low-Light",
+    elevation: "6.5m Above Grade",
+    coverage: "110m corridor, night watch",
+    targetDrain: "BLR-SKB-107",
+  },
+  "CAM-08": {
+    location: "HSR Service Road, Dawn Patrol",
+    ptz: "AZ 30° · EL -14° · 1.0x Optical",
+    lens: "2.8mm F/1.6 Starlight WDR",
+    elevation: "6.8m Above Grade",
+    coverage: "100m service road & footpath",
+    targetDrain: "BLR-SKB-110",
+  },
 };
 
 function RainOverlayCanvas({ isRaining }: { isRaining: boolean }) {
@@ -226,6 +294,8 @@ export function CameraFeedCanvas({
   showSpecs = false,
   rainfallMmHr = 0,
   compact = false,
+  surfaceStatus,
+  debrisClass,
 }: {
   cameraId: string;
   label: string;
@@ -237,9 +307,11 @@ export function CameraFeedCanvas({
   showSpecs?: boolean;
   rainfallMmHr?: number;
   compact?: boolean;
+  surfaceStatus?: RoadSensorStatus;
+  debrisClass?: DebrisClass | null;
 }) {
   const isAlerting = detectionActive || status === "alert";
-  const bgImage = getCameraImage(cameraId, isAlerting);
+  const bgImage = getCameraImage(cameraId, isAlerting, { surfaceStatus, debrisClass });
   const boxes = useMemo(
     () => (isAlerting ? getDetectionBoxes(cameraId, waterloggingConfidence) : []),
     [cameraId, isAlerting, waterloggingConfidence],
@@ -376,8 +448,18 @@ export function CameraDetailModal({
     (r) => r.status === "flooding" || r.status === "pooling",
   ).length;
 
+  const surfaceStatusRank: Record<string, number> = { dry: 0, damp: 1, pooling: 2, flooding: 3 };
+  const worstSurfaceStatus = nearbyReadings.reduce(
+    (worst, r) => (surfaceStatusRank[r.status] > surfaceStatusRank[worst] ? r.status : worst),
+    "dry" as SilkboardRoadSensorReading["status"],
+  );
+
+  const cameraDebrisClass =
+    snapshot.detections.find((d) => d.visual_result?.camera_id === selectedCamId)?.visual_result?.debris_class ??
+    null;
+
   const handleCopySnapshot = () => {
-    const url = `https://urbanflow.bbmp.gov.in${getCameraImage(selectedCamId, cameraState.detection_active)}`;
+    const url = `https://urbanflow.bbmp.gov.in${getCameraImage(selectedCamId, cameraState.detection_active, { surfaceStatus: worstSurfaceStatus, debrisClass: cameraDebrisClass })}`;
     navigator.clipboard.writeText(url);
     setSnapshotCopied(true);
     setTimeout(() => setSnapshotCopied(false), 2500);
@@ -436,6 +518,8 @@ export function CameraDetailModal({
                 nearbyFloodingSensors={floodingCount}
                 showSpecs={true}
                 rainfallMmHr={snapshot.config.rainfall_mm_hr}
+                surfaceStatus={worstSurfaceStatus}
+                debrisClass={cameraDebrisClass}
               />
 
               <div className="camera-hardware-card">
@@ -536,7 +620,7 @@ export function CameraDetailModal({
 
               <div className="camera-info-section">
                 <ObjectScan
-                  imageSrc={getCameraImage(selectedCamId, cameraState.detection_active)}
+                  imageSrc={getCameraImage(selectedCamId, cameraState.detection_active, { surfaceStatus: worstSurfaceStatus, debrisClass: cameraDebrisClass })}
                   cameraId={selectedCamId}
                   surfaceReadings={nearbyReadings}
                 />
@@ -607,6 +691,15 @@ export function CameraStrip({
             (r) => r.status === "flooding" || r.status === "pooling",
           ).length;
 
+          const surfaceStatusRank: Record<string, number> = { dry: 0, damp: 1, pooling: 2, flooding: 3 };
+          const worstSurfaceStatus = nearbyReadings.reduce(
+            (worst, r) => (surfaceStatusRank[r.status] > surfaceStatusRank[worst] ? r.status : worst),
+            "dry" as SilkboardRoadSensorReading["status"],
+          );
+          const debrisClass =
+            snapshot.detections.find((d) => d.visual_result?.camera_id === camera.id)?.visual_result?.debris_class ??
+            null;
+
           return (
             <button
               key={camera.id}
@@ -618,6 +711,8 @@ export function CameraStrip({
               <CameraFeedCanvas
                 cameraId={camera.id}
                 label={camera.label}
+                surfaceStatus={worstSurfaceStatus}
+                debrisClass={debrisClass}
                 status={status}
                 waterloggingConfidence={state?.waterlogging_confidence ?? 0}
                 detectionActive={state?.detection_active ?? false}

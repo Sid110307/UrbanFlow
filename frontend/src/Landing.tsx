@@ -72,6 +72,14 @@ const STEPS = [
   },
 ];
 
+const SELF_HEAL_GATES = [
+  { id: "G1", name: "Anomaly Detection", fails: "Sensor flatlines to 0cm", heals: "Reconstructed from inlet backpressure" },
+  { id: "G2", name: "Causal Disambiguation", fails: "Gemini stalls past 12s", heals: "Falls back to a deterministic heuristic, in milliseconds" },
+  { id: "G3", name: "Visual Verification", fails: "Camera drops offline", heals: "Triage reroutes to the neighboring camera" },
+  { id: "G4", name: "Cross-Validation", fails: "Model claims 'normal runoff'", heals: "Overridden the moment it contradicts flow data" },
+  { id: "G5", name: "Dispatch Execution", fails: "WhatsApp ack times out", heals: "Fails over to emergency VHF radio" },
+];
+
 const SCREENSHOTS = [
   {
     src: "/landing/drain-details.jpg",
@@ -88,6 +96,14 @@ const SCREENSHOTS = [
   {
     src: "/landing/silkboard-assist.jpg",
     caption: "UrbanFlow Assist reasoning over Silk Board's evidence-gated self-healing pipeline.",
+  },
+  {
+    src: "/cctv/cam05_flooded.jpg",
+    caption: "CAM-05, Silk Board underpass mid-flood: exactly the choke signature Gate 1 is built to catch.",
+  },
+  {
+    src: "/cctv/cam06_plastic_debris.jpg",
+    caption: "CAM-06 confirming the debris class Gemini and Gate 3 agreed on: plastic, not silt.",
   },
 ];
 
@@ -537,6 +553,54 @@ export function Landing() {
         <ScrollScrubVideo />
       )}
 
+      <section className="landing-section landing-silkboard-pitch">
+        <Reveal as="div">
+          <p className="eyebrow">Silk Board Junction · Evidence-gated, self-healing</p>
+          <h2>A sensor reading 94 cm doesn't tell you which emergency you have.</h2>
+        </Reveal>
+        <div className="landing-twocol">
+          <Reveal delay={60}>
+            <p>
+              Picture a cloudburst tearing through a wide-open culvert at 1.6 m/s, clearing itself
+              in twenty minutes on its own. Now picture the same sensor reading during a real choke:
+              cement sacks flat against the grate, flow collapsed to 0.02 m/s, water with nowhere to
+              go. Same 94 cm. Opposite emergencies, and dispatching the wrong response to either one
+              costs real time.
+            </p>
+          </Reveal>
+          <Reveal delay={140}>
+            <p>
+              UrbanFlow's Silk Board pipeline reads 15-second hydrodynamic chunks instead of a single
+              threshold, runs the physical signature through Gemini for causal disambiguation, and
+              cross-checks it against the camera feed before anything gets dispatched. Five evidence
+              gates hold veto power over all of it, and none of them trust a single point of failure.
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={180} className="gate-flow-illustration">
+          {SELF_HEAL_GATES.map((gate, index) => (
+            <div key={gate.id} className="gate-flow-illustration-item">
+              <div className="gate-flow-illustration-card">
+                <span className="gate-flow-illustration-id">{gate.id}</span>
+                <strong>{gate.name}</strong>
+                <p className="gate-flow-illustration-fail">{gate.fails}</p>
+                <p className="gate-flow-illustration-heal">→ {gate.heals}</p>
+              </div>
+              {index < SELF_HEAL_GATES.length - 1 && (
+                <span className="gate-flow-illustration-arrow" aria-hidden="true">→</span>
+              )}
+            </div>
+          ))}
+        </Reveal>
+
+        <Reveal delay={220} className="landing-silkboard-cta">
+          <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app/silkboard")}>
+            Watch it self-heal
+          </button>
+        </Reveal>
+      </section>
+
       <section className="landing-section">
         <Reveal as="div">
           <p className="eyebrow">Why this exists</p>
@@ -571,40 +635,6 @@ export function Landing() {
             <FeatureCard key={feature.tag} feature={feature} delay={index * 90} />
           ))}
         </div>
-      </section>
-
-      <section className="landing-section landing-silkboard-pitch">
-        <Reveal as="div">
-          <p className="eyebrow">Silk Board Junction</p>
-          <h2>A sensor reading 94 cm doesn't tell you which emergency you have.</h2>
-        </Reveal>
-        <div className="landing-twocol">
-          <Reveal delay={60}>
-            <p>
-              Picture a cloudburst tearing through a wide-open culvert at 1.6 m/s, clearing itself
-              in twenty minutes on its own. Now picture the same sensor reading during a real choke:
-              cement sacks flat against the grate, flow collapsed to 0.02 m/s, water with nowhere to
-              go. Same 94 cm. Opposite emergencies, and dispatching the wrong response to either one
-              costs real time.
-            </p>
-          </Reveal>
-          <Reveal delay={140}>
-            <p>
-              UrbanFlow's Silk Board pipeline reads 15-second hydrodynamic chunks instead of a single
-              threshold, runs the physical signature through Gemini for causal disambiguation, and
-              cross-checks it against the camera feed before anything gets dispatched. Five evidence
-              gates hold veto power over all of it: a flatlined sensor gets reconstructed from inlet
-              backpressure, a stalled Gemini call falls back to a deterministic heuristic in
-              milliseconds, a dead camera reroutes triage to its neighbor, and a hallucinated "normal
-              runoff" gets caught and overridden the moment it contradicts the flow data.
-            </p>
-          </Reveal>
-        </div>
-        <Reveal delay={200} className="landing-silkboard-cta">
-          <button type="button" className="landing-cta-primary" onClick={() => navigateTo("/app/silkboard")}>
-            Watch it self-heal
-          </button>
-        </Reveal>
       </section>
 
       <Reveal as="div" className="landing-shot reveal-scale">

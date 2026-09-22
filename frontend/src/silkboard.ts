@@ -1761,6 +1761,61 @@ export const CAMERAS: SilkboardCamera[] = [
     "bearing": 260,
     "coverage_angle": 85,
     "coverage_radius": 115
+  },
+  {
+    "id": "CAM-04",
+    "label": "Hosur Road South \u2014 BTM Approach Corridor",
+    "position": [
+      77.618845,
+      12.916185
+    ],
+    "bearing": 145,
+    "coverage_angle": 90,
+    "coverage_radius": 110
+  },
+  {
+    "id": "CAM-05",
+    "label": "Silk Board Underpass \u2014 Secondary Bore Angle",
+    "position": [
+      77.623486,
+      12.916291
+    ],
+    "bearing": 210,
+    "coverage_angle": 100,
+    "coverage_radius": 110
+  },
+  {
+    "id": "CAM-06",
+    "label": "Drain Grate Watch \u2014 ORR East Debris Post",
+    "position": [
+      77.624659,
+      12.914074
+    ],
+    "bearing": 300,
+    "coverage_angle": 80,
+    "coverage_radius": 90
+  },
+  {
+    "id": "CAM-07",
+    "label": "West Corridor \u2014 Low-Light Night Watch",
+    "position": [
+      77.616305,
+      12.916353
+    ],
+    "bearing": 95,
+    "coverage_angle": 90,
+    "coverage_radius": 110
+  },
+  {
+    "id": "CAM-08",
+    "label": "HSR Service Road \u2014 Dawn Patrol Post",
+    "position": [
+      77.621968,
+      12.916928
+    ],
+    "bearing": 30,
+    "coverage_angle": 90,
+    "coverage_radius": 100
   }
 ];
 

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { DRAIN_NODES } from "../../silkboard";
 import type { AgentDetection } from "../../types";
 
 type DeliveryStage = "draft" | "sent" | "delivered" | "read";
@@ -46,6 +47,11 @@ export function DispatchModal({
 
   const confidencePct = detection.visual_result?.confidence ?? detection.blockage_probability;
   const minutesToBreach = Math.max(4, Math.round(30 - confidencePct / 3.5));
+
+  const node = DRAIN_NODES.find((n) => n.drain_id === detection.drain_id);
+  const [lon, lat] = node?.position ?? [77.6229, 12.9172];
+  const mapsUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+  const mapsEmbedUrl = `https://maps.google.com/maps?q=${lat},${lon}&z=16&output=embed`;
 
   const jsonPayload = {
     to: "+919845012345",
@@ -165,6 +171,37 @@ export function DispatchModal({
                   </p>
                 </div>
 
+                <div className="whatsapp-msg-meta">
+                  {stage === "draft" ? (
+                    <span className="whatsapp-preview-tag">Preview, not yet sent</span>
+                  ) : (
+                    <>
+                      <span>{new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
+                      <span className={stage === "read" ? "whatsapp-double-check" : "whatsapp-single-check"}>
+                        {stage === "sent" ? "✓" : "✓✓"}
+                      </span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className="whatsapp-bubble whatsapp-location-bubble">
+                <a href={mapsUrl} target="_blank" rel="noreferrer" className="whatsapp-location-map">
+                  <iframe
+                    src={mapsEmbedUrl}
+                    title="Incident location map"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                  <span className="whatsapp-location-pin">📍</span>
+                </a>
+                <div className="whatsapp-location-info">
+                  <strong>{node?.label ?? "Silk Board Junction"}</strong>
+                  <span>{lat.toFixed(5)}, {lon.toFixed(5)}</span>
+                  <a href={mapsUrl} target="_blank" rel="noreferrer" className="whatsapp-location-open">
+                    Open in Google Maps
+                  </a>
+                </div>
                 <div className="whatsapp-msg-meta">
                   {stage === "draft" ? (
                     <span className="whatsapp-preview-tag">Preview, not yet sent</span>
