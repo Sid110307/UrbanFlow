@@ -4663,9 +4663,45 @@ input:focus-visible {
   .camera-strip-row {
     gap: 4px;
   }
-  .camera-thumb {
-    width: 140px;
-    height: 80px;
+}
+
+@media (max-width: 560px) {
+  .silkboard-topbar {
+    padding: 8px 12px;
+    gap: 8px;
+  }
+  .silkboard-brand {
+    gap: 8px;
+    min-width: 0;
+  }
+  .silkboard-brand .eyebrow {
+    display: none;
+  }
+  .silkboard-brand h1 {
+    font-size: 0.95rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .silkboard-back {
+    padding: 6px 9px;
+  }
+  .silkboard-topbar-right {
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .silkboard-demo-btn,
+  .silkboard-play-btn {
+    padding: 5px 9px;
+    font-size: 0.78rem;
+  }
+  .silkboard-elapsed {
+    padding: 4px 7px;
+    font-size: 0.75rem;
+  }
+  .fault-inject-grid {
+    flex-wrap: wrap;
   }
 }
 
