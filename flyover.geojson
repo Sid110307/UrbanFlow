@@ -1,0 +1,6164 @@
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2026-09-20T09:00:33Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/27555707",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxheight": "5.5",
+        "maxspeed": "40",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6225966,
+            12.9173014
+          ],
+          [
+            77.6228281,
+            12.9173744
+          ]
+        ]
+      },
+      "id": "way/27555707"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/40696219",
+        "highway": "trunk_link",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6214053,
+            12.9194475
+          ],
+          [
+            77.6215358,
+            12.9193284
+          ],
+          [
+            77.6219107,
+            12.9189075
+          ],
+          [
+            77.6221845,
+            12.918505
+          ],
+          [
+            77.622259,
+            12.9183567
+          ],
+          [
+            77.6223676,
+            12.9181996
+          ]
+        ]
+      },
+      "id": "way/40696219"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/40696221",
+        "alt_name": "Hosur Road",
+        "bridge": "yes",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "layer": "1",
+        "lit": "yes",
+        "loc_name": "Hosur Road",
+        "maxspeed": "40",
+        "maxweight:signed": "no",
+        "name": "Silk Board Flyover",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "official_name": "Sri Mahasharana Madiwala Machideva Flyover",
+        "oneway": "yes",
+        "overtaking": "no",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6219355,
+            12.9186638
+          ],
+          [
+            77.6219816,
+            12.918593
+          ],
+          [
+            77.6223393,
+            12.9180437
+          ],
+          [
+            77.6228925,
+            12.9171404
+          ],
+          [
+            77.6240446,
+            12.9151188
+          ]
+        ]
+      },
+      "id": "way/40696221"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/40696222",
+        "alt_name": "Hosur Road",
+        "bridge": "yes",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "layer": "1",
+        "lit": "yes",
+        "loc_name": "Hosur Road",
+        "maxspeed": "60",
+        "maxweight:signed": "no",
+        "name": "Silk Board Flyover",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "official_name": "Sri Mahasharana Madiwala Machideva Flyover",
+        "oneway": "yes",
+        "overtaking": "no",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6239418,
+            12.9150658
+          ],
+          [
+            77.6233472,
+            12.9161431
+          ],
+          [
+            77.6227896,
+            12.9171082
+          ],
+          [
+            77.6227353,
+            12.9171967
+          ],
+          [
+            77.6224757,
+            12.91762
+          ],
+          [
+            77.6218568,
+            12.918616
+          ]
+        ]
+      },
+      "id": "way/40696222"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/40696223",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6208647,
+            12.9202307
+          ],
+          [
+            77.6209061,
+            12.9201591
+          ],
+          [
+            77.6209846,
+            12.9200598
+          ],
+          [
+            77.6213541,
+            12.9195205
+          ],
+          [
+            77.6214053,
+            12.9194475
+          ]
+        ]
+      },
+      "id": "way/40696223"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/48691692",
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Begur Road",
+        "name:kn": "ಬೇಗೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6287986,
+            12.9070535
+          ],
+          [
+            77.6287515,
+            12.9070222
+          ]
+        ]
+      },
+      "id": "way/48691692"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/92196679",
+        "highway": "primary",
+        "lane_markings": "no",
+        "lit": "yes",
+        "name": "Madiwala Sarjapura Road",
+        "name:kn": "ಮಡಿವಾಳ ಸರ್ಜಾಪುರ ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "both",
+        "sidewalk:left:surface": "paving_stones",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6288623,
+            12.9241419
+          ],
+          [
+            77.6286643,
+            12.9239992
+          ],
+          [
+            77.6285248,
+            12.9239475
+          ],
+          [
+            77.627065,
+            12.9236267
+          ],
+          [
+            77.6266787,
+            12.9235503
+          ],
+          [
+            77.6242948,
+            12.9230244
+          ],
+          [
+            77.6236503,
+            12.92289
+          ],
+          [
+            77.6235996,
+            12.9228794
+          ],
+          [
+            77.6232282,
+            12.9227511
+          ],
+          [
+            77.6231013,
+            12.922675
+          ],
+          [
+            77.6220184,
+            12.9220258
+          ],
+          [
+            77.6217106,
+            12.9218412
+          ],
+          [
+            77.6210995,
+            12.9214902
+          ],
+          [
+            77.6207556,
+            12.9212926
+          ]
+        ]
+      },
+      "id": "way/92196679"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/103269863",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "bridge": "viaduct",
+        "cycleway": "no",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "layer": "2",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "60",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:etymology:wikidata": "Q298273",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "source:maxspeed": "sign",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6698904,
+            12.8467491
+          ],
+          [
+            77.6703131,
+            12.8469612
+          ],
+          [
+            77.6704618,
+            12.8470542
+          ],
+          [
+            77.6705444,
+            12.8471165
+          ],
+          [
+            77.6705935,
+            12.8471581
+          ],
+          [
+            77.670644,
+            12.8472034
+          ],
+          [
+            77.6706931,
+            12.8472549
+          ],
+          [
+            77.6707274,
+            12.8473023
+          ],
+          [
+            77.6707651,
+            12.8473604
+          ],
+          [
+            77.6707881,
+            12.8474104
+          ],
+          [
+            77.6708023,
+            12.8474803
+          ],
+          [
+            77.6708099,
+            12.8475426
+          ],
+          [
+            77.6708062,
+            12.8476193
+          ],
+          [
+            77.6707976,
+            12.8476859
+          ],
+          [
+            77.6707748,
+            12.8477578
+          ],
+          [
+            77.6707535,
+            12.8477989
+          ],
+          [
+            77.6706781,
+            12.8479318
+          ],
+          [
+            77.6705806,
+            12.848096
+          ],
+          [
+            77.6702864,
+            12.8484798
+          ],
+          [
+            77.667198,
+            12.8523861
+          ],
+          [
+            77.6660868,
+            12.8537852
+          ],
+          [
+            77.665718,
+            12.8542525
+          ],
+          [
+            77.6648472,
+            12.8553562
+          ],
+          [
+            77.6646906,
+            12.8555459
+          ],
+          [
+            77.6641168,
+            12.8562284
+          ],
+          [
+            77.6634588,
+            12.8570598
+          ],
+          [
+            77.6622258,
+            12.8586685
+          ],
+          [
+            77.6609625,
+            12.8602365
+          ],
+          [
+            77.6598751,
+            12.8616011
+          ],
+          [
+            77.658076,
+            12.8638821
+          ],
+          [
+            77.6563844,
+            12.8660037
+          ],
+          [
+            77.6554214,
+            12.8672114
+          ],
+          [
+            77.6531186,
+            12.8701257
+          ],
+          [
+            77.6510374,
+            12.8727788
+          ],
+          [
+            77.6508845,
+            12.8729694
+          ],
+          [
+            77.6507299,
+            12.8731544
+          ],
+          [
+            77.6504208,
+            12.8735164
+          ],
+          [
+            77.6502581,
+            12.8736949
+          ],
+          [
+            77.6501061,
+            12.8738614
+          ],
+          [
+            77.6498086,
+            12.8741943
+          ],
+          [
+            77.6495046,
+            12.8745256
+          ],
+          [
+            77.6493194,
+            12.8747336
+          ],
+          [
+            77.649131,
+            12.8749377
+          ],
+          [
+            77.6487884,
+            12.8753178
+          ],
+          [
+            77.6477185,
+            12.8765491
+          ],
+          [
+            77.6473108,
+            12.8770943
+          ],
+          [
+            77.646793,
+            12.8778983
+          ],
+          [
+            77.642852,
+            12.8843135
+          ],
+          [
+            77.6423815,
+            12.8850793
+          ],
+          [
+            77.6412187,
+            12.8869721
+          ],
+          [
+            77.6383252,
+            12.8916725
+          ],
+          [
+            77.6376842,
+            12.8927142
+          ],
+          [
+            77.6361018,
+            12.8952859
+          ],
+          [
+            77.6346378,
+            12.8976548
+          ],
+          [
+            77.6330387,
+            12.9002933
+          ],
+          [
+            77.6325784,
+            12.9010482
+          ],
+          [
+            77.6323896,
+            12.9013577
+          ],
+          [
+            77.6323479,
+            12.9014258
+          ],
+          [
+            77.6318032,
+            12.9023158
+          ],
+          [
+            77.6316213,
+            12.9026148
+          ],
+          [
+            77.6286187,
+            12.9074453
+          ],
+          [
+            77.6283396,
+            12.9079036
+          ]
+        ]
+      },
+      "id": "way/103269863"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/133759694",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "cycleway": "no",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "40",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:etymology:wikidata": "Q298273",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6274877,
+            12.9093025
+          ],
+          [
+            77.6272476,
+            12.9096149
+          ]
+        ]
+      },
+      "id": "way/133759694"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/133763765",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6212875,
+            12.9193784
+          ],
+          [
+            77.6210467,
+            12.9196804
+          ]
+        ]
+      },
+      "id": "way/133763765"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/148211165",
+        "highway": "secondary",
+        "lanes": "2",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6289631,
+            12.9071733
+          ],
+          [
+            77.6287986,
+            12.9070535
+          ]
+        ]
+      },
+      "id": "way/148211165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/160330784",
+        "highway": "trunk_link",
+        "lane_markings": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6222334,
+            12.9171705
+          ],
+          [
+            77.6223071,
+            12.9172421
+          ],
+          [
+            77.6223712,
+            12.9173339
+          ],
+          [
+            77.622401,
+            12.9174009
+          ],
+          [
+            77.6224202,
+            12.9174798
+          ],
+          [
+            77.622412,
+            12.9175658
+          ],
+          [
+            77.6223472,
+            12.9176923
+          ]
+        ]
+      },
+      "id": "way/160330784"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/160331538",
+        "highway": "trunk_link",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6224461,
+            12.9180682
+          ],
+          [
+            77.6225017,
+            12.9179832
+          ],
+          [
+            77.6227273,
+            12.9176101
+          ],
+          [
+            77.6227954,
+            12.9174509
+          ],
+          [
+            77.6228281,
+            12.9173744
+          ]
+        ]
+      },
+      "id": "way/160331538"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/160331539",
+        "highway": "trunk_link",
+        "lane_markings": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6221845,
+            12.918505
+          ],
+          [
+            77.6222593,
+            12.9184547
+          ],
+          [
+            77.6223207,
+            12.9184133
+          ],
+          [
+            77.622508,
+            12.918108
+          ],
+          [
+            77.6225286,
+            12.9180739
+          ],
+          [
+            77.6227392,
+            12.9177121
+          ],
+          [
+            77.6227867,
+            12.9176473
+          ],
+          [
+            77.6228687,
+            12.9175903
+          ],
+          [
+            77.6229935,
+            12.9175475
+          ],
+          [
+            77.6231011,
+            12.9175595
+          ],
+          [
+            77.6231201,
+            12.9175639
+          ],
+          [
+            77.6236376,
+            12.9177011
+          ]
+        ]
+      },
+      "id": "way/160331539"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/160511376",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "cycleway": "no",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "60",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "source:maxspeed": "sign",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6273567,
+            12.9096992
+          ],
+          [
+            77.6275614,
+            12.9093186
+          ]
+        ]
+      },
+      "id": "way/160511376"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/160511377",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "bridge": "yes",
+        "cycleway": "no",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "layer": "2",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "60",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:etymology:wikidata": "Q298273",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "source:maxspeed": "sign",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6284047,
+            12.9079368
+          ],
+          [
+            77.6285739,
+            12.9076595
+          ],
+          [
+            77.6295985,
+            12.9059993
+          ],
+          [
+            77.6313982,
+            12.9030894
+          ],
+          [
+            77.6324336,
+            12.9014031
+          ],
+          [
+            77.6351667,
+            12.8969401
+          ],
+          [
+            77.6375915,
+            12.893
+          ]
+        ]
+      },
+      "id": "way/160511377"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/172853382",
+        "highway": "primary",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "left",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6188855,
+            12.9234501
+          ],
+          [
+            77.6189926,
+            12.9232773
+          ],
+          [
+            77.6193219,
+            12.9227458
+          ],
+          [
+            77.6195407,
+            12.9224033
+          ],
+          [
+            77.6197926,
+            12.9220184
+          ],
+          [
+            77.6202103,
+            12.9213448
+          ],
+          [
+            77.6202306,
+            12.9213128
+          ],
+          [
+            77.6202544,
+            12.9212751
+          ],
+          [
+            77.6202708,
+            12.9212494
+          ],
+          [
+            77.6202961,
+            12.9212099
+          ]
+        ]
+      },
+      "id": "way/172853382"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/229965236",
+        "bicycle": "yes",
+        "cycleway": "no",
+        "foot": "yes",
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Begur Road",
+        "name:kn": "ಬೇಗೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6279709,
+            12.9065706
+          ],
+          [
+            77.6280579,
+            12.9066586
+          ],
+          [
+            77.62858,
+            12.9070089
+          ],
+          [
+            77.6286049,
+            12.9070256
+          ],
+          [
+            77.6287137,
+            12.9070868
+          ]
+        ]
+      },
+      "id": "way/229965236"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/229965238",
+        "foot": "no",
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Begur Road",
+        "name:kn": "ಬೇಗೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6287515,
+            12.9070222
+          ],
+          [
+            77.6286615,
+            12.9069506
+          ],
+          [
+            77.628103,
+            12.9066025
+          ],
+          [
+            77.6279848,
+            12.906476
+          ],
+          [
+            77.6278964,
+            12.9063064
+          ],
+          [
+            77.6278625,
+            12.9062029
+          ],
+          [
+            77.6278286,
+            12.9060902
+          ],
+          [
+            77.6277636,
+            12.9058051
+          ],
+          [
+            77.6277539,
+            12.9057715
+          ],
+          [
+            77.6276672,
+            12.9053935
+          ],
+          [
+            77.6275554,
+            12.9048748
+          ],
+          [
+            77.6274547,
+            12.904349
+          ],
+          [
+            77.6273896,
+            12.9040504
+          ],
+          [
+            77.6273246,
+            12.9038085
+          ],
+          [
+            77.6272743,
+            12.9035525
+          ],
+          [
+            77.6272674,
+            12.9035125
+          ],
+          [
+            77.6272674,
+            12.9035046
+          ],
+          [
+            77.6272676,
+            12.9034803
+          ],
+          [
+            77.6272749,
+            12.9034428
+          ],
+          [
+            77.6272802,
+            12.9034154
+          ],
+          [
+            77.6272902,
+            12.9033706
+          ],
+          [
+            77.627317,
+            12.9033028
+          ],
+          [
+            77.6273518,
+            12.9032388
+          ],
+          [
+            77.6273975,
+            12.9031428
+          ],
+          [
+            77.6274148,
+            12.9030854
+          ],
+          [
+            77.6274497,
+            12.9029408
+          ],
+          [
+            77.6274292,
+            12.9028828
+          ]
+        ]
+      },
+      "id": "way/229965238"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/229976708",
+        "highway": "secondary",
+        "name": "Tank Bund Road",
+        "name:kn": "ಟ್ಯಾಂಕ್ ಬಂಡ್ ರಸ್ತೆ",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6165199,
+            12.9154413
+          ],
+          [
+            77.6165486,
+            12.9154096
+          ],
+          [
+            77.6166045,
+            12.9153399
+          ],
+          [
+            77.616629,
+            12.9151871
+          ],
+          [
+            77.6166494,
+            12.9150354
+          ],
+          [
+            77.6166715,
+            12.9149857
+          ],
+          [
+            77.6167198,
+            12.9149302
+          ],
+          [
+            77.6171227,
+            12.9145413
+          ],
+          [
+            77.6174338,
+            12.9142759
+          ],
+          [
+            77.6177917,
+            12.9139845
+          ],
+          [
+            77.6179709,
+            12.9138265
+          ],
+          [
+            77.6184334,
+            12.9133254
+          ],
+          [
+            77.6185463,
+            12.9132217
+          ],
+          [
+            77.6189525,
+            12.9128591
+          ],
+          [
+            77.6190244,
+            12.9127759
+          ],
+          [
+            77.6192598,
+            12.9126334
+          ],
+          [
+            77.6194208,
+            12.9125472
+          ],
+          [
+            77.6195481,
+            12.9125028
+          ],
+          [
+            77.6196474,
+            12.9124883
+          ],
+          [
+            77.6201972,
+            12.912508
+          ],
+          [
+            77.6207203,
+            12.9125446
+          ],
+          [
+            77.6210931,
+            12.9126517
+          ],
+          [
+            77.6212688,
+            12.912708
+          ],
+          [
+            77.6216014,
+            12.9127955
+          ],
+          [
+            77.6216789,
+            12.9127953
+          ],
+          [
+            77.6217455,
+            12.9127883
+          ],
+          [
+            77.6219326,
+            12.9128348
+          ],
+          [
+            77.6220319,
+            12.9128426
+          ],
+          [
+            77.6222527,
+            12.9128086
+          ],
+          [
+            77.6224825,
+            12.9127649
+          ],
+          [
+            77.6225709,
+            12.9127512
+          ],
+          [
+            77.6227693,
+            12.9127393
+          ],
+          [
+            77.6228914,
+            12.9127422
+          ],
+          [
+            77.6230435,
+            12.9127432
+          ],
+          [
+            77.6232242,
+            12.9127263
+          ],
+          [
+            77.6236293,
+            12.912677
+          ],
+          [
+            77.6236707,
+            12.9126883
+          ],
+          [
+            77.6237132,
+            12.9127096
+          ],
+          [
+            77.6238234,
+            12.9128293
+          ],
+          [
+            77.6238558,
+            12.9128606
+          ],
+          [
+            77.6239093,
+            12.9128735
+          ],
+          [
+            77.6241988,
+            12.9128209
+          ],
+          [
+            77.6243596,
+            12.9127953
+          ],
+          [
+            77.6245364,
+            12.9128328
+          ],
+          [
+            77.6246955,
+            12.9128671
+          ],
+          [
+            77.6249748,
+            12.9129192
+          ],
+          [
+            77.6250232,
+            12.9129435
+          ],
+          [
+            77.6251583,
+            12.913026
+          ]
+        ]
+      },
+      "id": "way/229976708"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/230423164",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6225966,
+            12.9173014
+          ],
+          [
+            77.6223472,
+            12.9176923
+          ]
+        ]
+      },
+      "id": "way/230423164"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/237025636",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6240446,
+            12.9151188
+          ],
+          [
+            77.6242258,
+            12.9148111
+          ],
+          [
+            77.6243915,
+            12.9145188
+          ]
+        ]
+      },
+      "id": "way/237025636"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/237025639",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151801,
+            12.916317
+          ],
+          [
+            77.6151432,
+            12.9163201
+          ],
+          [
+            77.6147915,
+            12.9163499
+          ],
+          [
+            77.6144541,
+            12.9163713
+          ],
+          [
+            77.6131536,
+            12.9164108
+          ],
+          [
+            77.6123834,
+            12.916416
+          ],
+          [
+            77.6122583,
+            12.916417
+          ],
+          [
+            77.6111654,
+            12.9164264
+          ],
+          [
+            77.6106266,
+            12.9164431
+          ],
+          [
+            77.6101986,
+            12.9164504
+          ],
+          [
+            77.610188,
+            12.9164506
+          ],
+          [
+            77.6101169,
+            12.9164523
+          ],
+          [
+            77.6100469,
+            12.9164543
+          ],
+          [
+            77.6100005,
+            12.9164557
+          ],
+          [
+            77.6099288,
+            12.9164578
+          ],
+          [
+            77.6074465,
+            12.9165154
+          ],
+          [
+            77.6074199,
+            12.9165162
+          ],
+          [
+            77.6073789,
+            12.9165183
+          ],
+          [
+            77.6073236,
+            12.9165193
+          ],
+          [
+            77.6067587,
+            12.9165373
+          ],
+          [
+            77.6060202,
+            12.9165612
+          ],
+          [
+            77.6055124,
+            12.9165734
+          ],
+          [
+            77.6041289,
+            12.9165987
+          ],
+          [
+            77.6040209,
+            12.9166007
+          ],
+          [
+            77.6030528,
+            12.9166184
+          ],
+          [
+            77.6028373,
+            12.91662
+          ],
+          [
+            77.601803,
+            12.9166218
+          ],
+          [
+            77.6005999,
+            12.9166431
+          ],
+          [
+            77.600351,
+            12.9166475
+          ],
+          [
+            77.6000922,
+            12.9166528
+          ]
+        ]
+      },
+      "id": "way/237025639"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/239333571",
+        "highway": "trunk_link",
+        "lane_markings": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6292565,
+            12.9169435
+          ],
+          [
+            77.629255,
+            12.9168241
+          ]
+        ]
+      },
+      "id": "way/239333571"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/239438610",
+        "highway": "primary",
+        "lane_markings": "no",
+        "lit": "yes",
+        "name": "Madiwala Sarjapura Road",
+        "name:kn": "ಮಡಿವಾಳ ಸರ್ಜಾಪುರ ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk:left": "yes",
+        "sidewalk:left:surface": "paving_stones",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6202961,
+            12.9212099
+          ],
+          [
+            77.6204326,
+            12.9212646
+          ],
+          [
+            77.6206183,
+            12.9213614
+          ],
+          [
+            77.6208375,
+            12.9214785
+          ],
+          [
+            77.6209598,
+            12.9215439
+          ],
+          [
+            77.6219277,
+            12.9221108
+          ],
+          [
+            77.6228023,
+            12.9226377
+          ],
+          [
+            77.6229131,
+            12.9227043
+          ],
+          [
+            77.6230178,
+            12.9227661
+          ],
+          [
+            77.6232206,
+            12.9228858
+          ],
+          [
+            77.624256,
+            12.9231182
+          ],
+          [
+            77.6248792,
+            12.9232583
+          ],
+          [
+            77.6269752,
+            12.9237296
+          ],
+          [
+            77.6283741,
+            12.9240423
+          ],
+          [
+            77.6286029,
+            12.9240947
+          ],
+          [
+            77.6287288,
+            12.9241909
+          ]
+        ]
+      },
+      "id": "way/239438610"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/243897292",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6240948,
+            12.9147868
+          ],
+          [
+            77.6239418,
+            12.9150658
+          ]
+        ]
+      },
+      "id": "way/243897292"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/243897293",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6246589,
+            12.9140741
+          ],
+          [
+            77.6251714,
+            12.9132317
+          ],
+          [
+            77.6253504,
+            12.9129408
+          ],
+          [
+            77.6255442,
+            12.9126289
+          ]
+        ]
+      },
+      "id": "way/243897293"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/245809758",
+        "destination": "btm layout;jayanagar",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "maxspeed": "30",
+        "oneway": "yes",
+        "ref": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229543,
+            12.9165505
+          ],
+          [
+            77.6228622,
+            12.9165847
+          ],
+          [
+            77.6227779,
+            12.9166094
+          ],
+          [
+            77.6226466,
+            12.9166519
+          ],
+          [
+            77.6225201,
+            12.9166984
+          ],
+          [
+            77.6224655,
+            12.9167191
+          ],
+          [
+            77.6223288,
+            12.9167774
+          ],
+          [
+            77.6222602,
+            12.9168034
+          ],
+          [
+            77.6221812,
+            12.9168512
+          ],
+          [
+            77.6221488,
+            12.9168631
+          ],
+          [
+            77.6221002,
+            12.916881
+          ],
+          [
+            77.6219684,
+            12.9169283
+          ]
+        ]
+      },
+      "id": "way/245809758"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/312063814",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "maxspeed:type": "sign",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6398727,
+            12.889084
+          ],
+          [
+            77.6398414,
+            12.8891362
+          ],
+          [
+            77.6397799,
+            12.8892342
+          ],
+          [
+            77.6397357,
+            12.8893041
+          ],
+          [
+            77.63878,
+            12.8908426
+          ],
+          [
+            77.6377128,
+            12.8925608
+          ],
+          [
+            77.6369784,
+            12.8937647
+          ],
+          [
+            77.6366853,
+            12.8942451
+          ],
+          [
+            77.6366429,
+            12.8943146
+          ],
+          [
+            77.6360799,
+            12.8952324
+          ],
+          [
+            77.6351778,
+            12.8966974
+          ],
+          [
+            77.633455,
+            12.8994954
+          ],
+          [
+            77.6332401,
+            12.8998444
+          ],
+          [
+            77.6324388,
+            12.9011459
+          ],
+          [
+            77.6315171,
+            12.9026427
+          ],
+          [
+            77.6299112,
+            12.9052507
+          ],
+          [
+            77.6288825,
+            12.9069175
+          ],
+          [
+            77.6287986,
+            12.9070535
+          ],
+          [
+            77.6287582,
+            12.9071174
+          ],
+          [
+            77.6287431,
+            12.9071417
+          ],
+          [
+            77.6277928,
+            12.9086756
+          ],
+          [
+            77.6274318,
+            12.909251
+          ],
+          [
+            77.6273547,
+            12.9093582
+          ],
+          [
+            77.6272476,
+            12.9096149
+          ],
+          [
+            77.6270101,
+            12.9100034
+          ],
+          [
+            77.6261198,
+            12.9114595
+          ]
+        ]
+      },
+      "id": "way/312063814"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/312174028",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "40",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6226574,
+            12.9172126
+          ],
+          [
+            77.6223011,
+            12.9170799
+          ],
+          [
+            77.6219684,
+            12.9169283
+          ]
+        ]
+      },
+      "id": "way/312174028"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/370328586",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6231905,
+            12.9160684
+          ],
+          [
+            77.6234858,
+            12.9162914
+          ]
+        ]
+      },
+      "id": "way/370328586"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/377124830",
+        "alt_name": "Delhi - Chennai Highway",
+        "foot": "yes",
+        "highway": "trunk_link",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6234858,
+            12.9162914
+          ],
+          [
+            77.6235604,
+            12.9163216
+          ],
+          [
+            77.6235845,
+            12.9163061
+          ],
+          [
+            77.623607,
+            12.916256
+          ],
+          [
+            77.6236779,
+            12.9161089
+          ],
+          [
+            77.6237168,
+            12.9160645
+          ],
+          [
+            77.6237593,
+            12.9160357
+          ],
+          [
+            77.6238032,
+            12.9160163
+          ]
+        ]
+      },
+      "id": "way/377124830"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/377132617",
+        "alt_name": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6239622,
+            12.9147233
+          ],
+          [
+            77.6236515,
+            12.9152415
+          ],
+          [
+            77.6231905,
+            12.9160684
+          ],
+          [
+            77.6230541,
+            12.9163304
+          ],
+          [
+            77.6230294,
+            12.9163778
+          ],
+          [
+            77.6229543,
+            12.9165505
+          ]
+        ]
+      },
+      "id": "way/377132617"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/380707240",
+        "alt_name": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6242019,
+            12.914595
+          ],
+          [
+            77.6240088,
+            12.9146418
+          ]
+        ]
+      },
+      "id": "way/380707240"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/380709621",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "40",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6228281,
+            12.9173744
+          ],
+          [
+            77.6229259,
+            12.9173954
+          ]
+        ]
+      },
+      "id": "way/380709621"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/380980308",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6322917,
+            12.9164911
+          ],
+          [
+            77.6317612,
+            12.9165405
+          ],
+          [
+            77.6309395,
+            12.9166138
+          ],
+          [
+            77.6299413,
+            12.9166561
+          ],
+          [
+            77.6293197,
+            12.9166887
+          ],
+          [
+            77.6292164,
+            12.9166941
+          ],
+          [
+            77.6287887,
+            12.9167297
+          ],
+          [
+            77.6285856,
+            12.9167498
+          ],
+          [
+            77.6283794,
+            12.9168049
+          ],
+          [
+            77.6259953,
+            12.9175253
+          ],
+          [
+            77.625756,
+            12.9175781
+          ],
+          [
+            77.625555,
+            12.9176102
+          ],
+          [
+            77.6253351,
+            12.9176182
+          ],
+          [
+            77.6251311,
+            12.9176224
+          ],
+          [
+            77.6249271,
+            12.9176164
+          ],
+          [
+            77.6247091,
+            12.9176109
+          ],
+          [
+            77.6244453,
+            12.9175581
+          ],
+          [
+            77.6244169,
+            12.9175524
+          ],
+          [
+            77.6242664,
+            12.9175302
+          ],
+          [
+            77.6238988,
+            12.9174761
+          ],
+          [
+            77.6238004,
+            12.9174551
+          ],
+          [
+            77.6235614,
+            12.9174042
+          ],
+          [
+            77.6233051,
+            12.9173496
+          ]
+        ]
+      },
+      "id": "way/380980308"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/464465162",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6212842,
+            12.9168542
+          ],
+          [
+            77.6214901,
+            12.9169193
+          ],
+          [
+            77.6216695,
+            12.9169759
+          ]
+        ]
+      },
+      "id": "way/464465162"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/464465163",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6222334,
+            12.9171705
+          ],
+          [
+            77.6224563,
+            12.9172507
+          ],
+          [
+            77.6225966,
+            12.9173014
+          ]
+        ]
+      },
+      "id": "way/464465163"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/464465164",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.622197,
+            12.9179206
+          ],
+          [
+            77.6219809,
+            12.9182465
+          ],
+          [
+            77.6217925,
+            12.9185336
+          ],
+          [
+            77.621505,
+            12.9189241
+          ],
+          [
+            77.6211981,
+            12.919312
+          ],
+          [
+            77.6211643,
+            12.9193942
+          ],
+          [
+            77.6210467,
+            12.9196804
+          ]
+        ]
+      },
+      "id": "way/464465164"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/464465165",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "left",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6210467,
+            12.9196804
+          ],
+          [
+            77.6208506,
+            12.920006
+          ],
+          [
+            77.6206323,
+            12.9203687
+          ],
+          [
+            77.6204956,
+            12.9205958
+          ],
+          [
+            77.6202958,
+            12.9209276
+          ],
+          [
+            77.6202471,
+            12.9210144
+          ]
+        ]
+      },
+      "id": "way/464465165"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/476885790",
+        "highway": "trunk",
+        "lane_markings": "no",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6201733,
+            12.9211609
+          ],
+          [
+            77.6202961,
+            12.9212099
+          ]
+        ]
+      },
+      "id": "way/476885790"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/491889864",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6188446,
+            12.9161852
+          ],
+          [
+            77.6186346,
+            12.9161893
+          ],
+          [
+            77.6181144,
+            12.9161879
+          ],
+          [
+            77.6174276,
+            12.9161763
+          ],
+          [
+            77.6172407,
+            12.9161579
+          ],
+          [
+            77.6171756,
+            12.9161515
+          ],
+          [
+            77.6169634,
+            12.9161411
+          ],
+          [
+            77.6168465,
+            12.9161423
+          ]
+        ]
+      },
+      "id": "way/491889864"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/491889865",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6163047,
+            12.9163528
+          ],
+          [
+            77.6166903,
+            12.9163194
+          ],
+          [
+            77.6170671,
+            12.9163182
+          ],
+          [
+            77.6175426,
+            12.9163509
+          ],
+          [
+            77.6187185,
+            12.9163543
+          ],
+          [
+            77.6192664,
+            12.9163685
+          ],
+          [
+            77.6194449,
+            12.916389
+          ],
+          [
+            77.6198819,
+            12.916467
+          ],
+          [
+            77.6200281,
+            12.9165077
+          ],
+          [
+            77.6201826,
+            12.9165508
+          ],
+          [
+            77.6210334,
+            12.9167749
+          ],
+          [
+            77.6211055,
+            12.9167977
+          ],
+          [
+            77.6212842,
+            12.9168542
+          ]
+        ]
+      },
+      "id": "way/491889865"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/491889866",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151801,
+            12.916317
+          ],
+          [
+            77.6151961,
+            12.9164605
+          ]
+        ]
+      },
+      "id": "way/491889866"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/519734960",
+        "bridge": "yes",
+        "check_date": "2024-07-08",
+        "highway": "primary",
+        "lanes": "4",
+        "layer": "1",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6213794,
+            12.9188054
+          ],
+          [
+            77.6214152,
+            12.9188463
+          ],
+          [
+            77.6215249,
+            12.9189401
+          ],
+          [
+            77.6216117,
+            12.919024
+          ],
+          [
+            77.6216997,
+            12.9190728
+          ],
+          [
+            77.6218761,
+            12.9191001
+          ],
+          [
+            77.6220452,
+            12.9190668
+          ],
+          [
+            77.62218,
+            12.9190028
+          ],
+          [
+            77.6222926,
+            12.9188884
+          ],
+          [
+            77.622398,
+            12.9187445
+          ],
+          [
+            77.6225295,
+            12.9185042
+          ],
+          [
+            77.6226139,
+            12.9183288
+          ],
+          [
+            77.6227173,
+            12.9181046
+          ]
+        ]
+      },
+      "id": "way/519734960"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/559801783",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6216695,
+            12.9169759
+          ],
+          [
+            77.6222334,
+            12.9171705
+          ]
+        ]
+      },
+      "id": "way/559801783"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/610101763",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxheight": "5.5",
+        "maxspeed": "40",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229515,
+            12.9172887
+          ],
+          [
+            77.6228033,
+            12.9172563
+          ]
+        ]
+      },
+      "id": "way/610101763"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/654137560",
+        "highway": "trunk",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6226574,
+            12.9172126
+          ],
+          [
+            77.6225966,
+            12.9173014
+          ]
+        ]
+      },
+      "id": "way/654137560"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/654233027",
+        "highway": "trunk_link",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6224461,
+            12.9180682
+          ],
+          [
+            77.6223147,
+            12.9179911
+          ]
+        ]
+      },
+      "id": "way/654233027"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/688824218",
+        "highway": "primary",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "both",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6201122,
+            12.9212668
+          ],
+          [
+            77.6199308,
+            12.9215814
+          ],
+          [
+            77.619575,
+            12.9221973
+          ],
+          [
+            77.6193558,
+            12.9225657
+          ],
+          [
+            77.6191968,
+            12.9228306
+          ],
+          [
+            77.618972,
+            12.9231665
+          ],
+          [
+            77.6187935,
+            12.9234331
+          ],
+          [
+            77.6187611,
+            12.9234795
+          ],
+          [
+            77.6186023,
+            12.9237068
+          ]
+        ]
+      },
+      "id": "way/688824218"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/886153772",
+        "bridge": "viaduct",
+        "check_date": "2024-07-08",
+        "dual_carriageway": "yes",
+        "highway": "primary",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "maxheight": "4.5",
+        "maxspeed": "40",
+        "name": "Ragigudda-Silk Board Integrated Flyover",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "source:maxspeed": "sign",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6009818,
+            12.9167707
+          ],
+          [
+            77.6018886,
+            12.9167565
+          ],
+          [
+            77.6046272,
+            12.9167301
+          ],
+          [
+            77.6055093,
+            12.9166985
+          ],
+          [
+            77.6068966,
+            12.916649
+          ],
+          [
+            77.608769,
+            12.9166269
+          ],
+          [
+            77.6106789,
+            12.9165901
+          ],
+          [
+            77.6118255,
+            12.9165832
+          ],
+          [
+            77.6139489,
+            12.9165024
+          ],
+          [
+            77.6142033,
+            12.9164926
+          ],
+          [
+            77.6150652,
+            12.9164387
+          ],
+          [
+            77.6155799,
+            12.9164012
+          ],
+          [
+            77.6161169,
+            12.9163313
+          ],
+          [
+            77.616666,
+            12.9162711
+          ],
+          [
+            77.6171045,
+            12.9162816
+          ],
+          [
+            77.6175646,
+            12.9163121
+          ],
+          [
+            77.6189793,
+            12.9163339
+          ],
+          [
+            77.6193191,
+            12.9163443
+          ],
+          [
+            77.6195352,
+            12.9163779
+          ],
+          [
+            77.6197582,
+            12.9164634
+          ],
+          [
+            77.6200749,
+            12.9165965
+          ]
+        ]
+      },
+      "id": "way/886153772"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/886153773",
+        "bridge": "viaduct",
+        "check_date": "2026-04-23",
+        "dual_carriageway": "yes",
+        "highway": "primary",
+        "lanes": "2",
+        "layer": "1",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6188701,
+            12.9162035
+          ],
+          [
+            77.6183345,
+            12.9162143
+          ],
+          [
+            77.6175812,
+            12.9162126
+          ],
+          [
+            77.6170888,
+            12.9161807
+          ],
+          [
+            77.6166649,
+            12.9161772
+          ],
+          [
+            77.6155396,
+            12.9163031
+          ],
+          [
+            77.615037,
+            12.9163545
+          ],
+          [
+            77.6141976,
+            12.9164078
+          ],
+          [
+            77.6139087,
+            12.9164169
+          ],
+          [
+            77.6118265,
+            12.9164619
+          ],
+          [
+            77.6106846,
+            12.9164666
+          ],
+          [
+            77.6087578,
+            12.9165118
+          ],
+          [
+            77.6068882,
+            12.9165563
+          ],
+          [
+            77.6055308,
+            12.9166037
+          ],
+          [
+            77.6046139,
+            12.9166282
+          ],
+          [
+            77.6018855,
+            12.9166567
+          ],
+          [
+            77.6009778,
+            12.9166696
+          ]
+        ]
+      },
+      "id": "way/886153773"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1030669036",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "note": "Whitetopping work ongoing",
+        "oneway": "yes",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151426,
+            12.9151577
+          ],
+          [
+            77.6150354,
+            12.9137661
+          ]
+        ]
+      },
+      "id": "way/1030669036"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1030669037",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "note": "Whitetopping work ongoing",
+        "oneway": "yes",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6149711,
+            12.9137744
+          ],
+          [
+            77.6150655,
+            12.9147884
+          ],
+          [
+            77.6150862,
+            12.9151599
+          ]
+        ]
+      },
+      "id": "way/1030669037"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1042112410",
+        "highway": "trunk_link"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6256544,
+            12.9126626
+          ],
+          [
+            77.6255442,
+            12.9126289
+          ]
+        ]
+      },
+      "id": "way/1042112410"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1057573399",
+        "bicycle": "yes",
+        "cycleway": "no",
+        "foot": "yes",
+        "highway": "secondary",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Begur Road",
+        "name:kn": "ಬೇಗೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6287137,
+            12.9070868
+          ],
+          [
+            77.6287582,
+            12.9071174
+          ],
+          [
+            77.628929,
+            12.9072305
+          ]
+        ]
+      },
+      "id": "way/1057573399"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1073384217",
+        "alt_name": "Srinagar - Kanyakumari Highway;Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxheight:signed": "no",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229259,
+            12.9173954
+          ],
+          [
+            77.623148,
+            12.9174482
+          ],
+          [
+            77.623628,
+            12.9175615
+          ],
+          [
+            77.6243834,
+            12.9176822
+          ]
+        ]
+      },
+      "id": "way/1073384217"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1090570620",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6223472,
+            12.9176923
+          ],
+          [
+            77.6223044,
+            12.9177574
+          ],
+          [
+            77.6222664,
+            12.9178165
+          ],
+          [
+            77.622197,
+            12.9179206
+          ]
+        ]
+      },
+      "id": "way/1090570620"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1090570628",
+        "highway": "trunk_link",
+        "name": "Service Road",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6236376,
+            12.9177011
+          ],
+          [
+            77.624375,
+            12.9178281
+          ]
+        ]
+      },
+      "id": "way/1090570628"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1090570629",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6243834,
+            12.9176822
+          ],
+          [
+            77.6247366,
+            12.9177084
+          ]
+        ]
+      },
+      "id": "way/1090570629"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1108993651",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6219684,
+            12.9169283
+          ],
+          [
+            77.6215184,
+            12.9167765
+          ]
+        ]
+      },
+      "id": "way/1108993651"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1108993653",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6215184,
+            12.9167765
+          ],
+          [
+            77.6199358,
+            12.9163133
+          ]
+        ]
+      },
+      "id": "way/1108993653"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109914038",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6142171,
+            12.9165183
+          ],
+          [
+            77.6145682,
+            12.9164988
+          ],
+          [
+            77.6150798,
+            12.9164689
+          ],
+          [
+            77.6151308,
+            12.9164652
+          ]
+        ]
+      },
+      "id": "way/1109914038"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109914039",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152434,
+            12.9164549
+          ],
+          [
+            77.6152627,
+            12.9164526
+          ],
+          [
+            77.6157275,
+            12.9164081
+          ],
+          [
+            77.6163047,
+            12.9163528
+          ]
+        ]
+      },
+      "id": "way/1109914039"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109914041",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "note": "Whitetopping work ongoing",
+        "oneway": "yes",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152256,
+            12.9162758
+          ],
+          [
+            77.6151426,
+            12.9151577
+          ]
+        ]
+      },
+      "id": "way/1109914041"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109914406",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "note": "Whitetopping work ongoing",
+        "oneway": "yes",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6150862,
+            12.9151599
+          ],
+          [
+            77.6151746,
+            12.9162611
+          ],
+          [
+            77.6151764,
+            12.9162793
+          ],
+          [
+            77.6151801,
+            12.916317
+          ]
+        ]
+      },
+      "id": "way/1109914406"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109915717",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6156982,
+            12.9162576
+          ],
+          [
+            77.6152765,
+            12.9163018
+          ]
+        ]
+      },
+      "id": "way/1109915717"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109948513",
+        "alt_name": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229259,
+            12.9173954
+          ],
+          [
+            77.6229515,
+            12.9172887
+          ]
+        ]
+      },
+      "id": "way/1109948513"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109948700",
+        "alt_name": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk_link",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229515,
+            12.9172887
+          ],
+          [
+            77.6230347,
+            12.9172151
+          ],
+          [
+            77.623375,
+            12.9164764
+          ],
+          [
+            77.623439,
+            12.9163628
+          ],
+          [
+            77.6234858,
+            12.9162914
+          ]
+        ]
+      },
+      "id": "way/1109948700"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109948890",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "noexit": "yes",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6233051,
+            12.9173496
+          ],
+          [
+            77.6231607,
+            12.9173238
+          ],
+          [
+            77.6229515,
+            12.9172887
+          ]
+        ]
+      },
+      "id": "way/1109948890"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1109968033",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxheight": "5.5",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6202961,
+            12.9212099
+          ],
+          [
+            77.620374,
+            12.9210808
+          ]
+        ]
+      },
+      "id": "way/1109968033"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1124477399",
+        "highway": "trunk_link",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6223676,
+            12.9181996
+          ],
+          [
+            77.6224461,
+            12.9180682
+          ]
+        ]
+      },
+      "id": "way/1124477399"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1148717038",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.620374,
+            12.9210808
+          ],
+          [
+            77.6205402,
+            12.9207826
+          ],
+          [
+            77.6206949,
+            12.9205049
+          ],
+          [
+            77.6207247,
+            12.9204515
+          ],
+          [
+            77.6207471,
+            12.9204171
+          ],
+          [
+            77.6208647,
+            12.9202307
+          ]
+        ]
+      },
+      "id": "way/1148717038"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1155963376",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6261198,
+            12.9114595
+          ],
+          [
+            77.6251583,
+            12.913026
+          ],
+          [
+            77.6248109,
+            12.9135919
+          ],
+          [
+            77.6243627,
+            12.9142964
+          ],
+          [
+            77.6242019,
+            12.914595
+          ],
+          [
+            77.6240948,
+            12.9147868
+          ]
+        ]
+      },
+      "id": "way/1155963376"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1167293936",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6158912,
+            12.9162356
+          ],
+          [
+            77.6156982,
+            12.9162576
+          ]
+        ]
+      },
+      "id": "way/1167293936"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1167293937",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "left",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6168465,
+            12.9161423
+          ],
+          [
+            77.6166979,
+            12.9161412
+          ],
+          [
+            77.6158912,
+            12.9162356
+          ]
+        ]
+      },
+      "id": "way/1167293937"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1167293938",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxheight": "5.5",
+        "maxspeed": "40",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6228033,
+            12.9172563
+          ],
+          [
+            77.6226574,
+            12.9172126
+          ]
+        ]
+      },
+      "id": "way/1167293938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1167293939",
+        "highway": "trunk_link",
+        "maxheight": "5.5",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6228281,
+            12.9173744
+          ],
+          [
+            77.6228341,
+            12.9173384
+          ],
+          [
+            77.622835,
+            12.9173328
+          ],
+          [
+            77.6228346,
+            12.9172966
+          ],
+          [
+            77.6228033,
+            12.9172563
+          ]
+        ]
+      },
+      "id": "way/1167293939"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1167293940",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6214053,
+            12.9194475
+          ],
+          [
+            77.6214862,
+            12.9192766
+          ]
+        ]
+      },
+      "id": "way/1167293940"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1196514116",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6255442,
+            12.9126289
+          ],
+          [
+            77.6258542,
+            12.9121277
+          ],
+          [
+            77.6261085,
+            12.9117167
+          ],
+          [
+            77.6262768,
+            12.9114446
+          ],
+          [
+            77.6268087,
+            12.9105848
+          ]
+        ]
+      },
+      "id": "way/1196514116"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1196514117",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6273567,
+            12.9096992
+          ],
+          [
+            77.6274519,
+            12.909603
+          ],
+          [
+            77.6281657,
+            12.9084947
+          ],
+          [
+            77.6282524,
+            12.908353
+          ],
+          [
+            77.6285309,
+            12.9078976
+          ],
+          [
+            77.6289105,
+            12.9072616
+          ],
+          [
+            77.6289241,
+            12.9072388
+          ],
+          [
+            77.628929,
+            12.9072305
+          ]
+        ]
+      },
+      "id": "way/1196514117"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1196514118",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.628929,
+            12.9072305
+          ],
+          [
+            77.6289631,
+            12.9071733
+          ]
+        ]
+      },
+      "id": "way/1196514118"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1196514119",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6289631,
+            12.9071733
+          ],
+          [
+            77.6295779,
+            12.9061646
+          ],
+          [
+            77.6299033,
+            12.9056308
+          ],
+          [
+            77.6302568,
+            12.905054
+          ],
+          [
+            77.6303976,
+            12.9048243
+          ],
+          [
+            77.6304618,
+            12.9047195
+          ]
+        ]
+      },
+      "id": "way/1196514119"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1208112302",
+        "alt_name": "Hosur Road",
+        "embankment": "yes",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "loc_name": "Hosur Road",
+        "maxspeed": "60",
+        "maxweight:signed": "no",
+        "name": "Silk Board Flyover",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6218568,
+            12.918616
+          ],
+          [
+            77.6215952,
+            12.9189684
+          ],
+          [
+            77.6212875,
+            12.9193784
+          ]
+        ]
+      },
+      "id": "way/1208112302"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1208112303",
+        "alt_name": "Hosur Road",
+        "embankment": "yes",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "loc_name": "Hosur Road",
+        "maxspeed": "40",
+        "maxweight:signed": "no",
+        "name": "Silk Board Flyover",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6214862,
+            12.9192766
+          ],
+          [
+            77.6219355,
+            12.9186638
+          ]
+        ]
+      },
+      "id": "way/1208112303"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1254771465",
+        "alt_name": "Ramp D",
+        "bridge": "yes",
+        "dual_carriageway": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "layer": "2",
+        "maxheight": "4.5",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "name": "Silk Board Interchange",
+        "oneway": "yes",
+        "source:maxheight": "sign",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.626947,
+            12.917172
+          ],
+          [
+            77.6264843,
+            12.9173223
+          ],
+          [
+            77.6260552,
+            12.9174399
+          ],
+          [
+            77.6258647,
+            12.9174909
+          ],
+          [
+            77.6256676,
+            12.9175341
+          ],
+          [
+            77.6254316,
+            12.917555
+          ],
+          [
+            77.6251942,
+            12.917568
+          ],
+          [
+            77.6249565,
+            12.917569
+          ],
+          [
+            77.6246532,
+            12.917538
+          ],
+          [
+            77.6233596,
+            12.9172672
+          ],
+          [
+            77.6228183,
+            12.9169125
+          ],
+          [
+            77.6224551,
+            12.9168385
+          ],
+          [
+            77.6221146,
+            12.9167706
+          ],
+          [
+            77.6218727,
+            12.9166989
+          ],
+          [
+            77.6214669,
+            12.9165871
+          ]
+        ]
+      },
+      "id": "way/1254771465"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1292043921",
+        "highway": "secondary",
+        "name": "Tank Bund Road",
+        "name:kn": "ಟ್ಯಾಂಕ್ ಬಂಡ್ ರಸ್ತೆ",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6169634,
+            12.9161411
+          ],
+          [
+            77.6169305,
+            12.9160902
+          ],
+          [
+            77.6166625,
+            12.9156748
+          ],
+          [
+            77.6165199,
+            12.9154413
+          ]
+        ]
+      },
+      "id": "way/1292043921"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1299917512",
+        "bridge": "yes",
+        "check_date": "2024-03-01",
+        "highway": "primary",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6227173,
+            12.9181046
+          ],
+          [
+            77.6229179,
+            12.9176988
+          ],
+          [
+            77.6233245,
+            12.9168819
+          ],
+          [
+            77.6234745,
+            12.9163879
+          ],
+          [
+            77.6237162,
+            12.9159263
+          ],
+          [
+            77.6240067,
+            12.9153976
+          ],
+          [
+            77.6242747,
+            12.9149255
+          ]
+        ]
+      },
+      "id": "way/1299917512"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1299917514",
+        "bridge": "yes",
+        "check_date": "2024-07-08",
+        "highway": "primary",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Ramp A",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6200749,
+            12.9165965
+          ],
+          [
+            77.6201341,
+            12.9166326
+          ],
+          [
+            77.6202517,
+            12.9167296
+          ],
+          [
+            77.6204042,
+            12.9168642
+          ],
+          [
+            77.6204835,
+            12.916928
+          ],
+          [
+            77.6206226,
+            12.9170452
+          ],
+          [
+            77.6208466,
+            12.9172983
+          ],
+          [
+            77.6210992,
+            12.9176249
+          ],
+          [
+            77.6211722,
+            12.917718
+          ],
+          [
+            77.6212926,
+            12.9179259
+          ],
+          [
+            77.6213126,
+            12.9179939
+          ],
+          [
+            77.6213308,
+            12.9181035
+          ],
+          [
+            77.6213522,
+            12.9182871
+          ],
+          [
+            77.6213565,
+            12.9185985
+          ],
+          [
+            77.6213899,
+            12.9187356
+          ],
+          [
+            77.6213794,
+            12.9188054
+          ]
+        ]
+      },
+      "id": "way/1299917514"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1299917517",
+        "bridge": "yes",
+        "check_date": "2024-03-01",
+        "destination": "HSR;Marathahalli",
+        "highway": "primary_link",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6227173,
+            12.9181046
+          ],
+          [
+            77.6230079,
+            12.9178623
+          ],
+          [
+            77.6231691,
+            12.9177667
+          ],
+          [
+            77.6233348,
+            12.9176909
+          ],
+          [
+            77.6234801,
+            12.9176674
+          ],
+          [
+            77.6238075,
+            12.9176687
+          ],
+          [
+            77.6240038,
+            12.9176961
+          ],
+          [
+            77.6241964,
+            12.9177295
+          ],
+          [
+            77.624417,
+            12.9177654
+          ],
+          [
+            77.624649,
+            12.9177909
+          ],
+          [
+            77.6248781,
+            12.9178158
+          ],
+          [
+            77.6251117,
+            12.9178157
+          ],
+          [
+            77.6253276,
+            12.9178256
+          ],
+          [
+            77.6257399,
+            12.9178017
+          ]
+        ]
+      },
+      "id": "way/1299917517"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1299932382",
+        "bridge": "yes",
+        "check_date": "2024-07-08",
+        "destination": "HSR Layout",
+        "foot": "no",
+        "highway": "primary_link",
+        "lane_markings": "no",
+        "lanes": "2",
+        "layer": "1",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6205048,
+            12.9170258
+          ],
+          [
+            77.6208167,
+            12.9173425
+          ],
+          [
+            77.6211109,
+            12.9177408
+          ],
+          [
+            77.6212219,
+            12.9179414
+          ],
+          [
+            77.6212438,
+            12.9180073
+          ],
+          [
+            77.621269,
+            12.9181129
+          ],
+          [
+            77.6212902,
+            12.9182833
+          ],
+          [
+            77.6212908,
+            12.9186135
+          ],
+          [
+            77.6213223,
+            12.9187527
+          ],
+          [
+            77.6213794,
+            12.9188054
+          ]
+        ]
+      },
+      "id": "way/1299932382"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1301808818",
+        "bridge": "yes",
+        "check_date": "2024-03-01",
+        "highway": "primary_link",
+        "lanes": "2",
+        "layer": "1",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6257399,
+            12.9178017
+          ],
+          [
+            77.6260659,
+            12.9177301
+          ],
+          [
+            77.6265194,
+            12.917584
+          ]
+        ]
+      },
+      "id": "way/1301808818"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1301808819",
+        "check_date": "2024-03-01",
+        "highway": "primary",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6242747,
+            12.9149255
+          ],
+          [
+            77.6243203,
+            12.9148464
+          ],
+          [
+            77.6243915,
+            12.9145188
+          ]
+        ]
+      },
+      "id": "way/1301808819"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1301808820",
+        "check_date": "2024-07-08",
+        "destination": "HSR Layout",
+        "highway": "primary_link",
+        "lane_markings": "no",
+        "lanes": "2",
+        "lit": "yes",
+        "maxspeed": "40",
+        "name": "Ramp to Hosur road joining Ragigudda Silkboard Double Decker Flyover",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6202167,
+            12.9168179
+          ],
+          [
+            77.6205048,
+            12.9170258
+          ]
+        ]
+      },
+      "id": "way/1301808820"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1303068639",
+        "alt_name": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxheight": "5.5",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6229543,
+            12.9165505
+          ],
+          [
+            77.6228902,
+            12.9167603
+          ],
+          [
+            77.6228536,
+            12.9168664
+          ],
+          [
+            77.6228375,
+            12.9169462
+          ],
+          [
+            77.6228348,
+            12.91699
+          ],
+          [
+            77.6228392,
+            12.9170482
+          ],
+          [
+            77.6228463,
+            12.917099
+          ],
+          [
+            77.6228631,
+            12.9171577
+          ],
+          [
+            77.6228991,
+            12.917215
+          ]
+        ]
+      },
+      "id": "way/1303068639"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1303740766",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "cycleway": "no",
+        "embankment": "yes",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "60",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:etymology:wikidata": "Q298273",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "source:maxspeed": "sign",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6275614,
+            12.9093186
+          ],
+          [
+            77.6284047,
+            12.9079368
+          ]
+        ]
+      },
+      "id": "way/1303740766"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1303740767",
+        "alt_name": "Electronic City Elevated Expressway",
+        "auto_rickshaw:conditional": "no @ (2027 Sep 11 >=)",
+        "bicycle": "no",
+        "cycleway": "no",
+        "embankment": "yes",
+        "foot": "no",
+        "highway": "motorway",
+        "lanes": "2",
+        "lit": "yes",
+        "loc_name": "Bengaluru City Expressway",
+        "maxspeed": "60",
+        "motorcycle:conditional": "no @ (2027 Sep 11 >=)",
+        "name": "Electronic City Flyover",
+        "name:etymology:wikidata": "Q298273",
+        "name:ta": "எலக்ட்ரானிக் சிட்டி விரைவுப் பாலம்",
+        "old_name": "Bangalore Elevated Tollways Limited",
+        "oneway": "yes",
+        "operator": "BETL",
+        "reg_name": "Hosur Road Expressway",
+        "short_name": "BETL",
+        "source:maxspeed": "sign",
+        "surface": "asphalt",
+        "toll": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6283396,
+            12.9079036
+          ],
+          [
+            77.6275003,
+            12.9092817
+          ],
+          [
+            77.6274877,
+            12.9093025
+          ]
+        ]
+      },
+      "id": "way/1303740767"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1310034044",
+        "highway": "trunk_link",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6237354,
+            12.9173475
+          ],
+          [
+            77.6236747,
+            12.9173673
+          ],
+          [
+            77.6235614,
+            12.9174042
+          ]
+        ]
+      },
+      "id": "way/1310034044"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1314562830",
+        "check_date": "2024-03-01",
+        "highway": "primary_link",
+        "lanes": "2",
+        "name": "Silkboard Double Decker Flyover",
+        "official_name": "Silk Board Interchange",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "start_date": "2024-07-17",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6265194,
+            12.917584
+          ],
+          [
+            77.6267689,
+            12.9175108
+          ],
+          [
+            77.6271288,
+            12.9174072
+          ]
+        ]
+      },
+      "id": "way/1314562830"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1317811589",
+        "highway": "trunk_link",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6235864,
+            12.9165801
+          ],
+          [
+            77.623375,
+            12.9164764
+          ],
+          [
+            77.6230541,
+            12.9163304
+          ]
+        ]
+      },
+      "id": "way/1317811589"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1321561536",
+        "highway": "trunk_link",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6223147,
+            12.9179911
+          ],
+          [
+            77.622197,
+            12.9179206
+          ]
+        ]
+      },
+      "id": "way/1321561536"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1321626563",
+        "highway": "secondary",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151961,
+            12.9164605
+          ],
+          [
+            77.6152237,
+            12.9165048
+          ]
+        ]
+      },
+      "id": "way/1321626563"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1321626564",
+        "highway": "secondary",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152237,
+            12.9165048
+          ],
+          [
+            77.6152434,
+            12.9164549
+          ]
+        ]
+      },
+      "id": "way/1321626564"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1326496636",
+        "highway": "trunk_link",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6196739,
+            12.9162567
+          ],
+          [
+            77.6195751,
+            12.9161022
+          ]
+        ]
+      },
+      "id": "way/1326496636"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1331247892",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxheight": "5.5",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "left",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6202471,
+            12.9210144
+          ],
+          [
+            77.6201733,
+            12.9211609
+          ]
+        ]
+      },
+      "id": "way/1331247892"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1340248834",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151308,
+            12.9164652
+          ],
+          [
+            77.6151569,
+            12.9164633
+          ],
+          [
+            77.6151961,
+            12.9164605
+          ]
+        ]
+      },
+      "id": "way/1340248834"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1340248835",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152434,
+            12.9164549
+          ],
+          [
+            77.6152282,
+            12.9163102
+          ]
+        ]
+      },
+      "id": "way/1340248835"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1340248836",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152282,
+            12.9163102
+          ],
+          [
+            77.6151801,
+            12.916317
+          ]
+        ]
+      },
+      "id": "way/1340248836"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1340248837",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6151961,
+            12.9164605
+          ],
+          [
+            77.6152434,
+            12.9164549
+          ]
+        ]
+      },
+      "id": "way/1340248837"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1351994264",
+        "bridge": "viaduct",
+        "check_date": "2024-07-08",
+        "dual_carriageway": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "layer": "1",
+        "name": "Ragigudda-Silk Board Integrated Flyover (u/c)",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "smoothness": "excellent",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6214669,
+            12.9165871
+          ],
+          [
+            77.6212047,
+            12.9165005
+          ],
+          [
+            77.6204783,
+            12.916274
+          ],
+          [
+            77.6200263,
+            12.9161431
+          ],
+          [
+            77.6188701,
+            12.9162035
+          ]
+        ]
+      },
+      "id": "way/1351994264"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1351994265",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "1",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "no",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6199358,
+            12.9163133
+          ],
+          [
+            77.6196739,
+            12.9162567
+          ],
+          [
+            77.6194127,
+            12.9162034
+          ],
+          [
+            77.6191564,
+            12.9161908
+          ],
+          [
+            77.6188446,
+            12.9161852
+          ]
+        ]
+      },
+      "id": "way/1351994265"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1362809474",
+        "highway": "primary",
+        "oneway": "yes"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.620374,
+            12.9210808
+          ],
+          [
+            77.6202471,
+            12.9210144
+          ]
+        ]
+      },
+      "id": "way/1362809474"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1362809475",
+        "highway": "primary",
+        "lane_markings": "no",
+        "lit": "yes",
+        "name": "Madiwala Sarjapura Road",
+        "name:kn": "ಮಡಿವಾಳ ಸರ್ಜಾಪುರ ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk:left": "yes",
+        "sidewalk:left:surface": "paving_stones",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6207556,
+            12.9212926
+          ],
+          [
+            77.6205247,
+            12.92116
+          ]
+        ]
+      },
+      "id": "way/1362809475"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1384907601",
+        "frontage_road": "yes",
+        "highway": "trunk_link",
+        "lanes": "2",
+        "maxspeed": "30",
+        "name": "Service Road",
+        "oneway": "yes",
+        "sidewalk": "separate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.624375,
+            12.9178281
+          ],
+          [
+            77.6248138,
+            12.9178719
+          ],
+          [
+            77.6252968,
+            12.9178913
+          ],
+          [
+            77.6256919,
+            12.9178679
+          ],
+          [
+            77.6257399,
+            12.9178659
+          ],
+          [
+            77.6258381,
+            12.9178569
+          ],
+          [
+            77.6264421,
+            12.9176973
+          ],
+          [
+            77.626744,
+            12.9175912
+          ],
+          [
+            77.6270655,
+            12.9174749
+          ],
+          [
+            77.6271288,
+            12.9174072
+          ]
+        ]
+      },
+      "id": "way/1384907601"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1393438377",
+        "highway": "trunk_link"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6224461,
+            12.9180682
+          ],
+          [
+            77.622508,
+            12.918108
+          ]
+        ]
+      },
+      "id": "way/1393438377"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1393474724",
+        "highway": "primary",
+        "lane_markings": "no",
+        "lit": "yes",
+        "maxheight": "5.5",
+        "name": "Madiwala Sarjapura Road",
+        "name:kn": "ಮಡಿವಾಳ ಸರ್ಜಾಪುರ ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk:left": "yes",
+        "sidewalk:left:surface": "paving_stones",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6205247,
+            12.92116
+          ],
+          [
+            77.6204844,
+            12.9211388
+          ],
+          [
+            77.6204297,
+            12.9211101
+          ],
+          [
+            77.620374,
+            12.9210808
+          ]
+        ]
+      },
+      "id": "way/1393474724"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1411430413",
+        "destination": "BTM Layout; Ragigudda",
+        "dual_carriageway": "yes",
+        "embankment": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "maxheight": "4.5",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "oneway": "yes",
+        "source:maxheight": "sign",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6281379,
+            12.9167864
+          ],
+          [
+            77.6278307,
+            12.9168859
+          ],
+          [
+            77.6277922,
+            12.9168983
+          ],
+          [
+            77.626947,
+            12.917172
+          ]
+        ]
+      },
+      "id": "way/1411430413"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1411430414",
+        "destination": "BTM Layout; Ragigudda",
+        "dual_carriageway": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "maxheight": "4.5",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "oneway": "yes",
+        "source:maxheight": "sign",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.628383,
+            12.9166937
+          ],
+          [
+            77.6283003,
+            12.916725
+          ],
+          [
+            77.6281379,
+            12.9167864
+          ]
+        ]
+      },
+      "id": "way/1411430414"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1416769967",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6243915,
+            12.9145188
+          ],
+          [
+            77.6246589,
+            12.9140741
+          ]
+        ]
+      },
+      "id": "way/1416769967"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1421955575",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6247366,
+            12.9177084
+          ],
+          [
+            77.6250219,
+            12.9177105
+          ],
+          [
+            77.625459,
+            12.9177069
+          ],
+          [
+            77.6257316,
+            12.9176757
+          ],
+          [
+            77.6259616,
+            12.91763
+          ],
+          [
+            77.6267966,
+            12.9174011
+          ],
+          [
+            77.6283946,
+            12.9169273
+          ],
+          [
+            77.6285971,
+            12.9168787
+          ],
+          [
+            77.6288171,
+            12.9168603
+          ],
+          [
+            77.629255,
+            12.9168241
+          ]
+        ]
+      },
+      "id": "way/1421955575"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1422778328",
+        "highway": "primary_link",
+        "lanes": "2",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6173179,
+            12.9161158
+          ],
+          [
+            77.6172407,
+            12.9161579
+          ]
+        ]
+      },
+      "id": "way/1422778328"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1422778329",
+        "embankment": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6180327,
+            12.9161288
+          ],
+          [
+            77.6173179,
+            12.9161158
+          ]
+        ]
+      },
+      "id": "way/1422778329"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1422778330",
+        "bridge": "yes",
+        "highway": "primary_link",
+        "lanes": "2",
+        "layer": "1",
+        "maxspeed": "40",
+        "maxspeed:type": "sign",
+        "oneway": "yes",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6188701,
+            12.9162035
+          ],
+          [
+            77.6185074,
+            12.9161458
+          ],
+          [
+            77.6180327,
+            12.9161288
+          ]
+        ]
+      },
+      "id": "way/1422778330"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1453814098",
+        "highway": "primary",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "60",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "sidewalk": "left",
+        "smoothness": "good",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6201733,
+            12.9211609
+          ],
+          [
+            77.6201362,
+            12.9212213
+          ],
+          [
+            77.6201122,
+            12.9212668
+          ]
+        ]
+      },
+      "id": "way/1453814098"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1453821325",
+        "alt_name": "Delhi - Chennai Highway",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "2",
+        "maxspeed": "80",
+        "name": "Srinagar - Kanyakumari Highway",
+        "name:kn": "ಕನ್ಯಾಕುಮಾರಿ - ಶ್ರೀನಗರ ಹೆದ್ದಾರಿ",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6228991,
+            12.917215
+          ],
+          [
+            77.6229219,
+            12.9172485
+          ],
+          [
+            77.6229515,
+            12.9172887
+          ]
+        ]
+      },
+      "id": "way/1453821325"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1454345481",
+        "frontage_road": "yes",
+        "highway": "trunk",
+        "lanes": "2",
+        "maxspeed": "40",
+        "name": "Service Road",
+        "oneway": "yes",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6240088,
+            12.9146418
+          ],
+          [
+            77.6239622,
+            12.9147233
+          ]
+        ]
+      },
+      "id": "way/1454345481"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1501709575",
+        "highway": "trunk_link"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6231201,
+            12.9175639
+          ],
+          [
+            77.623148,
+            12.9174482
+          ]
+        ]
+      },
+      "id": "way/1501709575"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1534247766",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "maxspeed": "60",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "official_name": "KC Reddy Ring Road",
+        "official_name:etymology:wikidata": "Q6323235",
+        "official_name:kn": "ಕ್ಚ್ ರೆಡ್ಡಿ ವರ್ತುಲ ರಸ್ತೆನ್ಟ್",
+        "oneway": "yes",
+        "ref": "NH44;NH48",
+        "ref:old": "NH7",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "source:official_name": "https://timesofindia.indiatimes.com/city/bengaluru/kc-reddy-vartula-raste-30km-orr-stretch-named-after-first-mysore-cm/articleshow/107002205.cms",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.629255,
+            12.9168241
+          ],
+          [
+            77.6298974,
+            12.9167787
+          ],
+          [
+            77.6306363,
+            12.91673
+          ],
+          [
+            77.6310658,
+            12.9167093
+          ],
+          [
+            77.6322048,
+            12.9165984
+          ],
+          [
+            77.6322913,
+            12.9165892
+          ]
+        ]
+      },
+      "id": "way/1534247766"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1537156440",
+        "highway": "trunk_link"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6306363,
+            12.91673
+          ],
+          [
+            77.6306416,
+            12.9168671
+          ]
+        ]
+      },
+      "id": "way/1537156440"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1543206230",
+        "dual_carriageway": "yes",
+        "highway": "trunk",
+        "lanes": "2",
+        "maxspeed": "50",
+        "name": "Outer Ring Road",
+        "name:kn": "ಹೊರ ವರ್ತುಲ ರಸ್ತೆ",
+        "oneway": "yes",
+        "short_name": "ORR",
+        "sidewalk": "separate",
+        "smoothness": "intermediate",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152765,
+            12.9163018
+          ],
+          [
+            77.6152528,
+            12.9163059
+          ],
+          [
+            77.6152282,
+            12.9163102
+          ]
+        ]
+      },
+      "id": "way/1543206230"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1543206231",
+        "alt_name": "Madiwala Lake road",
+        "highway": "secondary",
+        "name": "29th Main Road",
+        "name:kn": "೨೯ನೇ ಮುಖ್ಯ ರಸ್ತೆ",
+        "note": "Whitetopping work ongoing",
+        "oneway": "yes",
+        "surface": "concrete"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6152282,
+            12.9163102
+          ],
+          [
+            77.6152256,
+            12.9162758
+          ]
+        ]
+      },
+      "id": "way/1543206231"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1553783841",
+        "highway": "trunk_link"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.626901,
+            12.9106433
+          ],
+          [
+            77.6268087,
+            12.9105848
+          ]
+        ]
+      },
+      "id": "way/1553783841"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1553783843",
+        "alt_name": "Srinagar - Kanyakumari Highway",
+        "alt_name_1": "Delhi - Chennai Highway",
+        "foot": "no",
+        "highway": "trunk",
+        "int_ref": "AH43",
+        "lanes": "3",
+        "lit": "yes",
+        "maxspeed": "80",
+        "name": "Hosur Road",
+        "name:etymology:wikidata": "Q297967",
+        "name:kn": "ಹೊಸೂರು ರಸ್ತೆ",
+        "oneway": "yes",
+        "ref": "NH44",
+        "ref:old": "NH7",
+        "ref_1": "NH48",
+        "sidewalk": "no",
+        "surface": "asphalt"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            77.6268087,
+            12.9105848
+          ],
+          [
+            77.6273567,
+            12.9096992
+          ]
+        ]
+      },
+      "id": "way/1553783843"
+    }
+  ]
+}
