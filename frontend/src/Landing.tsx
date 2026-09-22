@@ -538,21 +538,6 @@ export function Landing() {
         </div>
       </section>
 
-      {prefersReducedMotion ? (
-        <div
-          ref={heroShot.ref}
-          className={`landing-shot landing-shot-hero reveal-scale${heroShot.visible ? " is-visible" : ""}`}
-        >
-          <img
-            ref={heroShotParallax as never}
-            src="/landing/flood-hero-poster.jpg"
-            alt="Isometric illustration of a Bengaluru street intersection flooding and receding"
-          />
-        </div>
-      ) : (
-        <ScrollScrubVideo />
-      )}
-
       <section className="landing-section landing-silkboard-pitch">
         <Reveal as="div">
           <p className="eyebrow">Silk Board Junction · Evidence-gated, self-healing</p>
@@ -600,6 +585,21 @@ export function Landing() {
           </button>
         </Reveal>
       </section>
+
+      {prefersReducedMotion ? (
+        <div
+          ref={heroShot.ref}
+          className={`landing-shot landing-shot-hero reveal-scale${heroShot.visible ? " is-visible" : ""}`}
+        >
+          <img
+            ref={heroShotParallax as never}
+            src="/landing/flood-hero-poster.jpg"
+            alt="Isometric illustration of a Bengaluru street intersection flooding and receding"
+          />
+        </div>
+      ) : (
+        <ScrollScrubVideo />
+      )}
 
       <section className="landing-section">
         <Reveal as="div">

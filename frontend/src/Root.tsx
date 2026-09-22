@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { isAuthenticated } from "./auth";
+import { isAuthenticated } from "./kindeAuth";
 import { LoginGate } from "./LoginGate";
 
 const App = lazy(() => import("./App"));
@@ -22,7 +22,7 @@ export function navigateTo(path: string) {
 
 export default function Root() {
   const [pathname, setPathname] = useState(() => window.location.pathname);
-  const [authed, setAuthed] = useState(() => isAuthenticated());
+  const [authed, setAuthed] = useState<boolean | null>(null);
 
   useEffect(() => {
     const onPopState = () => setPathname(window.location.pathname);
@@ -30,8 +30,15 @@ export default function Root() {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  if (isAppPath(pathname) && !authed) {
-    return <LoginGate onSuccess={() => setAuthed(true)} />;
+  useEffect(() => {
+    isAuthenticated()
+      .then(setAuthed)
+      .catch(() => setAuthed(false));
+  }, []);
+
+  if (isAppPath(pathname)) {
+    if (authed === null) return null;
+    if (!authed) return <LoginGate />;
   }
 
   return (
