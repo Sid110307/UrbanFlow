@@ -459,7 +459,7 @@ export function CameraDetailModal({
     null;
 
   const handleCopySnapshot = () => {
-    const url = `https://urbanflow.bbmp.gov.in${getCameraImage(selectedCamId, cameraState.detection_active, { surfaceStatus: worstSurfaceStatus, debrisClass: cameraDebrisClass })}`;
+    const url = `https://urbanflow-scuba-cats.netlify.app${getCameraImage(selectedCamId, cameraState.detection_active, { surfaceStatus: worstSurfaceStatus, debrisClass: cameraDebrisClass })}`;
     navigator.clipboard.writeText(url);
     setSnapshotCopied(true);
     setTimeout(() => setSnapshotCopied(false), 2500);
@@ -672,7 +672,6 @@ export function CameraStrip({
 
   return (
     <div className="camera-strip">
-      <span className="camera-strip-label">Live CCTV Corridor Feeds</span>
       <div className="camera-strip-row">
         {CAMERAS.map((camera) => {
           const state = snapshot.cameras.find((c) => c.camera_id === camera.id);

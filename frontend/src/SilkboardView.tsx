@@ -226,9 +226,6 @@ export function SilkboardView() {
           >
             {demoStep ?? "Run Demo"}
           </button>
-          <span className={`live-status${sim.snapshot ? "" : " is-connecting"}`}>
-            {sim.snapshot ? "Live" : "Connecting"}
-          </span>
           <span className="silkboard-elapsed">
             T+ {formatElapsed(sim.config.elapsed_seconds)}
           </span>

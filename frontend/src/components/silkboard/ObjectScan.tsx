@@ -16,6 +16,10 @@ async function loadModel(): Promise<ObjectDetection> {
   if (!modelPromise) {
     modelPromise = (async () => {
       const tf = await import("@tensorflow/tfjs");
+      // Force the GPU backend explicitly: without this, tfjs can silently
+      // fall back to the CPU backend, which runs detection on the main
+      // thread and visibly janks the page.
+      await tf.setBackend("webgl");
       await tf.ready();
       const cocoSsd = await import("@tensorflow-models/coco-ssd");
       return cocoSsd.load({ base: "lite_mobilenet_v2" });
@@ -24,7 +28,7 @@ async function loadModel(): Promise<ObjectDetection> {
   return modelPromise;
 }
 
-const SCAN_INTERVAL_MS = 6000;
+const SCAN_INTERVAL_MS = 15000;
 
 export function ObjectScan({
   imageSrc,
@@ -47,6 +51,10 @@ export function ObjectScan({
     async function scan() {
       const img = imgRef.current;
       if (!img) return;
+      if (document.hidden) {
+        timer = setTimeout(scan, SCAN_INTERVAL_MS);
+        return;
+      }
 
       try {
         const model = await loadModel();

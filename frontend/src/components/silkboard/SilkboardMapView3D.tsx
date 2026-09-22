@@ -97,7 +97,73 @@ function DeckGLOverlay(props: MapLibreOverlayProps) {
   return null;
 }
 
-type TooltipDatum = { _kind: string; html: string };
+function RainCanvas({ intensity }: { intensity: number }) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf = 0;
+    let width = 0;
+    let height = 0;
+    const drops: Array<{ x: number; y: number; length: number; speed: number; opacity: number }> = [];
+    const count = Math.round(30 + Math.min(intensity, 100) * 1.3);
+
+    function resize() {
+      const parent = canvas!.parentElement;
+      if (!parent) return;
+      width = canvas!.width = parent.clientWidth;
+      height = canvas!.height = parent.clientHeight;
+    }
+
+    function seed() {
+      drops.length = 0;
+      for (let i = 0; i < count; i++) {
+        drops.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          length: 10 + Math.random() * 16,
+          speed: 9 + Math.random() * 7,
+          opacity: 0.12 + Math.random() * 0.28,
+        });
+      }
+    }
+
+    resize();
+    seed();
+    window.addEventListener("resize", resize);
+
+    function render() {
+      ctx!.clearRect(0, 0, width, height);
+      ctx!.lineWidth = 1.1;
+      for (const d of drops) {
+        ctx!.strokeStyle = `rgba(200, 220, 240, ${d.opacity})`;
+        ctx!.beginPath();
+        ctx!.moveTo(d.x, d.y);
+        ctx!.lineTo(d.x - 2.5, d.y + d.length);
+        ctx!.stroke();
+        d.y += d.speed;
+        d.x -= 1.2;
+        if (d.y > height) {
+          d.y = -d.length;
+          d.x = Math.random() * (width + 40);
+        }
+      }
+      raf = requestAnimationFrame(render);
+    }
+    render();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", resize);
+    };
+  }, [intensity]);
+
+  return <canvas ref={canvasRef} className="silkboard-map-rain" />;
+}
 
 export function SilkboardMapView3D({
   snapshot,
@@ -493,7 +559,15 @@ export function SilkboardMapView3D({
           />
         )}
 
-        <DeckGLOverlay interleaved layers={layers} effects={[lightingEffect]} getTooltip={getTooltip} />
+        <DeckGLOverlay
+          interleaved
+          layers={layers}
+          effects={[lightingEffect]}
+          getTooltip={getTooltip}
+          getCursor={({ isDragging, isHovering }: { isDragging: boolean; isHovering: boolean }) =>
+            isDragging ? "grabbing" : isHovering ? "pointer" : "grab"
+          }
+        />
 
         {latestAnnotations.map((detection) => {
           const node = DRAIN_NODES.find((n) => n.drain_id === detection.drain_id);
@@ -521,6 +595,10 @@ export function SilkboardMapView3D({
           );
         })}
       </MapGL>
+
+      {(snapshot?.config.rainfall_mm_hr ?? 0) > 12 && (
+        <RainCanvas intensity={snapshot!.config.rainfall_mm_hr} />
+      )}
 
       <div className="map-toolbar">
         <button type="button" className="dimension-toggle-button" onClick={handleToggleDimension} aria-label={is3D ? "Switch to 2D" : "Switch to 3D"}>

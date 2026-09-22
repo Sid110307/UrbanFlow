@@ -406,7 +406,7 @@ export function SilkboardAgentPanel({
       if (!drain || !node) return { text: `I couldn't find ${id} in this network.` };
       onSelectDrain(id);
       return {
-        text: `${id} (${node.label}): ${drain.status.toUpperCase()}, ${drain.telemetry.water_level_cm.toFixed(0)}cm water level, ${drain.telemetry.flow_velocity_mps.toFixed(2)} m/s flow, ${drain.telemetry.turbidity_ntu} NTU turbidity. Focused on the map.`,
+        text: `${id} (${node.label}): ${drain.status.toUpperCase()}, ${drain.telemetry.water_level_cm.toFixed(0)}cm water level, ${drain.telemetry.flow_velocity_mps.toFixed(2)} m/s flow, ${drain.telemetry.turbidity_ntu} NTU turbidity.`,
         attachment: { kind: "drains", drainIds: [id] },
       };
     }
@@ -444,32 +444,45 @@ export function SilkboardAgentPanel({
     if (!isQuestion && /run.*(demo|orchestrat)|full demo/.test(text)) {
       if (!onRunDemo) return { text: "Demo orchestration isn't wired up here." };
       onRunDemo();
-      return { text: "Running the full orchestrated demo, watch the topbar and map." };
+      return { text: "Running the full orchestrated demo across every scenario and failure mode." };
     }
 
     if (!isQuestion && /kill.*cam|camera.*(offline|down|kill|fail)|offline.*camera/.test(text)) {
       onToggleFailure?.("camera_offline");
-      return { text: "Toggled CAM-02 offline. Watch detection failover reroute around it." };
+      return { text: "Toggled CAM-02 offline. Detection failover reroutes to adjacent cameras." };
     }
 
     if (!isQuestion && /sensor.*(corrupt|fail|bad)|corrupt.*sensor/.test(text)) {
       onToggleFailure?.("sensor_corrupt");
-      return { text: "Toggled sensor corruption on a drain node. Watch the outlier exclusion gate." };
+      return { text: "Toggled sensor corruption on a drain node. The outlier-exclusion gate will flag and drop it." };
     }
 
     if (!isQuestion && /gemini.*(hallucinat|wrong|lie|contradict)/.test(text)) {
       onToggleFailure?.("gemini_hallucination");
-      return { text: "Toggled a forced Gemini hallucination. Watch the zero-trust cross-validation gate." };
+      return { text: "Toggled a forced Gemini hallucination. Zero-trust cross-validation should catch and reject it." };
     }
 
     if (!isQuestion && (/gemini.*(timeout|slow|hang)/.test(text) || /network.*cut|cut.*network/.test(text))) {
       onToggleFailure?.("gemini_timeout");
-      return { text: "Toggled a simulated Gemini timeout. Watch the fallback to the heuristic engine." };
+      return { text: "Toggled a simulated Gemini timeout. The heuristic engine takes over automatically." };
     }
 
     if (!isQuestion && /dispatch.*(no ack|silen|fail)|crew.*(silen|down)/.test(text)) {
       onToggleFailure?.("dispatch_no_ack");
-      return { text: "Toggled dispatch ACK timeout. Watch the alternate dispatch channel fallback." };
+      return { text: "Toggled dispatch ACK timeout. Falls back to the alternate dispatch channel automatically." };
+    }
+
+    if (!isQuestion && /dispatch|send.*crew|alert.*crew|notify.*crew/.test(text)) {
+      const drainMatchForDispatch = raw.toUpperCase().match(/BLR-SKB-\d{3}/);
+      const target = drainMatchForDispatch
+        ? detections.find((d) => d.drain_id === drainMatchForDispatch[0] && d.classification !== "normal_runoff")
+        : activeAlerts[0];
+      if (!target) return { text: "No active alert to dispatch on right now." };
+      setDispatchDetection(target);
+      return {
+        text: `Dispatching crew to ${target.drain_id}: ${target.dispatch_action ?? "field crew notified"}.`,
+        attachment: { kind: "detections", detectionItems: [target] },
+      };
     }
 
     if (!isQuestion && /clear.*fault|clear.*fail|fix everything|heal everything/.test(text)) {
@@ -508,7 +521,7 @@ export function SilkboardAgentPanel({
       const top = activeAlerts[0];
       onSelectDrain(top.drain_id);
       return {
-        text: `${activeAlerts.length} active alert${activeAlerts.length === 1 ? "" : "s"}, risk level ${metrics.risk_level.toUpperCase()}. Highest priority: ${top.drain_id} at ${top.blockage_probability}% probability. Focused it on the map.`,
+        text: `${activeAlerts.length} active alert${activeAlerts.length === 1 ? "" : "s"}, risk level ${metrics.risk_level.toUpperCase()}. Highest priority: ${top.drain_id} at ${top.blockage_probability}% probability.`,
         attachment: { kind: "detections", detectionItems: activeAlerts.slice(0, 4) },
       };
     }
@@ -627,6 +640,18 @@ export function SilkboardAgentPanel({
       }
       case "list_scenario_references": {
         return { result: { ok: true, scenarios: SCENARIO_REFERENCES.map((s) => s.id) }, attachment: { kind: "scenarios" } };
+      }
+      case "dispatch_crew": {
+        const requestedId = args.drain_id ? String(args.drain_id).toUpperCase() : null;
+        const target = requestedId
+          ? detections.find((d) => d.drain_id === requestedId && d.classification !== "normal_runoff")
+          : activeAlerts[0];
+        if (!target) return { result: { ok: false, error: "no_active_alert" } };
+        setDispatchDetection(target);
+        return {
+          result: { ok: true, drain_id: target.drain_id, dispatch_action: target.dispatch_action ?? "Field crew notified" },
+          attachment: { kind: "detections", detectionItems: [target] },
+        };
       }
       default:
         return { result: { ok: false, error: "unknown_tool" } };

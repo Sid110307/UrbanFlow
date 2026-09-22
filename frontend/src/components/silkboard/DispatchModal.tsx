@@ -65,7 +65,7 @@ export function DispatchModal({
           parameters: [
             {
               type: "image",
-              image: { link: `https://urbanflow.bbmp.gov.in${imageSrc}` },
+              image: { link: `https://urbanflow-scuba-cats.netlify.app${imageSrc}` },
             },
           ],
         },
@@ -86,7 +86,7 @@ export function DispatchModal({
             { type: "text", text: `${minutesToBreach} minutes to overflow` },
             {
               type: "text",
-              text: `urbanflow.bbmp.gov.in/incident/${detection.drain_id.toLowerCase()}`,
+              text: `Ref: ${detection.drain_id}-${detection.id.slice(-4).toUpperCase()}`,
             },
           ],
         },
@@ -167,7 +167,7 @@ export function DispatchModal({
                   </p>
                   <hr className="whatsapp-divider" />
                   <p className="whatsapp-footer-note">
-                    <em>Track in real-time: urbanflow.bbmp.gov.in/incident/{detection.drain_id.toLowerCase()}</em>
+                    <em>Ref: {detection.drain_id}-{detection.id.slice(-4).toUpperCase()}</em>
                   </p>
                 </div>
 
