@@ -1,21 +1,87 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { navigateTo } from "./Root";
 import { SilkboardMapView } from "./components/silkboard/SilkboardMapView";
 import { SilkboardAgentPanel } from "./components/silkboard/SilkboardAgent";
 import { CameraStrip, CameraDetailModal } from "./components/silkboard/CameraFeed";
-import { GeminiConfigModal } from "./components/silkboard/GeminiConfigModal";
 import { FailureInjectionPanel } from "./components/silkboard/FailureInjection";
 import { useSilkboardSimulation } from "./useSilkboardSimulation";
 import { useSilkboardAgent } from "./useSilkboardAgent";
-import { isGeminiActive } from "./services/geminiService";
 import { loadSilkboardFloodHistory, loadSilkboardRealDrains } from "./silkboardRealData";
 import { CAMERAS } from "./silkboard";
 import type {
   AgentDetection,
+  FailureType,
   SilkboardFloodHistoryPoint,
   SilkboardRealDrainDataset,
   SilkboardScenarioKind,
 } from "./types";
+
+const DEMO_SCRIPT: Array<{ label: string; delayMs: number; run: (ctx: DemoContext) => void }> = [
+  {
+    label: "Resetting to baseline",
+    delayMs: 1500,
+    run: (ctx) => {
+      ctx.clearAllFailures();
+      ctx.startScenario("normal");
+      ctx.setSpeed(2);
+    },
+  },
+  {
+    label: "Triggering a drain blockage",
+    delayMs: 3200,
+    run: (ctx) => ctx.startScenario("blockage"),
+  },
+  {
+    label: "Killing CAM-02, watch it reroute",
+    delayMs: 3200,
+    run: (ctx) => ctx.toggleFailure("camera_offline"),
+  },
+  {
+    label: "Forcing Gemini to hallucinate normal",
+    delayMs: 3600,
+    run: (ctx) => ctx.toggleFailure("gemini_hallucination"),
+  },
+  {
+    label: "Cutting network mid-reasoning",
+    delayMs: 3600,
+    run: (ctx) => ctx.toggleFailure("gemini_timeout"),
+  },
+  {
+    label: "Silencing the dispatch crew",
+    delayMs: 3600,
+    run: (ctx) => ctx.toggleFailure("dispatch_no_ack"),
+  },
+  {
+    label: "Corrupting the primary sensor",
+    delayMs: 3600,
+    run: (ctx) => ctx.toggleFailure("sensor_corrupt"),
+  },
+  {
+    label: "Five simultaneous failures, still green",
+    delayMs: 3500,
+    run: () => {},
+  },
+  {
+    label: "Recovering",
+    delayMs: 2200,
+    run: (ctx) => ctx.clearAllFailures(),
+  },
+  {
+    label: "Back to baseline",
+    delayMs: 0,
+    run: (ctx) => {
+      ctx.startScenario("normal");
+      ctx.setSpeed(1);
+    },
+  },
+];
+
+interface DemoContext {
+  startScenario: (scenario: SilkboardScenarioKind, blockedId?: string | null) => void;
+  toggleFailure: (failure: FailureType) => void;
+  clearAllFailures: () => void;
+  setSpeed: (speed: 1 | 2 | 4) => void;
+}
 
 const SCENARIOS: Array<{
   id: SilkboardScenarioKind;
@@ -56,10 +122,10 @@ export function SilkboardView() {
   const [selectedDrainId, setSelectedDrainId] = useState<string | null>(null);
   const [selectedCameraId, setSelectedCameraId] = useState<string | null>(null);
   const [selectedDetection, setSelectedDetection] = useState<AgentDetection | null>(null);
-  const [showGeminiModal, setShowGeminiModal] = useState(false);
-  const [configCounter, setConfigCounter] = useState(0);
   const [floodHistory, setFloodHistory] = useState<SilkboardFloodHistoryPoint[]>([]);
   const [realDrains, setRealDrains] = useState<SilkboardRealDrainDataset | null>(null);
+  const [demoStep, setDemoStep] = useState<string | null>(null);
+  const demoRunIdRef = useRef(0);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -80,7 +146,6 @@ export function SilkboardView() {
     sim.activeFailures,
   );
 
-  const geminiActive = useMemo(() => isGeminiActive(), [configCounter]);
   const metrics = sim.snapshot?.metrics;
 
   const handleSelectDrain = useCallback((id: string) => {
@@ -95,6 +160,25 @@ export function SilkboardView() {
     setSelectedDetection(d);
     setSelectedDrainId(d.drain_id);
   }, []);
+
+  const runDemo = useCallback(async () => {
+    const runId = ++demoRunIdRef.current;
+    const ctx: DemoContext = {
+      startScenario: sim.startScenario,
+      toggleFailure: sim.toggleFailure,
+      clearAllFailures: sim.clearAllFailures,
+      setSpeed: sim.setSpeed,
+    };
+    for (const step of DEMO_SCRIPT) {
+      if (demoRunIdRef.current !== runId) return;
+      setDemoStep(step.label);
+      step.run(ctx);
+      if (step.delayMs > 0) {
+        await new Promise((resolve) => setTimeout(resolve, step.delayMs));
+      }
+    }
+    if (demoRunIdRef.current === runId) setDemoStep(null);
+  }, [sim.startScenario, sim.toggleFailure, sim.clearAllFailures, sim.setSpeed]);
 
   const latestDetectionForCamera = useMemo(() => {
     if (!selectedCameraId || !sim.snapshot) return null;
@@ -126,21 +210,6 @@ export function SilkboardView() {
           </div>
         </div>
         <div className="silkboard-topbar-right">
-          <button
-            type="button"
-            className={`btn-gemini-status ${geminiActive ? "is-live" : "is-mock"}`}
-            onClick={() => setShowGeminiModal(true)}
-            title={
-              geminiActive
-                ? "Gemini Flash Live API active, click to configure"
-                : "Configure Google Gemini API key for Live LLM Disambiguation"
-            }
-          >
-            <span className="gemini-status-dot" />
-            <span className="gemini-status-text">
-              {geminiActive ? "Gemini Flash (Live)" : "Gemini AI (Ready)"}
-            </span>
-          </button>
           <span className={`live-status${sim.snapshot ? "" : " is-connecting"}`}>
             {sim.snapshot ? "Live" : "Connecting"}
           </span>
@@ -290,13 +359,6 @@ export function SilkboardView() {
           snapshot={sim.snapshot}
           latestDetection={latestDetectionForCamera}
           onClose={() => setSelectedCameraId(null)}
-        />
-      )}
-
-      {showGeminiModal && (
-        <GeminiConfigModal
-          onClose={() => setShowGeminiModal(false)}
-          onConfigSaved={() => setConfigCounter((c) => c + 1)}
         />
       )}
     </div>

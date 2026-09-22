@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useRef } from "react";
-import { CAMERAS, DRAIN_NODES, ROAD_SENSORS } from "../../silkboard";
+import { CAMERAS, DRAIN_NODES, ROAD_SENSORS, distance } from "../../silkboard";
 import { DispatchModal } from "./DispatchModal";
 import type {
   AgentDetection,
@@ -355,10 +355,7 @@ export function CameraDetailModal({
   const specs = CAMERA_SPECS[selectedCamId] || CAMERA_SPECS["CAM-01"];
 
   const nearbySensors = ROAD_SENSORS.filter((s) => {
-    const dist = Math.sqrt(
-      (s.position[0] - activeCamera.position[0]) ** 2 +
-      (s.position[1] - activeCamera.position[1]) ** 2,
-    );
+    const dist = distance(s.position, activeCamera.position);
     return dist < activeCamera.coverage_radius / 100000;
   });
 
@@ -581,10 +578,7 @@ export function CameraStrip({
           const status = state?.status ?? "online";
 
           const nearbySensors = ROAD_SENSORS.filter((s) => {
-            const dist = Math.sqrt(
-              (s.position[0] - camera.position[0]) ** 2 +
-              (s.position[1] - camera.position[1]) ** 2,
-            );
+            const dist = distance(s.position, camera.position);
             return dist < camera.coverage_radius / 100000;
           });
 

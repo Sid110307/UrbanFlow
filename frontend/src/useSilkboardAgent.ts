@@ -4,6 +4,7 @@ import {
   DRAIN_NODES,
   ROAD_SENSORS,
   DEFAULT_SENSOR_CORRUPT_DRAIN_ID,
+  distance,
 } from "./silkboard";
 import { isGeminiActive } from "./services/geminiService";
 import type {
@@ -77,10 +78,7 @@ function buildTemporalChunk(
     const inletNode = DRAIN_INLETS.find((di) => di.id === i.inlet_id);
     const drainNode = DRAIN_NODES.find((n) => n.drain_id === currentDrain.drain_id);
     if (!inletNode || !drainNode) return false;
-    const dist = Math.sqrt(
-      (inletNode.position[0] - drainNode.position[0]) ** 2 +
-      (inletNode.position[1] - drainNode.position[1]) ** 2,
-    );
+    const dist = distance(inletNode.position, drainNode.position);
     return dist < 0.003;
   });
   const backflowInlet = nearbyInlets.find((i) => i.flow_direction === "backflow");
@@ -273,10 +271,7 @@ export function useSilkboardAgent(
         if (!inlet) return false;
         const node = DRAIN_NODES.find((n) => n.drain_id === drain.drain_id);
         if (!node) return false;
-        const dist = Math.sqrt(
-          (inlet.position[0] - node.position[0]) ** 2 +
-          (inlet.position[1] - node.position[1]) ** 2,
-        );
+        const dist = distance(inlet.position, node.position);
         return dist < 0.003;
       });
 

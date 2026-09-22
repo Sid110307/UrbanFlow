@@ -1,7 +1,7 @@
 const MODELS = ["gemini-flash-latest", "gemini-3.6-flash", "gemini-flash-lite-latest"];
 const MAX_PROMPT_CHARS = 16000;
-const REQUEST_TIMEOUT_MS = 10000;
-const OVERALL_DEADLINE_MS = 20000;
+const REQUEST_TIMEOUT_MS = 6000;
+const OVERALL_DEADLINE_MS = 11000;
 
 const INSTANCE_LIMIT = 200;
 let windowStart = Date.now();
@@ -64,7 +64,7 @@ export default async (req: Request) => {
     if (remaining <= 0) break;
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), Math.min(REQUEST_TIMEOUT_MS, remaining));
+    const timeout = setTimeout(() => controller.abort("timeout"), Math.min(REQUEST_TIMEOUT_MS, remaining));
 
     try {
       const upstream = await fetch(

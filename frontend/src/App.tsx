@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { navigateTo } from "./Root";
 import { DrainDetails } from "./components/DrainDetails";
 import { DrainExplorer } from "./components/DrainExplorer";
 import { FlowAssistant } from "./components/FlowAssistant";
@@ -178,7 +179,7 @@ export default function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <div className="brand-lockup">
+        <button type="button" className="brand-lockup brand-lockup-link" onClick={() => navigateTo("/")}>
           <div className="brand-mark" aria-hidden="true">
             <span />
             <span />
@@ -188,8 +189,11 @@ export default function App() {
             <p className="eyebrow">Bengaluru infrastructure atlas</p>
             <h1>UrbanFlow</h1>
           </div>
-        </div>
+        </button>
         <div className="topbar-context">
+          <button type="button" className="topbar-silkboard-link" onClick={() => navigateTo("/app/silkboard")}>
+            Silk Board deep-dive <span aria-hidden="true">-&gt;</span>
+          </button>
           <a href={metadata.sourceUrl} target="_blank" rel="noreferrer" className="source-link">
             OpenCity source <span aria-hidden="true">-&gt;</span>
           </a>

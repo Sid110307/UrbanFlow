@@ -2146,6 +2146,10 @@ export const SCENARIO_REFERENCES: SilkboardScenarioRef[] = [
   },
 ];
 
+export function distance(a: Coordinate, b: Coordinate): number {
+  return Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2);
+}
+
 /** Get the nearest camera to a position */
 export function getNearestCamera(pos: Coordinate): SilkboardCamera {
   let best = CAMERAS[0];

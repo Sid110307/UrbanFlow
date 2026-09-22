@@ -5,250 +5,12 @@ import type {
   TemporalChunkRecording,
 } from "../types";
 
-const STORAGE_KEY_API_KEY = "urbanflow_gemini_api_key";
-const STORAGE_KEY_MODEL = "urbanflow_gemini_model";
-const DEFAULT_MODEL = "gemini-flash-latest";
-
-export function getGeminiApiKey(): string | null {
-  if (typeof window === "undefined") return null;
-  const stored = localStorage.getItem(STORAGE_KEY_API_KEY);
-  if (stored && stored.trim()) return stored.trim();
-  return null;
-}
-
-export function setGeminiApiKey(key: string) {
-  if (typeof window === "undefined") return;
-  if (!key || !key.trim()) {
-    localStorage.removeItem(STORAGE_KEY_API_KEY);
-  } else {
-    localStorage.setItem(STORAGE_KEY_API_KEY, key.trim());
-  }
-}
-
-export function getGeminiModel(): string {
-  if (typeof window === "undefined") return DEFAULT_MODEL;
-  return localStorage.getItem(STORAGE_KEY_MODEL) || DEFAULT_MODEL;
-}
-
-export function setGeminiModel(model: string) {
-  if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY_MODEL, model);
-}
-
 export function isGeminiActive(): boolean {
   return true;
 }
 
-export interface GeminiModelInfo {
-  id: string;
-  displayName: string;
-  description?: string;
-  supportedMethods: string[];
-}
-
-export const POPULAR_GEMINI_MODELS = [
-  { id: "gemini-flash-latest", label: "Gemini Flash Latest (Active / Recommended)" },
-  { id: "gemini-pro-latest", label: "Gemini Pro Latest (Deep Reasoning)" },
-  { id: "gemini-flash-lite-latest", label: "Gemini Flash Lite Latest (Fastest)" },
-  { id: "gemini-2.5-flash-lite", label: "Gemini 2.5 Flash Lite" },
-  { id: "gemini-2.5-pro", label: "Gemini 2.5 Pro" },
-  { id: "gemini-1.5-flash-latest", label: "Gemini 1.5 Flash Latest" },
-  { id: "gemini-2.0-flash", label: "Gemini 2.0 Flash" },
-];
-
-function isReasoningModel(id: string): boolean {
-  const lower = id.toLowerCase();
-  if (
-    lower.includes("-tts") ||
-    lower.includes("-image") ||
-    lower.includes("-transcribe") ||
-    lower.includes("lyria") ||
-    lower.includes("robotics") ||
-    lower.includes("customtools") ||
-    lower.includes("deep-research") ||
-    lower.includes("preview-10-2025") ||
-    lower.includes("preview-12-2025")
-  ) {
-    return false;
-  }
-  return true;
-}
-
-export async function listGeminiModels(apiKey: string): Promise<GeminiModelInfo[]> {
-  const cleanKey = apiKey.trim();
-  if (!cleanKey) return [];
-
-  const versions = ["v1beta", "v1"];
-  for (const ver of versions) {
-    try {
-      const res = await fetch(
-        `https://generativelanguage.googleapis.com/${ver}/models?key=${cleanKey}`
-      );
-      if (!res.ok) continue;
-      const data = await res.json();
-      if (Array.isArray(data?.models)) {
-        const models: GeminiModelInfo[] = data.models
-          .filter(
-            (m: any) =>
-              Array.isArray(m.supportedGenerationMethods) &&
-              m.supportedGenerationMethods.includes("generateContent") &&
-              isReasoningModel(m.name)
-          )
-          .map((m: any) => ({
-            id: m.name.replace(/^models\//, ""),
-            displayName: m.displayName || m.name.replace(/^models\//, ""),
-            description: m.description,
-            supportedMethods: m.supportedGenerationMethods || [],
-          }));
-
-        if (models.length > 0) {
-          const priority = [
-            "gemini-flash-latest",
-            "gemini-pro-latest",
-            "gemini-flash-lite-latest",
-            "gemini-2.5-flash-lite",
-            "gemini-2.5-pro",
-            "gemini-2.5-flash",
-          ];
-          models.sort((a, b) => {
-            const indexA = priority.indexOf(a.id);
-            const indexB = priority.indexOf(b.id);
-            if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-            if (indexA !== -1) return -1;
-            if (indexB !== -1) return 1;
-            return a.id.localeCompare(b.id);
-          });
-          return models;
-        }
-      }
-    } catch {
-    }
-  }
-  return [];
-}
-
-export async function testGeminiApiKey(
-  apiKey: string,
-  model: string = DEFAULT_MODEL,
-): Promise<{
-  success: boolean;
-  message: string;
-  model: string;
-  availableModels?: GeminiModelInfo[];
-}> {
-  const cleanKey = apiKey.trim();
-  if (!cleanKey) {
-    return { success: false, message: "Please enter an API key.", model };
-  }
-
-  const tryCall = async (testModel: string, ver = "v1beta") => {
-    const url = `https://generativelanguage.googleapis.com/${ver}/models/${testModel}:generateContent?key=${cleanKey}`;
-    const res = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: "Ping test. Return JSON: {\"status\": \"ok\"}" }],
-          },
-        ],
-        generationConfig: {
-          responseMimeType: "application/json",
-          temperature: 0.1,
-        },
-      }),
-    });
-    return res;
-  };
-
-  try {
-    let res = await tryCall(model, "v1beta");
-
-    if (res.status === 404) {
-      res = await tryCall(model, "v1");
-    }
-
-    if (res.ok) {
-      const data = await res.json();
-      const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (text) {
-        return { success: true, message: `Connected successfully to ${model}!`, model };
-      }
-    }
-
-    const availableModels = await listGeminiModels(cleanKey);
-
-    const priorityList = [
-      "gemini-flash-latest",
-      "gemini-pro-latest",
-      "gemini-flash-lite-latest",
-      "gemini-2.5-flash-lite",
-      "gemini-2.5-pro",
-      "gemini-1.5-flash-latest",
-      "gemini-2.0-flash",
-      "gemini-2.5-flash",
-      "gemini-1.5-flash-002",
-      "gemini-1.5-flash-001",
-    ];
-
-    const candidatesToTry: string[] = [];
-    if (model) candidatesToTry.push(model);
-    for (const p of priorityList) {
-      if (!candidatesToTry.includes(p)) candidatesToTry.push(p);
-    }
-    for (const m of availableModels) {
-      if (!candidatesToTry.includes(m.id)) candidatesToTry.push(m.id);
-    }
-
-    const tried = new Set<string>();
-    for (const candidate of candidatesToTry) {
-      if (tried.has(candidate)) continue;
-      tried.add(candidate);
-
-      try {
-        const retryRes = await tryCall(candidate, "v1beta");
-        if (retryRes.ok) {
-          const data = await retryRes.json().catch(() => null);
-          const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-          if (text) {
-            setGeminiModel(candidate);
-            return {
-              success: true,
-              message: `Connected successfully! Using active model "${candidate}".`,
-              model: candidate,
-              availableModels,
-            };
-          }
-        }
-      } catch {
-      }
-    }
-
-    const errData = await res.json().catch(() => null);
-    const errMsg = errData?.error?.message || `HTTP ${res.status}: ${res.statusText}`;
-    return {
-      success: false,
-      message: `Could not connect with "${model}". Error: ${errMsg}`,
-      model,
-      availableModels,
-    };
-  } catch (err: any) {
-    return {
-      success: false,
-      message: err?.message || "Failed to reach Google Gemini API endpoints.",
-      model,
-    };
-  }
-}
-
 let lastGeminiApiCallTime = 0;
 export const MIN_GEMINI_CALL_INTERVAL_MS = 15000;
-
-export function getGeminiCooldownRemainingMs(): number {
-  const elapsed = Date.now() - lastGeminiApiCallTime;
-  return Math.max(0, MIN_GEMINI_CALL_INTERVAL_MS - elapsed);
-}
 
 export async function callGeminiCausalDisambiguation({
   drain,
@@ -261,8 +23,6 @@ export async function callGeminiCausalDisambiguation({
   historyWaterLevels: number[];
   temporalChunk?: TemporalChunkRecording;
 }): Promise<CausalJudgment | null> {
-  const apiKey = getGeminiApiKey();
-
   const now = Date.now();
   if (lastGeminiApiCallTime > 0 && now - lastGeminiApiCallTime < MIN_GEMINI_CALL_INTERVAL_MS) {
     const waitSec = Math.ceil((MIN_GEMINI_CALL_INTERVAL_MS - (now - lastGeminiApiCallTime)) / 1000);
@@ -270,9 +30,8 @@ export async function callGeminiCausalDisambiguation({
     return null;
   }
 
-  const model = getGeminiModel();
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 6000);
+  const timeoutId = setTimeout(() => controller.abort("timeout"), 12000);
 
   const neighborSummaries = neighbors.map((n) => ({
     drain_id: n.drain_id,
@@ -335,70 +94,22 @@ Respond strictly with JSON according to this schema:
     "You are DrainGuard L3 Stormwater Telemetry Classifier. Return ONLY a valid JSON object matching the requested schema. No markdown backticks or commentary outside JSON.";
 
   try {
-    let rawText: string | undefined;
+    lastGeminiApiCallTime = Date.now();
+    const response = await fetch("/.netlify/functions/silkboard-gemini", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({ prompt, systemInstruction }),
+    });
+    clearTimeout(timeoutId);
 
-    if (apiKey) {
-      const makeRequest = async (targetModel: string, ver = "v1beta") => {
-        const url = `https://generativelanguage.googleapis.com/${ver}/models/${targetModel}:generateContent?key=${apiKey}`;
-        return await fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          signal: controller.signal,
-          body: JSON.stringify({
-            contents: [{ role: "user", parts: [{ text: prompt }] }],
-            systemInstruction: { parts: [{ text: systemInstruction }] },
-            generationConfig: { responseMimeType: "application/json", temperature: 0.2 },
-          }),
-        });
-      };
-
-      lastGeminiApiCallTime = Date.now();
-      let response = await makeRequest(model, "v1beta");
-
-      if (!response.ok) {
-        for (const fallback of [
-          "gemini-flash-latest",
-          "gemini-pro-latest",
-          "gemini-flash-lite-latest",
-          "gemini-2.5-flash-lite",
-          "gemini-2.5-pro",
-        ]) {
-          if (fallback === model) continue;
-          const fbRes = await makeRequest(fallback, "v1beta");
-          if (fbRes.ok) {
-            response = fbRes;
-            setGeminiModel(fallback);
-            break;
-          }
-        }
-      }
-
-      if (!response.ok) {
-        console.warn("Gemini API error:", response.status, response.statusText);
-        return null;
-      }
-
-      const data = await response.json();
-      rawText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    } else {
-      lastGeminiApiCallTime = Date.now();
-      const response = await fetch("/.netlify/functions/silkboard-gemini", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify({ prompt, systemInstruction }),
-      });
-
-      if (!response.ok) {
-        console.warn("Gemini proxy error:", response.status, response.statusText);
-        return null;
-      }
-
-      const data = await response.json().catch(() => null);
-      rawText = data?.text;
+    if (!response.ok) {
+      console.warn("Gemini proxy error:", response.status, response.statusText);
+      return null;
     }
 
-    clearTimeout(timeoutId);
+    const data = await response.json().catch(() => null);
+    const rawText = data?.text;
     if (!rawText) return null;
 
     const parsed = JSON.parse(rawText);

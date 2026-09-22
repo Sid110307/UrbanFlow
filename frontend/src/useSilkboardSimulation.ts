@@ -7,6 +7,7 @@ import {
   ROAD_SENSORS,
   DEFAULT_SENSOR_CORRUPT_DRAIN_ID,
   DEFAULT_CAMERA_OFFLINE_ID,
+  distance,
 } from "./silkboard";
 import type {
   SilkboardCameraState,
@@ -65,10 +66,7 @@ function generateDrainTelemetry(
     } else if (config.scenario === "blockage" && config.blocked_drain_id) {
       const blockedNode = DRAIN_NODES.find((n) => n.drain_id === config.blocked_drain_id);
       if (blockedNode) {
-        const dist = Math.sqrt(
-          (node.position[0] - blockedNode.position[0]) ** 2 +
-          (node.position[1] - blockedNode.position[1]) ** 2,
-        );
+        const dist = distance(node.position, blockedNode.position);
         if (dist < 0.004) {
           const backupFactor = 1 - dist / 0.004;
           waterLevel += backupFactor * 40;
@@ -141,10 +139,7 @@ function generateRoadSensorReadings(
 
     if (config.scenario === "inlet_backflow") {
       const nearInlet = DRAIN_INLETS.find((inlet) => {
-        const dist = Math.sqrt(
-          (inlet.position[0] - sensor.position[0]) ** 2 +
-          (inlet.position[1] - sensor.position[1]) ** 2,
-        );
+        const dist = distance(inlet.position, sensor.position);
         return dist < 0.001;
       });
       if (nearInlet && drainData && drainData.status === "red") {
@@ -181,10 +176,7 @@ function generateInletReadings(
     for (const dt of drainTelemetry) {
       const node = DRAIN_NODES.find((n) => n.drain_id === dt.drain_id);
       if (!node) continue;
-      const dist = Math.sqrt(
-        (node.position[0] - inlet.position[0]) ** 2 +
-        (node.position[1] - inlet.position[1]) ** 2,
-      );
+      const dist = distance(node.position, inlet.position);
       if (dist < 0.003 && dt.telemetry.water_level_cm > maxDrainLevel) {
         maxDrainLevel = dt.telemetry.water_level_cm;
       }
@@ -244,10 +236,7 @@ function generateCameraStates(
 
     // Check if any sensors in camera's coverage area are alerting
     const nearbySensors = ROAD_SENSORS.filter((s) => {
-      const dist = Math.sqrt(
-        (s.position[0] - camera.position[0]) ** 2 +
-        (s.position[1] - camera.position[1]) ** 2,
-      );
+      const dist = distance(s.position, camera.position);
       return dist < camera.coverage_radius / 100000;
     });
 

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Map, { Layer, useControl } from "react-map-gl/maplibre";
+import Map, { Layer, Marker, useControl } from "react-map-gl/maplibre";
 import type { MapRef } from "react-map-gl/maplibre";
 import type { Map as MapLibreMap } from "maplibre-gl";
 import { MapLibreOverlay } from "@deck.gl/maplibre";
@@ -8,6 +8,8 @@ import { LightingEffect, AmbientLight, DirectionalLight } from "@deck.gl/core";
 import type { PickingInfo } from "@deck.gl/core";
 import { PathLayer } from "@deck.gl/layers";
 import { PathStyleExtension } from "@deck.gl/extensions";
+import { navigateTo } from "../Root";
+import { SILKBOARD_CENTER } from "../silkboard";
 import type {
   Bounds,
   DrainFeature,
@@ -358,6 +360,21 @@ export function MapView({
           />
         )}
         <DeckGLOverlay interleaved layers={layers} effects={[lightingEffect]} getTooltip={getTooltip} />
+
+        <Marker
+          longitude={SILKBOARD_CENTER[0]}
+          latitude={SILKBOARD_CENTER[1]}
+          anchor="bottom"
+          onClick={(e) => {
+            e.originalEvent.stopPropagation();
+            navigateTo("/app/silkboard");
+          }}
+        >
+          <button type="button" className="silkboard-hotspot-marker" title="Silk Board Junction — open evidence-gated agent deep-dive">
+            <span className="silkboard-hotspot-dot" />
+            <span className="silkboard-hotspot-label">Silk Board Junction</span>
+          </button>
+        </Marker>
       </Map>
 
       <div className="map-toolbar">

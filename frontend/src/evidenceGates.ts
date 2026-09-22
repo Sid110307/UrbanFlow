@@ -30,7 +30,7 @@ import type {
 const BLOCKAGE_WATER_LEVEL_THRESHOLD = 75;
 const ELEVATED_WATER_LEVEL_THRESHOLD = 50;
 const BLOCKAGE_FLOW_VELOCITY_THRESHOLD = 0.3;
-const GEMINI_TIMEOUT_MS = 4000;
+const GEMINI_TIMEOUT_MS = 13000;
 
 export interface GateExecutionContext {
   drain: SilkboardDrainTelemetry;

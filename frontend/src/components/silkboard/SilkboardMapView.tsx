@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import type { PathOptions, Layer, LatLngExpression } from "leaflet";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
   TileLayer,
@@ -253,6 +254,7 @@ export function SilkboardMapView({
   realDrains?: SilkboardRealDrainDataset | null;
 }) {
   const tick = snapshot?.tick ?? 0;
+  const svgRenderer = useMemo(() => L.svg(), []);
 
   const drainTelemetryMap = useMemo(() => {
     const map = new Map<string, SilkboardDrainTelemetry>();
@@ -296,42 +298,6 @@ export function SilkboardMapView({
       />
 
       <SilkboardMapController />
-
-      {realDrains?.features.map((feature) => {
-        const geom = feature.geometry;
-        const lines = geom.type === "LineString" ? [geom.coordinates] : geom.coordinates;
-        return lines.map((line, index) => (
-          <Polyline
-            key={`${feature.properties.id}-${index}`}
-            positions={line.map(([lon, lat]) => [lat, lon] as [number, number])}
-            pathOptions={{ color: "#94a3b8", weight: 2, opacity: 0.55, dashArray: "4 4" }}
-          >
-            <Tooltip sticky>
-              <div className="silkboard-tooltip">
-                <strong>{feature.properties.label}</strong>
-                <span>Real drain geometry, OpenCity stormwater drain dataset</span>
-              </div>
-            </Tooltip>
-          </Polyline>
-        ));
-      })}
-
-      {floodHistory?.map((point) => (
-        <CircleMarker
-          key={point.id}
-          center={[point.position[1], point.position[0]]}
-          radius={7}
-          pathOptions={{ color: "#f59e0b", fillColor: "#f59e0b", fillOpacity: 0.35, weight: 2 }}
-        >
-          <Tooltip sticky>
-            <div className="silkboard-tooltip">
-              <strong>{point.name}</strong>
-              <span>BBMP-flagged flood-vulnerable location</span>
-              {point.wardName && <span>Ward: {point.wardName} ({point.wardNo})</span>}
-            </div>
-          </Tooltip>
-        </CircleMarker>
-      ))}
 
       {FLYOVER_STRUCTURES.map((flyover) => (
         <Polyline
@@ -528,6 +494,44 @@ export function SilkboardMapView({
         detections={snapshot?.detections ?? []}
         onSelectDetection={onSelectDetection}
       />
+
+      {realDrains?.features.map((feature) => {
+        const geom = feature.geometry;
+        const lines = geom.type === "LineString" ? [geom.coordinates] : geom.coordinates;
+        return lines.map((line, index) => (
+          <Polyline
+            key={`${feature.properties.id}-${index}`}
+            renderer={svgRenderer}
+            positions={line.map(([lon, lat]) => [lat, lon] as [number, number])}
+            pathOptions={{ color: "#94a3b8", weight: 2, opacity: 0.55, dashArray: "4 4" }}
+          >
+            <Tooltip sticky>
+              <div className="silkboard-tooltip">
+                <strong>{feature.properties.label}</strong>
+                <span>Real drain geometry, OpenCity stormwater drain dataset</span>
+              </div>
+            </Tooltip>
+          </Polyline>
+        ));
+      })}
+
+      {floodHistory?.map((point) => (
+        <CircleMarker
+          key={point.id}
+          renderer={svgRenderer}
+          center={[point.position[1], point.position[0]]}
+          radius={7}
+          pathOptions={{ color: "#f59e0b", fillColor: "#f59e0b", fillOpacity: 0.35, weight: 2 }}
+        >
+          <Tooltip sticky>
+            <div className="silkboard-tooltip">
+              <strong>{point.name}</strong>
+              <span>BBMP-flagged flood-vulnerable location</span>
+              {point.wardName && <span>Ward: {point.wardName} ({point.wardNo})</span>}
+            </div>
+          </Tooltip>
+        </CircleMarker>
+      ))}
 
       <div className="silkboard-map-legend">
         <p><strong>Silk Board Junction Network</strong></p>

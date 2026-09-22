@@ -99,8 +99,36 @@ input:focus-visible {
   gap: 13px;
 }
 
+.brand-lockup-link {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
 .brand-lockup .eyebrow {
   color: #a9c4bd;
+}
+
+.topbar-silkboard-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0d7377 100%);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font: 500 11px/1 "DM Mono", monospace;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.topbar-silkboard-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(13, 115, 119, 0.35);
 }
 
 .brand-lockup h1 {
@@ -582,7 +610,7 @@ input:focus-visible {
 .clean-map-tiles,
 .clean-map-tiles .leaflet-tile,
 .clean-map-tiles img {
-  filter: grayscale(100%) brightness(1.05) contrast(0.92);
+  filter: grayscale(100%) brightness(1.25) contrast(0.85);
 }
 
 .network-map:active {
@@ -629,6 +657,34 @@ input:focus-visible {
 
 .map-count span {
   color: var(--ink);
+}
+
+.silkboard-hotspot-marker {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 8px;
+  background: linear-gradient(135deg, #1e3a5f 0%, #0d7377 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  font: 600 11px/1 "DM Mono", monospace;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(15, 42, 39, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.silkboard-hotspot-marker:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15, 42, 39, 0.45);
+}
+
+.silkboard-hotspot-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6ee7b7;
+  flex-shrink: 0;
 }
 
 .map-toolbar {
@@ -2976,8 +3032,9 @@ input:focus-visible {
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
+  color: #f6faf7;
+  background: #173b36;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   gap: 16px;
   flex-shrink: 0;
 }
@@ -2992,24 +3049,24 @@ input:focus-visible {
   display: flex;
   align-items: center;
   padding: 6px 12px;
-  background: var(--panel-soft);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
-  color: var(--ink-soft);
+  color: #f6faf7;
   font-size: 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 .silkboard-back:hover {
-  background: var(--line);
-  color: var(--ink);
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 
 .silkboard-brand .eyebrow {
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--muted);
+  color: #a9c4bd;
   margin: 0;
 }
 
@@ -3018,6 +3075,7 @@ input:focus-visible {
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
+  color: #f6faf7;
 }
 
 .silkboard-topbar-right {
@@ -3029,11 +3087,29 @@ input:focus-visible {
 .silkboard-elapsed {
   font-family: "DM Mono", monospace;
   font-size: 0.85rem;
-  color: var(--ink-soft);
-  background: var(--panel-soft);
+  color: #f6faf7;
+  background: rgba(255, 255, 255, 0.08);
   padding: 4px 10px;
   border-radius: 6px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #6ee7b7;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(6, 78, 59, 0.35);
+  border: 1px solid rgba(16, 185, 129, 0.5);
+}
+.live-status.is-connecting {
+  color: #a9c4bd;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* ─── Metrics bar ────────────────────────────────────────────────────────── */
@@ -3083,7 +3159,7 @@ input:focus-visible {
 
 .silkboard-workspace {
   display: grid;
-  grid-template-columns: 1fr 420px;
+  grid-template-columns: minmax(0, 1fr) 420px;
   flex: 1;
   min-height: 0;
   overflow: hidden;
@@ -3092,6 +3168,7 @@ input:focus-visible {
 .silkboard-map-stage {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   min-height: 0;
   position: relative;
 }
@@ -3204,9 +3281,11 @@ input:focus-visible {
 .silkboard-agent-panel {
   display: flex;
   flex-direction: column;
+  min-width: 0;
   background: var(--paper);
   border-left: 1px solid var(--line);
   overflow-y: auto;
+  overflow-x: hidden;
   gap: 0;
 }
 
