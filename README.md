@@ -1,5 +1,9 @@
 # UrbanFlow
 
+<p align="center">
+  <img src="docs/urbanflow.jpg" alt="UrbanFlow landing page" width="900" />
+</p>
+
 UrbanFlow is an atlas of Bengaluru's mapped stormwater drain network, built
 around an evidence-gated, self-healing agentic pipeline for Silk Board
 Junction. A single sensor reading, say 94cm of water, can mean two opposite
